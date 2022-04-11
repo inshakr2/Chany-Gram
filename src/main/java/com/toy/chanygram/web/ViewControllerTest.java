@@ -6,8 +6,5 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ViewControllerTest {
 
-    @GetMapping("/auth/signin")
-    public String signin() {
-        return "/auth/signin";
-    }
+
 }
