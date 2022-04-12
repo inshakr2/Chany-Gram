@@ -1,19 +1,19 @@
 package com.toy.chanygram.domain.user;
 
 import com.toy.chanygram.domain.BaseTimeEntity;
+import com.toy.chanygram.web.dto.auth.SignupDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+import static com.toy.chanygram.domain.user.Role.USER;
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Getter @Setter(PROTECTED)
+@Getter @Setter(PROTECTED) @ToString
 @NoArgsConstructor(access = PROTECTED)
 public class User extends BaseTimeEntity {
 
@@ -21,6 +21,7 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 20, unique = true)
     private String username;
 
     private String password;
@@ -33,5 +34,15 @@ public class User extends BaseTimeEntity {
     private String gender;
 
     private String profileImageUrl; // 프로필 사진
-    private String role; // 권한
+
+    @Enumerated(EnumType.STRING)
+    private Role role = USER; // 권한
+
+    public User(SignupDto signupDto) {
+        this.username = signupDto.getUsername();
+        this.password = signupDto.getPassword();
+        this.email = signupDto.getEmail();
+        this.name = signupDto.getName();
+    }
+
 }
