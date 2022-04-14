@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter @Setter @ToString
+@Getter @Setter
 public class SignupDto {
 
     @Size(max = 20)
@@ -19,4 +19,13 @@ public class SignupDto {
     private String email;
     @NotBlank
     private String name;
+
+    @Override
+    public String toString() {
+        return "SignupDto (" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", name='" + name + '\'' +
+                ')';
+    }
 }
