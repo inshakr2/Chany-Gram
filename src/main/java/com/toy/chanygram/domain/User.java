@@ -1,6 +1,7 @@
 package com.toy.chanygram.domain;
 
 import com.toy.chanygram.dto.auth.SignupDto;
+import com.toy.chanygram.dto.user.UserUpdateDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -47,6 +48,15 @@ public class User extends BaseTimeEntity {
         this.password = signupDto.getPassword();
         this.email = signupDto.getEmail();
         this.name = signupDto.getName();
+    }
+
+    public void update(UserUpdateDto dto) {
+        this.name = dto.getName();
+        this.password = dto.getPassword();
+        this.aboutMe = dto.getAboutMe();
+        this.gender = dto.getGender();
+        this.website = dto.getWebsite();
+        this.phone = dto.getPhone();
     }
 
 }
