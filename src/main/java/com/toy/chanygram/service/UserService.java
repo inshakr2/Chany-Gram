@@ -2,6 +2,7 @@ package com.toy.chanygram.service;
 
 import com.toy.chanygram.domain.User;
 import com.toy.chanygram.dto.user.UserUpdateDto;
+import com.toy.chanygram.exception.CustomValidationApiException;
 import com.toy.chanygram.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +23,14 @@ public class UserService {
 
         userUpdateDto.setPassword(encoder.encode(userUpdateDto.getPassword()));
 
-        //TODO : Exception 처리
         User findUser = userRepository.findById(id).get();
+
+        userRepository.findById(id).orElseThrow(
+                () -> {
+                    log.info("유효성 검사 실패 [존재하지 않는 회원입니다.]");
+                    return new CustomValidationApiException("존재하지 않는 회원입니다.");}
+        );
+
         findUser.update(userUpdateDto);
 
         return findUser;

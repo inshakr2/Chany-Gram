@@ -42,10 +42,10 @@ public class AuthController {
 
             for(FieldError fieldError : errors.getFieldErrors()) {
                 errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-                log.info("유효성 검사 실패 [" + fieldError.getField() +"] : [" + fieldError.getDefaultMessage() + "]");
+                log.info("유효성 검사 실패 - 회원가입 [" + fieldError.getField() +"] : [" + fieldError.getDefaultMessage() + "]");
             }
 
-            throw new CustomValidationException("유효성 검사 실패", errorMap);
+            throw new CustomValidationException("유효성 검사 실패 - 회원가입", errorMap);
         }
 
         log.info("New SignUp Req : " + signupDto);

@@ -1,6 +1,7 @@
 // (1) 회원정보 수정
-function update(userId) {
+function update(userId, event) {
 
+    event.preventDefault();
     let data = $("#profileUpdate").serialize();
 
     $.ajax({
@@ -12,6 +13,13 @@ function update(userId) {
     }).done(res=>{
         location.href=`/user/${userId}`
     }).fail(error=>{
+
+        // CustomValidationApiException 분기처리
+        if (error.data == null) {
+            alert(error.responseJSON.message);
+        } else {
+            alert(JSON.stringify(error.responseJSON.data));
+        }
     })
 
 }
