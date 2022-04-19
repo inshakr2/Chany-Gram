@@ -1,6 +1,7 @@
 package com.toy.chanygram.handler;
 
 import com.toy.chanygram.dto.CommonResponseDto;
+import com.toy.chanygram.exception.CustomApiException;
 import com.toy.chanygram.exception.CustomValidationApiException;
 import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.utils.ScriptWriter;
@@ -25,6 +26,15 @@ public class ControllerExceptionHandler {
 
         return new ResponseEntity<>(
                 new CommonResponseDto(-1, e.getMessage(), e.getErrorMap()),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(CustomApiException.class)
+    public ResponseEntity<?> apiException(CustomApiException e) {
+
+        return new ResponseEntity<>(
+                new CommonResponseDto(-1, e.getMessage(), null),
                 HttpStatus.BAD_REQUEST
         );
     }
