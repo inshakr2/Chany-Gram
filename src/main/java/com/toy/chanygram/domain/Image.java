@@ -1,5 +1,6 @@
 package com.toy.chanygram.domain;
 
+import com.toy.chanygram.dto.image.ImageUploadDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,4 +28,10 @@ public class Image extends BaseTimeEntity{
     private User user;
 
     // TODO : like & comment 추가 필요
+
+    public Image(String caption, String imageFullPath, User user) {
+        this.caption = caption;
+        this.postImageUrl = imageFullPath;
+        this.user = user;
+    }
 }

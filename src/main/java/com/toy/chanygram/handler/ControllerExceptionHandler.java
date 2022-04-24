@@ -17,8 +17,12 @@ public class ControllerExceptionHandler {
 
     @ExceptionHandler(CustomValidationException.class)
     public String validationException(CustomValidationException e) {
-//        CommonResponseDto commonResponseDto = new CommonResponseDto(-1, e.getMessage(), e.getErrorMap());
-        return ScriptWriter.alertWithBack(e.getErrorMap().toString());
+
+        if (e.getErrorMap() == null) {
+            return ScriptWriter.alertWithBack(e.getMessage());
+        } else {
+            return ScriptWriter.alertWithBack(e.getErrorMap().toString());
+        }
     }
 
     @ExceptionHandler(CustomValidationApiException.class)

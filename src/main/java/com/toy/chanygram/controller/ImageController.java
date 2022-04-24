@@ -2,6 +2,7 @@ package com.toy.chanygram.controller;
 
 import com.toy.chanygram.config.auth.PrincipalDetails;
 import com.toy.chanygram.dto.image.ImageUploadDto;
+import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -34,6 +35,10 @@ public class ImageController {
     @PostMapping("/images")
     public String imageUpload(@ModelAttribute ImageUploadDto imageUploadDto,
                               @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        if (imageUploadDto.getFile().isEmpty()) {
+            throw new CustomValidationException("이미지가 첨부되지 않았습니다.", null);
+        }
 
         imageService.imageUpload(imageUploadDto, principalDetails);
         return "redirect:/user/" + principalDetails.getUser().getId();
