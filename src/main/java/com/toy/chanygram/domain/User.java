@@ -9,6 +9,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 import static com.toy.chanygram.domain.Role.USER;
 import static lombok.AccessLevel.PROTECTED;
 
@@ -42,6 +44,9 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role = USER; // 권한
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Image> images;
 
     public User(SignupDto signupDto) {
         this.username = signupDto.getUsername();

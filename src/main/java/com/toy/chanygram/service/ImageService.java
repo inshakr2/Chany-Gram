@@ -5,6 +5,7 @@ import com.toy.chanygram.domain.Image;
 import com.toy.chanygram.dto.image.ImageUploadDto;
 import com.toy.chanygram.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ImageService {
@@ -31,10 +33,10 @@ public class ImageService {
         Path imagePath = Paths.get(imageFullPath);
 
         try {
-
+            log.info("Try to upload [" + imageFileName +"] image to ${file.path}");
             Files.write(imagePath, imageUploadDto.getFile().getBytes());
-
         } catch (IOException e) {
+            log.error("I/O error occurred during image upload : [" + imageFileName + "]");
             e.printStackTrace();
         }
 

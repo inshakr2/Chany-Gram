@@ -5,12 +5,14 @@ import com.toy.chanygram.dto.image.ImageUploadDto;
 import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.service.ImageService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 public class ImageController {
@@ -37,6 +39,7 @@ public class ImageController {
                               @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
         if (imageUploadDto.getFile().isEmpty()) {
+            log.info("No image attached");
             throw new CustomValidationException("이미지가 첨부되지 않았습니다.", null);
         }
 
