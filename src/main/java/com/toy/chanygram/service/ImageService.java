@@ -40,7 +40,7 @@ public class ImageService {
             e.printStackTrace();
         }
 
-        Image image = new Image(imageUploadDto.getCaption(), imageFullPath, principalDetails.getUser());
+        Image image = new Image(imageUploadDto.getCaption(), imageFileName, principalDetails.getUser());
         imageRepository.save(image);
     }
 }
