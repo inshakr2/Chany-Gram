@@ -16,5 +16,5 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query("SELECT u FROM User u " +
             "LEFT JOIN FETCH u.images i " +
             "WHERE u.id = :userId")
-    Optional<User> findUserForProfile(@Param("userId") Long userId);
+    Optional<User> findUserWithImages(@Param("userId") Long userId);
 }

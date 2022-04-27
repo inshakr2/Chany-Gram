@@ -24,7 +24,7 @@ public class UserService {
 
         userUpdateDto.setPassword(encoder.encode(userUpdateDto.getPassword()));
 
-        User findUser = userRepository.findById(userId).orElseThrow(
+        User findUser = userRepository.findUserWithImages(userId).orElseThrow(
                 () -> {
                     log.info("유효성 검사 실패 [존재하지 않는 회원입니다.]");
                     return new CustomValidationApiException("존재하지 않는 회원입니다.");
@@ -32,13 +32,13 @@ public class UserService {
         );
 
         findUser.update(userUpdateDto);
-
+        log.info("회원 정보 변경 : [" + findUser.getId() + "]" );
         return findUser;
     }
 
     @Transactional(readOnly = true)
     public User userProfile(Long userId) {
-        User findUser = userRepository.findUserForProfile(userId).orElseThrow(
+        User findUser = userRepository.findUserWithImages(userId).orElseThrow(
                 () -> {
                     log.info("유효성 검사 실패 [존재하지 않는 회원입니다.]");
                     return new CustomValidationException("존재하지 않는 회원입니다.", null);

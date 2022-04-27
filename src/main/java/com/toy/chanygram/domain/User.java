@@ -1,5 +1,6 @@
 package com.toy.chanygram.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.toy.chanygram.dto.auth.SignupDto;
 import com.toy.chanygram.dto.user.UserUpdateDto;
 import lombok.Getter;
@@ -45,6 +46,7 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role = USER; // 권한
 
+    @JsonIgnoreProperties({"user"})
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Image> images;
 
