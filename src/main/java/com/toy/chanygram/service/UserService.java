@@ -36,6 +36,7 @@ public class UserService {
         return findUser;
     }
 
+    @Transactional(readOnly = true)
     public User userProfile(Long userId) {
         User findUser = userRepository.findUserForProfile(userId).orElseThrow(
                 () -> {
