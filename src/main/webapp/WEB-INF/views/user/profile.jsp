@@ -33,7 +33,17 @@
 						<button class="cta" onclick="location.href='/images/upload'">사진등록</button>
 					</c:when>
 					<c:otherwise>
-						<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
+
+						<!-- 로그인 유저 본인 아닌 프로필 페이지의 경우 구독하기 / 구독취소 버튼 분기 -->
+						<c:choose>
+							<c:when test="${dto.subscribeState}">
+								<button class="cta blue" onclick="toggleSubscribe(this)">구독취소</button>
+							</c:when>
+							<c:otherwise>
+								<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
+							</c:otherwise>
+						</c:choose>
+
 					</c:otherwise>
 				</c:choose>
 
@@ -48,7 +58,7 @@
 				<ul>
 					<li><a href=""> 게시물<span>${dto.imageCount}</span>
 					</a></li>
-					<li><a href="javascript:subscribeInfoModalOpen();"> 구독정보<span>2</span>
+					<li><a href="javascript:subscribeInfoModalOpen();"> 구독정보<span>${dto.following}</span>
 					</a></li>
 				</ul>
 			</div>

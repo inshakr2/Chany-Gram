@@ -5,6 +5,7 @@ import com.toy.chanygram.dto.user.UserProfileDto;
 import com.toy.chanygram.dto.user.UserUpdateDto;
 import com.toy.chanygram.exception.CustomValidationApiException;
 import com.toy.chanygram.exception.CustomValidationException;
+import com.toy.chanygram.repository.SubscribeRepository;
 import com.toy.chanygram.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
+    private final SubscribeRepository subscribeRepository;
 
     public User userUpdate(long userId, UserUpdateDto userUpdateDto) {
 
@@ -51,6 +53,13 @@ public class UserService {
         userProfileDto.setPageOwner(pageUserId == principalId);
         userProfileDto.setImageCount(findUser.getImages().size());
         userProfileDto.setUser(findUser);
+
+        // 구독정보
+        int subscribeState = subscribeRepository.checkSubscribeState(principalId, pageUserId);
+        int following = subscribeRepository.countFollowing(pageUserId);
+
+        userProfileDto.setSubscribeState(subscribeState >= 1);
+        userProfileDto.setFollowing(following);
 
         return userProfileDto;
     }

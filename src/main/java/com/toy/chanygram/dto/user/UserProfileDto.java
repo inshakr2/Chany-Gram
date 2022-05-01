@@ -12,6 +12,8 @@ import lombok.Setter;
 public class UserProfileDto {
 
     private boolean pageOwner;
+    private boolean subscribeState;
+    private int following;
     private int imageCount;
     private User user;
 }
