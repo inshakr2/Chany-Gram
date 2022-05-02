@@ -37,10 +37,10 @@
 						<!-- 로그인 유저 본인 아닌 프로필 페이지의 경우 구독하기 / 구독취소 버튼 분기 -->
 						<c:choose>
 							<c:when test="${dto.subscribeState}">
-								<button class="cta blue" onclick="toggleSubscribe(this)">구독취소</button>
+								<button class="cta blue" onclick="toggleSubscribe(${dto.user.id}, this)">구독취소</button>
 							</c:when>
 							<c:otherwise>
-								<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
+								<button class="cta" onclick="toggleSubscribe(${dto.user.id}, this)">구독하기</button>
 							</c:otherwise>
 						</c:choose>
 

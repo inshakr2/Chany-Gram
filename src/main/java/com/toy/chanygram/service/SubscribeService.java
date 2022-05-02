@@ -17,7 +17,7 @@ public class SubscribeService {
 
     public void subscribe(Long fromUserId, Long toUserId) {
         try {
-            log.info("USER " + fromUserId + "Subscribed to USER " + toUserId);
+            log.info("USER " + fromUserId + " Subscribed to USER " + toUserId);
             subscribeRepository.subscribe(fromUserId, toUserId);
         } catch (Exception e) {
             log.info("USER " + fromUserId +" has already subscribed to USER " + toUserId);
@@ -26,7 +26,7 @@ public class SubscribeService {
     }
 
     public void unSubscribe(Long fromUserId, Long toUserId) {
-        log.info("USER " + fromUserId + "UnSubscribed to USER " + toUserId);
+        log.info("USER " + fromUserId + " UnSubscribed to USER " + toUserId);
         subscribeRepository.unSubscribe(fromUserId, toUserId);
     }
 }
