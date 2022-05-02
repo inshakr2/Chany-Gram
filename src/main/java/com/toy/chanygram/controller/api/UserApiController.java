@@ -3,22 +3,24 @@ package com.toy.chanygram.controller.api;
 import com.toy.chanygram.config.auth.PrincipalDetails;
 import com.toy.chanygram.domain.User;
 import com.toy.chanygram.dto.CommonResponseDto;
+import com.toy.chanygram.dto.subscribe.SubscribeResponseDto;
 import com.toy.chanygram.dto.user.UserUpdateDto;
 import com.toy.chanygram.exception.CustomValidationApiException;
 import com.toy.chanygram.exception.CustomValidationException;
+import com.toy.chanygram.service.SubscribeService;
 import com.toy.chanygram.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -27,6 +29,16 @@ import java.util.Map;
 public class UserApiController {
 
     private final UserService userService;
+    private final SubscribeService subscribeService;
+
+    @GetMapping("/api/user/{pageUserId}/subscribe")
+    public ResponseEntity<?> subscribeList(@PathVariable long pageUserId,
+                                           @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        List<SubscribeResponseDto> subscribeDto = subscribeService.
+                                        getFollowingList(principalDetails.getUser().getId(), pageUserId);
+        return new ResponseEntity<>(new CommonResponseDto<>(1, "구독 정보 리스트", subscribeDto), HttpStatus.OK);
+    }
 
     @PatchMapping("/api/user/{id}")
     public CommonResponseDto<?> update(@PathVariable long id,

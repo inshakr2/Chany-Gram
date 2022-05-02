@@ -1,11 +1,15 @@
 package com.toy.chanygram.repository;
 
 import com.toy.chanygram.domain.Subscribe;
+import com.toy.chanygram.dto.subscribe.SubscribeResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
@@ -29,4 +33,16 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
     @Query(value = "SELECT COUNT(s) FROM Subscribe s " +
             "WHERE s.fromUser.id = :pageUserId")
     int countFollowing(@Param("pageUserId") long pageUserId);
+
+    @Query(value =
+            "SELECT new com.toy.chanygram.dto.subscribe." +
+                    "SubscribeResponseDto(u.id, u.username, u.profileImageUrl, true, true) " +
+            "FROM User u " +
+            "INNER JOIN Subscribe s ON u.id = s.toUser.id " +
+            "WHERE s.fromUser.id = :pageUserId"
+    )
+    Optional<List<SubscribeResponseDto>> followingList(@Param("pageUserId") long pageUserId);
+
+    //"select new jpql.DTO.MemberDTO(m.username, m.age) " +
+    //        "from Member m"
 }

@@ -1,11 +1,15 @@
 package com.toy.chanygram.service;
 
+import com.toy.chanygram.dto.subscribe.SubscribeResponseDto;
 import com.toy.chanygram.exception.CustomApiException;
 import com.toy.chanygram.repository.SubscribeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -28,5 +32,17 @@ public class SubscribeService {
     public void unSubscribe(Long fromUserId, Long toUserId) {
         log.info("USER " + fromUserId + " UnSubscribed to USER " + toUserId);
         subscribeRepository.unSubscribe(fromUserId, toUserId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<SubscribeResponseDto> getFollowingList(Long id, long pageUserId) {
+        List<SubscribeResponseDto> subscribeList = subscribeRepository.followingList(pageUserId).get();
+
+        for (SubscribeResponseDto subscribeResponseDto : subscribeList) {
+            System.out.println(subscribeResponseDto.getUserId());
+            System.out.println(subscribeResponseDto.getUsername());
+        }
+
+        return null;
     }
 }
