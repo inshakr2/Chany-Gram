@@ -35,14 +35,14 @@ public class SubscribeService {
     }
 
     @Transactional(readOnly = true)
-    public List<SubscribeResponseDto> getFollowingList(Long id, long pageUserId) {
-        List<SubscribeResponseDto> subscribeList = subscribeRepository.followingList(pageUserId).get();
+    public List<SubscribeResponseDto> getFollowingList(Long principalId, Long pageUserId) {
+        List<SubscribeResponseDto> subscribeList = subscribeRepository.followingList(principalId, pageUserId).get();
 
         for (SubscribeResponseDto subscribeResponseDto : subscribeList) {
-            System.out.println(subscribeResponseDto.getUserId());
-            System.out.println(subscribeResponseDto.getUsername());
+            System.out.println(subscribeResponseDto);
         }
 
         return null;
     }
 }
+

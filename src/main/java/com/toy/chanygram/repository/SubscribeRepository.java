@@ -36,13 +36,14 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
 
     @Query(value =
             "SELECT new com.toy.chanygram.dto.subscribe." +
-                    "SubscribeResponseDto(u.id, u.username, u.profileImageUrl, true, true) " +
+                    "SubscribeResponseDto(u.id, u.username, u.profileImageUrl, " +
+                    "(SELECT COUNT(s.id) > 1 FROM Subscribe s WHERE s.fromUser.id = :principalId AND s.toUser.id = u.id), " +
+                    "(:principalId=u.id)) " +
             "FROM User u " +
             "INNER JOIN Subscribe s ON u.id = s.toUser.id " +
             "WHERE s.fromUser.id = :pageUserId"
     )
-    Optional<List<SubscribeResponseDto>> followingList(@Param("pageUserId") long pageUserId);
+    Optional<List<SubscribeResponseDto>> followingList(@Param("principalId") long principalId,
+                                                       @Param("pageUserId") long pageUserId);
 
-    //"select new jpql.DTO.MemberDTO(m.username, m.age) " +
-    //        "from Member m"
 }
