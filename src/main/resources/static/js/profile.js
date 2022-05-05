@@ -44,12 +44,51 @@ function toggleSubscribe(toUserId, obj) {
 }
 
 // (2) 구독자 정보  모달 보기
-function subscribeInfoModalOpen() {
+function subscribeInfoModalOpen(pageUserId) {
 	$(".modal-subscribe").css("display", "flex");
+
+	$.ajax({
+		type: "GET",
+		url: `/api/user/${pageUserId}/subscribe`,
+		dataType: "json"
+	}).done(res=> {
+		console.log(res);
+		res.data.forEach((u)=> {
+			let item = getSubscribeModalItem(u);
+			$("#subscribeModalList").append(item);
+		});
+		
+	}).fail(error=> {
+		console.log(error);
+	});
 }
 
-function getSubscribeModalItem() {
+function getSubscribeModalItem(u) {
+	let item = `
+	<div class="subscribe__item" id="subscribeModalItem-${u.userId}">
+		<div class="subscribe__img">
+			<img src="/upload/${u.profileImageUrl}" onerror="this.src='/image/person.jpeg'"/>
+		</div>
+		<div class="subscribe__text">
+			<h2>${u.username}</h2>
+		</div>
+		<div class="subscribe__btn">`;
 
+		// 동일유저가 아닐때 구독하기 / 취소 버튼 생성
+		if(! u.equalUserState){
+			if(u.subscribeState){
+				item += `<button class="cta blue" onclick="toggleSubscribeModal(this)">구독취소</button>`;
+			}else{
+				item += `<button class="cta" onclick="toggleSubscribeModal(this)">구독하기</button>`;
+			}
+		}
+			
+	item +=		
+		`</div>
+	</div>
+	`;
+
+	return item;
 }
 
 

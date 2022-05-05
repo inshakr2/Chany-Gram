@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -38,11 +37,7 @@ public class SubscribeService {
     public List<SubscribeResponseDto> getFollowingList(Long principalId, Long pageUserId) {
         List<SubscribeResponseDto> subscribeList = subscribeRepository.followingList(principalId, pageUserId).get();
 
-        for (SubscribeResponseDto subscribeResponseDto : subscribeList) {
-            System.out.println(subscribeResponseDto);
-        }
-
-        return null;
+        return subscribeList;
     }
 }
 
