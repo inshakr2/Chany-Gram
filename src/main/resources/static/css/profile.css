@@ -379,6 +379,79 @@
   align-items: center;
 }
 
+.modal-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.modal-follower .subscribe {
+  width: 600px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+.modal-follower .subscribe .subscribe-header {
+  text-align: center;
+  line-height: 50px;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+.modal-follower .subscribe .subscribe-header button {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  background-color: transparent;
+  border: 0;
+}
+.modal-follower .subscribe .subscribe-header button i {
+  font-size: 20px;
+}
+.modal-follower .subscribe .subscribe-list {
+  overflow: hidden;
+  overflow-y: auto;
+}
+.modal-follower .subscribe .subscribe-list .subscribe__item {
+  display: flex;
+  height: 70px;
+  padding: 10px;
+}
+.modal-follower .subscribe .subscribe-list .subscribe__item .subscribe__img {
+  width: 80px;
+  text-align: center;
+}
+.modal-follower .subscribe .subscribe-list .subscribe__item .subscribe__img {
+  width: 80px;
+  text-align: center;
+}
+.modal-follower .subscribe .subscribe-list .subscribe__item .subscribe__img img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.modal-follower .subscribe .subscribe-list .subscribe__item .subscribe__text {
+  padding-top: 5px;
+}
+.modal-follower .subscribe .subscribe-list .subscribe__item .subscribe__text h2 {
+  font-size: 16px;
+  line-height: 50px;
+}
+.modal-follower .subscribe .subscribe-list .subscribe__item .subscribe__btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+
+
 .cta {
   margin-right: 10px;
   padding: 10px 10px;

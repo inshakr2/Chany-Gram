@@ -57,9 +57,11 @@ public class UserService {
         // 구독정보
         int subscribeState = subscribeRepository.checkSubscribeState(principalId, pageUserId);
         int following = subscribeRepository.countFollowing(pageUserId);
+        int follower = subscribeRepository.countFollower(pageUserId);
 
         userProfileDto.setSubscribeState(subscribeState >= 1);
         userProfileDto.setFollowing(following);
+        userProfileDto.setFollower(follower);
 
         return userProfileDto;
     }

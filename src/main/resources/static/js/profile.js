@@ -1,12 +1,14 @@
 /**
   1. 유저 프로파일 페이지
   (1) 유저 프로파일 페이지 구독하기, 구독취소
-  (2) 구독자 정보 모달 보기
-  (3) 유저 프로필 사진 변경
-  (4) 사용자 정보 메뉴 열기 닫기
-  (5) 사용자 정보(회원정보, 로그아웃, 닫기) 모달
-  (6) 사용자 프로파일 이미지 메뉴(사진업로드, 취소) 모달 
-  (7) 구독자 정보 모달 닫기
+  (2) 팔로워 정보 모달 보기
+  (3) 팔로잉 리스트 모달 정보 (추가)
+  (4) 유저 프로필 사진 변경
+  (5) 사용자 정보 메뉴 열기 닫기
+  (6) 사용자 정보(회원정보, 로그아웃, 닫기) 모달
+  (7) 사용자 프로파일 이미지 메뉴(사진업로드, 취소) 모달 
+  (8) 구독자 정보 모달 닫기
+
  */
 
 // (1) 유저 프로파일 페이지 구독하기, 구독취소
@@ -42,7 +44,7 @@ function toggleSubscribe(toUserId, obj) {
 	}
 }
 
-// (2) 구독자 정보  모달 보기
+// (2) 팔로워 정보  모달 보기
 function subscribeInfoModalOpen(pageUserId) {
 	$(".modal-subscribe").css("display", "flex");
 
@@ -51,16 +53,38 @@ function subscribeInfoModalOpen(pageUserId) {
 		url: `/api/user/${pageUserId}/subscribe`,
 		dataType: "json"
 	}).done(res=> {
-		console.log(res);
 		res.data.forEach((u)=> {
 			let item = getSubscribeModalItem(u);
 			$("#subscribeModalList").append(item);
 		});
 		
 	}).fail(error=> {
-		console.log(error);
 	});
 }
+
+// (3) 팔로잉 리스트 모달 정보 (추가)
+function followerInfoModalOpen(pageUserId) {
+	$(".modal-follower").css("display", "flex");
+
+	$.ajax({
+		type: "GET",
+		url: `/api/user/${pageUserId}/follower`,
+		dataType: "json"
+	}).done(res=> {
+		res.data.forEach((u)=> {
+			let item = getSubscribeModalItem(u);
+			$("#followerModalList").append(item);
+		});
+		
+	}).fail(error=> {
+	});
+}
+
+function followerModalClose() {
+	$(".modal-follower").css("display", "none");
+	location.reload();
+}
+
 
 function getSubscribeModalItem(u) {
 	let item = `
@@ -90,7 +114,9 @@ function getSubscribeModalItem(u) {
 	return item;
 }
 
-// (3) 유저 프로파일 사진 변경 (완)
+
+
+// (4) 유저 프로파일 사진 변경 (완)
 function profileImageUpload() {
 	$("#userProfileImageInput").click();
 
@@ -112,7 +138,7 @@ function profileImageUpload() {
 }
 
 
-// (4) 사용자 정보 메뉴 열기 닫기
+// (5) 사용자 정보 메뉴 열기 닫기
 function popup(obj) {
 	$(obj).css("display", "flex");
 }
@@ -122,21 +148,22 @@ function closePopup(obj) {
 }
 
 
-// (5) 사용자 정보(회원정보, 로그아웃, 닫기) 모달
+// (6) 사용자 정보(회원정보, 로그아웃, 닫기) 모달
 function modalInfo() {
 	$(".modal-info").css("display", "none");
 }
 
-// (6) 사용자 프로파일 이미지 메뉴(사진업로드, 취소) 모달
+// (7) 사용자 프로파일 이미지 메뉴(사진업로드, 취소) 모달
 function modalImage() {
 	$(".modal-image").css("display", "none");
 }
 
-// (7) 구독자 정보 모달 닫기
+// (8) 팔로워 정보 모달 닫기
 function modalClose() {
 	$(".modal-subscribe").css("display", "none");
 	location.reload();
 }
+
 
 
 

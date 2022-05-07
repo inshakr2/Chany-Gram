@@ -31,6 +31,15 @@ public class UserApiController {
     private final UserService userService;
     private final SubscribeService subscribeService;
 
+    @GetMapping("/api/user/{pageUserId}/follower")
+    public ResponseEntity<?> followingList(@PathVariable long pageUserId,
+                                           @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        List<SubscribeResponseDto> subscribeDto = subscribeService.
+                getFollowerList(principalDetails.getUser().getId(), pageUserId);
+        return new ResponseEntity<>(new CommonResponseDto<>(1, "구독 정보 리스트", subscribeDto), HttpStatus.OK);
+    }
+
     @GetMapping("/api/user/{pageUserId}/subscribe")
     public ResponseEntity<?> subscribeList(@PathVariable long pageUserId,
                                            @AuthenticationPrincipal PrincipalDetails principalDetails) {

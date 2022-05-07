@@ -58,7 +58,9 @@
 				<ul>
 					<li><a href=""> 게시물<span>${dto.imageCount}</span>
 					</a></li>
-					<li><a href="javascript:subscribeInfoModalOpen(${dto.user.id});"> 구독정보<span>${dto.following}</span>
+					<li><a href="javascript:followerInfoModalOpen(${dto.user.id});"> 팔로워<span>${dto.follower}</span>
+					</a></li>
+					<li><a href="javascript:subscribeInfoModalOpen(${dto.user.id});"> 팔로잉<span>${dto.following}</span>
 					</a></li>
 				</ul>
 			</div>
@@ -131,6 +133,22 @@
 		</div>
 
 		<div class="subscribe-list" id="subscribeModalList">
+			<!-- 모달 리스트 ajax에서 처리 -->
+		</div>
+	</div>
+
+</div>
+
+<div class="modal-follower">
+	<div class="subscribe">
+		<div class="subscribe-header">
+			<span>구독정보</span>
+			<button onclick="followerModalClose()">
+				<i class="fas fa-times"></i>
+			</button>
+		</div>
+
+		<div class="subscribe-list" id="followerModalList">
 			<!-- 모달 리스트 ajax에서 처리 -->
 		</div>
 	</div>

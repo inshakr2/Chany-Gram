@@ -39,5 +39,12 @@ public class SubscribeService {
 
         return subscribeList;
     }
+
+    @Transactional(readOnly = true)
+    public List<SubscribeResponseDto> getFollowerList(Long principalId, Long pageUserId) {
+        List<SubscribeResponseDto> subscribeList = subscribeRepository.followerList(principalId, pageUserId).get();
+
+        return subscribeList;
+    }
 }
 
