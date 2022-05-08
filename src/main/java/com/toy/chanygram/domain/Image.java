@@ -1,5 +1,6 @@
 package com.toy.chanygram.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.toy.chanygram.dto.image.ImageUploadDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class Image extends BaseTimeEntity{
     private String caption;
     private String postImageUrl;
 
+    @JsonIgnoreProperties({"images"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "User_ID")
     private User user;

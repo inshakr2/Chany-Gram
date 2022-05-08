@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -26,6 +27,12 @@ public class ImageService {
 
     @Value("${file.path}")
     private String uploadPath;
+
+    @Transactional(readOnly = true)
+    public List<Image> getImages(Long principalId) {
+        List<Image> imageForStory = imageRepository.getImageForStory(principalId);
+        return imageForStory;
+    }
 
     public void imageUpload(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails) {
         UUID uuid = UUID.randomUUID();
