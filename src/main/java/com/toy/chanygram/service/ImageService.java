@@ -7,6 +7,8 @@ import com.toy.chanygram.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,8 +31,8 @@ public class ImageService {
     private String uploadPath;
 
     @Transactional(readOnly = true)
-    public List<Image> getImages(Long principalId) {
-        List<Image> imageForStory = imageRepository.getImageForStory(principalId);
+    public Slice<Image> getImages(Long principalId, Pageable pageable) {
+        Slice<Image> imageForStory = imageRepository.getImageForStory(principalId, pageable);
         return imageForStory;
     }
 

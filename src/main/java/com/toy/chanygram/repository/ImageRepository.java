@@ -1,6 +1,8 @@
 package com.toy.chanygram.repository;
 
 import com.toy.chanygram.domain.Image;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +15,8 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     @Query("SELECT i FROM Image i " +
             "JOIN FETCH i.user u " +
-            "WHERE i.user.id IN (SELECT s.toUser.id FROM Subscribe s WHERE s.fromUser.id = :principalId)")
-    List<Image> getImageForStory(@Param("principalId") Long principalId);
+            "WHERE i.user.id IN (SELECT s.toUser.id FROM Subscribe s WHERE s.fromUser.id = :principalId) " +
+            "OR i.user.id = :principalId")
+    Slice<Image> getImageForStory(@Param("principalId") Long principalId, Pageable pageable);
 
 }
