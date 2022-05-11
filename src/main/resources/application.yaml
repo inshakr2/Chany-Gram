@@ -31,5 +31,9 @@ spring:
       enabled: true
       max-file-size: 5MB
 
-file:
-  path: E:/data/upload/
+custom:
+  file:
+    path: E:/data/upload/
+
+  story:
+    page-size: 3

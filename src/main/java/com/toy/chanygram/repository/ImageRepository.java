@@ -15,8 +15,10 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     @Query("SELECT i FROM Image i " +
             "JOIN FETCH i.user u " +
-            "WHERE i.user.id IN (SELECT s.toUser.id FROM Subscribe s WHERE s.fromUser.id = :principalId) " +
-            "OR i.user.id = :principalId")
-    Slice<Image> getImageForStory(@Param("principalId") Long principalId, Pageable pageable);
+            "WHERE (i.user.id IN (SELECT s.toUser.id FROM Subscribe s WHERE s.fromUser.id = :principalId) " +
+            "OR i.user.id = :principalId) " +
+            "AND i.id < :lastImageId")
+    Slice<Image> getImageForStory(@Param("principalId") Long principalId,
+                                  @Param("lastImageId") Long lastImageId, Pageable pageable);
 
 }

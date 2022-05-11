@@ -8,27 +8,25 @@
  */
 
 // (1) 스토리 로드하기
-let page = 0;
-
-function storyLoad() {
+function storyLoad(lastImageId) {
 	$.ajax({
-		url:`/api/image?page=${page}`,
+		url:`/api/image?lastImageId=${lastImageId}`,
 		type:"GET",
 		dataType:"json"
 	}).done(res=>{
-		console.log(res);
 		res.data.content.forEach((image)=>{
 			let storyItem = getStoryItem(image);
 			$("#storyList").append(storyItem);
 		})
 	}).fail(error=>{
-		console.log(error);
+
 	});
 }
-
-storyLoad();
+// Number.MAX_SAFE_INTEGER (9007199254740991.. 약 9천조)
+// 최초 로딩시 가장 작은 id값이 없기 때문에 해당 값으로 로딩 차후 변경 필요한 시점이 있을 수 있음.
+storyLoad(Number.MAX_SAFE_INTEGER);
 function getStoryItem(image) {
-	let item = `<div class="story-list__item">
+	let item = `<div class="story-list__item" id="${image.id}">
 	<div class="sl__item__header">
 		<div>
 			<img class="profile-image" src="/upload/${image.user.profileImageUrl}"
@@ -83,13 +81,28 @@ function getStoryItem(image) {
 }
 
 // (2) 스토리 스크롤 페이징하기
+function getLastImageId() {
+
+	var id = [];
+	var story = document.getElementsByClassName('story-list__item');
+
+	for(let i = 0; i < story.length; i++)  {
+		id.push(story[i].id);
+	  }
+	id = Math.min.apply(null, id);
+
+	return id;
+}
+
 $(window).scroll(() => {
 
 	let checkNum = $(window).scrollTop() - ($(document).height() - $(window).height());
 
 	if (checkNum < 1 && checkNum > -1) {
-		page++;
-		storyLoad();
+
+		var lastImageId = getLastImageId();
+		storyLoad(lastImageId);
+
 	}
 });
 
