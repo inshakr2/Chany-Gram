@@ -8,7 +8,8 @@
 /*컨테이너*/
 .main .container {
   padding-top: 30px;
-  width: 935px;
+  max-width: 915px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   margin: 0 auto;
@@ -70,8 +71,10 @@
 
 /* 게시물 이미지 박스*/
 .main .container .story-list .story-list__item .sl__item__img {
-  height: 600px;
-  min-height: 300px;
+  max-width: 85%;
+  /* max-height: 70%; */
+  display: block;
+  margin: 0px auto;
 }
 
 /* 게시물 이미지*/
