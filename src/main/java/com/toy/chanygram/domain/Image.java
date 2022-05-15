@@ -9,6 +9,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+import java.util.List;
+
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
@@ -29,7 +31,10 @@ public class Image extends BaseTimeEntity{
     @JoinColumn(name = "User_ID")
     private User user;
 
-    // TODO : like & comment 추가 필요
+    @OneToMany(mappedBy = "image")
+    private List<Likes> likes;
+
+    // TODO : comment 추가 필요
 
     public Image(String caption, String imageFullPath, User user) {
         this.caption = caption;
