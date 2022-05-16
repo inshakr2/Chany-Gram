@@ -31,6 +31,7 @@ public class Image extends BaseTimeEntity{
     @JoinColumn(name = "User_ID")
     private User user;
 
+    @JsonIgnoreProperties({"image"})
     @OneToMany(mappedBy = "image")
     private List<Likes> likes;
 

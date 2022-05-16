@@ -2,6 +2,8 @@ package com.toy.chanygram.service;
 
 import com.toy.chanygram.config.auth.PrincipalDetails;
 import com.toy.chanygram.domain.Image;
+import com.toy.chanygram.domain.Likes;
+import com.toy.chanygram.dto.image.ImageStoryDto;
 import com.toy.chanygram.dto.image.ImageUploadDto;
 import com.toy.chanygram.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
@@ -35,11 +39,38 @@ public class ImageService {
     private int pageSize;
 
     @Transactional(readOnly = true)
-    public Slice<Image> getImages(Long principalId, Long lastImageId) {
+    public List<ImageStoryDto> getImages(Long principalId, Long lastImageId) {
         PageRequest pageRequest = PageRequest.of(0, pageSize, Sort.by(DESC, "id"));
 
         Slice<Image> imageForStory = imageRepository.getImageForStory(principalId, lastImageId, pageRequest);
-        return imageForStory;
+        List<ImageStoryDto> imageStoryDtoList = new ArrayList<>();
+
+        imageForStory.forEach(
+                image -> {
+                    imageStoryDtoList.add(new ImageStoryDto(
+                            image.getId(),
+                            image.getPostImageUrl(),
+                            image.getCaption(),
+                            getLikeStatus(image.getLikes(), principalId),
+                            image.getUser().getUsername(),
+                            image.getUser().getProfileImageUrl()
+                    ));
+                }
+        );
+
+        return imageStoryDtoList;
+    }
+
+    private boolean getLikeStatus(List<Likes> likes, Long principalId) {
+        List<Long> likeUserId = new ArrayList<>();
+
+        likes.forEach(
+                like -> {
+                    likeUserId.add(like.getUser().getId());
+                }
+        );
+
+        return likeUserId.contains(principalId);
     }
 
     public void imageUpload(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails) {
