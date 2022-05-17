@@ -16,6 +16,8 @@ public class ImageStoryDto {
     String postImageUrl;
     String caption;
     boolean likeStatus;
+    int likeCount;
+
 
     // User
     String username;

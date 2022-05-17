@@ -52,6 +52,7 @@ public class ImageService {
                             image.getPostImageUrl(),
                             image.getCaption(),
                             getLikeStatus(image.getLikes(), principalId),
+                            image.getLikes().size(),
                             image.getUser().getUsername(),
                             image.getUser().getProfileImageUrl()
                     ));
