@@ -120,13 +120,41 @@ $(window).scroll(() => {
 function toggleLike(imageId) {
 	let likeIcon = $(`#storyLikeIcon-${imageId}`);
 	if (likeIcon.hasClass("far")) {
-		likeIcon.addClass("fas");
-		likeIcon.addClass("active");
-		likeIcon.removeClass("far");
+
+		$.ajax({
+			url:`/api/image/${imageId}/likes`,
+			type:"POST",
+			dataType:"JSON"
+		}).done(res=>{	
+
+			let likeCount = $(`storyLikeCount-${image.imageId}`).text();
+			likeCount = Number(likeCount) + 1;
+			$(`storyLikeCount-${image.imageId}`).text(likeCount);
+
+			likeIcon.addClass("fas");
+			likeIcon.addClass("active");
+			likeIcon.removeClass("far");
+		}).fail(error=>{
+			console.log("ERROR", error);
+		});
 	} else {
-		likeIcon.removeClass("fas");
-		likeIcon.removeClass("active");
-		likeIcon.addClass("far");
+
+		$.ajax({
+			url:`/api/image/${imageId}/likes`,
+			type:"DELETE",
+			dataType:"JSON"
+		}).done(res=>{
+
+			let likeCount = $(`storyLikeCount-${image.imageId}`).text();
+			likeCount = Number(likeCount) - 1;
+			$(`storyLikeCount-${image.imageId}`).text(likeCount);
+
+			likeIcon.removeClass("fas");
+			likeIcon.removeClass("active");
+			likeIcon.addClass("far");
+		}).fail(error=>{
+			console.log("ERROR", error);
+		});
 	}
 }
 
