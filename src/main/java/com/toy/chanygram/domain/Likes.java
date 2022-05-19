@@ -30,6 +30,7 @@ public class Likes extends BaseTimeEntity {
     @JoinColumn(name = "ToImage_ID")
     private Image image;
 
+    @JsonIgnoreProperties({"images"})
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "FromUser_ID")
     private User user;
