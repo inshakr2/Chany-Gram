@@ -3,6 +3,7 @@ package com.toy.chanygram.service;
 import com.toy.chanygram.config.auth.PrincipalDetails;
 import com.toy.chanygram.domain.Image;
 import com.toy.chanygram.domain.Likes;
+import com.toy.chanygram.dto.image.ImagePopularDto;
 import com.toy.chanygram.dto.image.ImageStoryDto;
 import com.toy.chanygram.dto.image.ImageUploadDto;
 import com.toy.chanygram.repository.ImageRepository;
@@ -91,5 +92,12 @@ public class ImageService {
 
         Image image = new Image(imageUploadDto.getCaption(), imageFileName, principalDetails.getUser());
         imageRepository.save(image);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ImagePopularDto> getPopularImage() {
+
+        List<ImagePopularDto> images = imageRepository.fetchPopularImage();
+        return images;
     }
 }

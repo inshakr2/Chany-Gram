@@ -1,6 +1,8 @@
 package com.toy.chanygram.controller;
 
 import com.toy.chanygram.config.auth.PrincipalDetails;
+import com.toy.chanygram.domain.Image;
+import com.toy.chanygram.dto.image.ImagePopularDto;
 import com.toy.chanygram.dto.image.ImageUploadDto;
 import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.service.ImageService;
@@ -8,9 +10,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -25,7 +30,11 @@ public class ImageController {
     }
 
     @GetMapping("/images/popular")
-    public String popular() {
+    public String popular(Model model) {
+
+        List<ImagePopularDto> popularImage = imageService.getPopularImage();
+        model.addAttribute("popularImage", popularImage);
+
         return "/images/popular";
     }
 
