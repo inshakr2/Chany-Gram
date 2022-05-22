@@ -127,9 +127,9 @@ function toggleLike(imageId) {
 			dataType:"JSON"
 		}).done(res=>{	
 
-			let likeCount = $(`storyLikeCount-${image.imageId}`).text();
+			let likeCount = $(`#storyLikeCount-${imageId}`).text();
 			likeCount = Number(likeCount) + 1;
-			$(`storyLikeCount-${image.imageId}`).text(likeCount);
+			$(`#storyLikeCount-${imageId}`).text(likeCount);
 
 			likeIcon.addClass("fas");
 			likeIcon.addClass("active");
@@ -145,9 +145,9 @@ function toggleLike(imageId) {
 			dataType:"JSON"
 		}).done(res=>{
 
-			let likeCount = $(`storyLikeCount-${image.imageId}`).text();
+			let likeCount = $(`#storyLikeCount-${imageId}`).text();
 			likeCount = Number(likeCount) - 1;
-			$(`storyLikeCount-${image.imageId}`).text(likeCount);
+			$(`#storyLikeCount-${imageId}`).text(likeCount);
 
 			likeIcon.removeClass("fas");
 			likeIcon.removeClass("active");
