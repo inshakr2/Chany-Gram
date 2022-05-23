@@ -13,8 +13,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     Optional<User> findByUsername(String username);
 
-    @Query("SELECT u FROM User u " +
+    @Query("SELECT distinct u FROM User u " +
             "LEFT JOIN FETCH u.images i " +
+            "LEFT JOIN i.likes " +
             "WHERE u.id = :userId")
     Optional<User> findUserWithImages(@Param("userId") Long userId);
 }

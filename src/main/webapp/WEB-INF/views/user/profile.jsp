@@ -26,7 +26,7 @@
 		<!--유저정보 및 사진등록 구독하기-->
 		<div class="profile-right">
 			<div class="name-group">
-				<h2>${dto.user.name}</h2>
+				<h2>${dto.username}</h2>
 
 				<c:choose>
 					<c:when test="${dto.pageOwner}">
@@ -37,10 +37,10 @@
 						<!-- 로그인 유저 본인 아닌 프로필 페이지의 경우 구독하기 / 구독취소 버튼 분기 -->
 						<c:choose>
 							<c:when test="${dto.subscribeState}">
-								<button class="cta blue" onclick="toggleSubscribe(${dto.user.id}, this)">구독취소</button>
+								<button class="cta blue" onclick="toggleSubscribe(${dto.userId}, this)">구독취소</button>
 							</c:when>
 							<c:otherwise>
-								<button class="cta" onclick="toggleSubscribe(${dto.user.id}, this)">구독하기</button>
+								<button class="cta" onclick="toggleSubscribe(${dto.userId}, this)">구독하기</button>
 							</c:otherwise>
 						</c:choose>
 
@@ -58,15 +58,15 @@
 				<ul>
 					<li><a href=""> 게시물<span>${dto.imageCount}</span>
 					</a></li>
-					<li><a href="javascript:followerInfoModalOpen(${dto.user.id});"> 팔로워<span>${dto.follower}</span>
+					<li><a href="javascript:followerInfoModalOpen(${dto.userId});"> 팔로워<span>${dto.follower}</span>
 					</a></li>
-					<li><a href="javascript:subscribeInfoModalOpen(${dto.user.id});"> 팔로잉<span>${dto.following}</span>
+					<li><a href="javascript:subscribeInfoModalOpen(${dto.userId});"> 팔로잉<span>${dto.following}</span>
 					</a></li>
 				</ul>
 			</div>
 			<div class="state">
-				<h4>${dto.user.aboutMe}</h4>
-				<h4>${dto.user.website}</h4>
+				<h4>${dto.userAboutMe}</h4>
+				<h4>${dto.userWebsite}</h4>
 			</div>
 		</div>
 		<!--유저정보 및 사진등록 구독하기-->
@@ -85,12 +85,12 @@
 
 				<!--아이템들-->
 
-                <c:forEach var="image" items="${dto.user.images}">
+                <c:forEach var="image" items="${dto.images}">
                     <div class="img-box">
                         <a href=""> <img src="/upload/${image.postImageUrl}" >
                         </a>
                         <div class="comment">
-                            <a href="#" class=""> <i class="fas fa-heart"></i><span>0</span>
+                            <a href="#" class=""> <i class="fas fa-heart"></i><span>${image.likesCount}</span>
                             </a>
                         </div>
                     </div>

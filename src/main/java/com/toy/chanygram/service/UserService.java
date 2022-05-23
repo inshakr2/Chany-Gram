@@ -50,9 +50,14 @@ public class UserService {
                 }
         );
 
+        // User Meta 정보 세팅
         userProfileDto.setPageOwner(pageUserId == principalId);
         userProfileDto.setImageCount(findUser.getImages().size());
-        userProfileDto.setUser(findUser);
+        userProfileDto.setUserId(findUser.getId());
+        userProfileDto.setUsername(findUser.getUsername());
+        userProfileDto.setUserAboutMe(findUser.getAboutMe());
+        userProfileDto.setUserWebsite(findUser.getWebsite());
+        userProfileDto.setImages(findUser.getImages());
 
         // 구독정보
         int subscribeState = subscribeRepository.checkSubscribeState(principalId, pageUserId);
