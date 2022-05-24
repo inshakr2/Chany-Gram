@@ -7,20 +7,37 @@
 <section class="profile">
 	<!--유저정보 컨테이너-->
 	<div class="profileContainer">
-
+		
 		<!--유저이미지-->
 		<div class="profile-left">
-			<div class="profile-img-wrap story-border"
-				onclick="popup('.modal-image')">
-				<form id="userProfileImageForm">
-					<input type="file" name="profileImageFile" style="display: none;"
-						id="userProfileImageInput" />
-				</form>
+			<c:choose>
+				<c:when test="${dto.userId == principal.user.id}">
+				
+					<div class="profile-img-wrap story-border"
+						onclick="popup('.modal-image')">
 
-				<img class="profile-image" src="#"
-					onerror="this.src='/image/person.jpeg'" id="userProfileImage" />
-			</div>
+						<form id="userProfileImageForm">
+							<input type="file" name="profileImageFile" style="display: none;"
+								id="userProfileImageInput" />
+						</form>
+
+						<img class="profile-image" src="/upload/${dto.userProfileImageUrl}"
+							onerror="this.src='/image/person.jpeg'" id="userProfileImage" />
+					</div>
+								
+				</c:when>
+				<c:otherwise>
+
+					<div class="profile-img-wrap story-border">
+
+						<img class="profile-image" src="#"
+							onerror="this.src='/image/person.jpeg'" id="userProfileImage" />
+					</div>
+
+				</c:otherwise>
+			</c:choose>		
 		</div>
+
 		<!--유저이미지end-->
 
 		<!--유저정보 및 사진등록 구독하기-->
@@ -105,7 +122,7 @@
 <!--로그아웃, 회원정보변경 모달-->
 <div class="modal-info" onclick="modalInfo()">
 	<div class="modal">
-		<button onclick="location.href='/user/1/update'">회원정보 변경</button>
+		<button onclick="location.href='/user/${dto.userId}/update'">회원정보 변경</button>
 		<button onclick="location.href='/logout'">로그아웃</button>
 		<button onclick="closePopup('.modal-info')">취소</button>
 	</div>
@@ -116,7 +133,7 @@
 <div class="modal-image" onclick="modalImage()">
 	<div class="modal">
 		<p>프로필 사진 바꾸기</p>
-		<button onclick="profileImageUpload()">사진 업로드</button>
+		<button onclick="profileImageUpload(${dto.userId}, ${principal.user.id})">사진 업로드</button>
 		<button onclick="closePopup('.modal-image')">취소</button>
 	</div>
 </div>

@@ -24,6 +24,7 @@ public class UserProfileDto {
     private String username;
     private String userAboutMe;
     private String userWebsite;
+    private String userProfileImageUrl;
     private List<ImagesWithLikes> images = new ArrayList<>();
 
     public void setImages(List<Image> image) {
