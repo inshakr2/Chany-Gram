@@ -3,16 +3,13 @@ package com.toy.chanygram.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 
 import static lombok.AccessLevel.PROTECTED;
 
 @Entity
-@Getter
-@Setter(PROTECTED)
-@ToString
+@Setter(PROTECTED) @Getter
 @NoArgsConstructor(access = PROTECTED)
 public class Comment extends BaseTimeEntity {
 
@@ -30,4 +27,10 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "Image_ID")
     @ManyToOne(fetch = FetchType.LAZY)
     private Image image;
+
+    public Comment(String content, User user, Image image) {
+        this.content = content;
+        this.user = user;
+        this.image = image;
+    }
 }
