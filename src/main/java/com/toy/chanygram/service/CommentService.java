@@ -26,14 +26,14 @@ public class CommentService {
 
     public Comment writeComment(Long userId, Long imageId, String content) {
 
-        User user = userRepository.findById(userId).orElseThrow(
+        User user = userRepository.findUserWithImages(userId).orElseThrow(
                 () -> {
                     log.info("댓글 저장 실패 : 존재하지 않는 회원입니다.");
                     return new CustomValidationException("댓글 저장 실패 : 존재하지 않는 회원입니다.", null);
                 }
         );
 
-        Image image = imageRepository.findById(imageId).orElseThrow(
+        Image image = imageRepository.findImageWithUser(imageId).orElseThrow(
                 () -> {
                     log.info("댓글 저장 실패 : 존재하지 않는 이미지입니다.");
                     return new CustomValidationException("댓글 저장 실패 : 존재하지 않는 이미지입니다.", null);

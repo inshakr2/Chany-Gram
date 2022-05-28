@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ImageRepository extends JpaRepository<Image, Long> {
@@ -28,9 +29,9 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
             "GROUP BY i.id " +
             "ORDER BY cnt DESC")
     List<ImagePopularDto> fetchPopularImage();
+
+    @Query("SELECT i FROM Image i " +
+            "JOIN FETCH i.user u " +
+            "WHERE i.id = :imageId")
+    Optional<Image> findImageWithUser(@Param("imageId") Long imageId);
 }
-    /*SELECT t1.id, COUNT(*) cnt FROM image t1
-        LEFT OUTER JOIN likes t2 ON t1.id = t2.ToImage_ID
-        GROUP BY t1.id
-        ORDER BY cnt desc
-*/

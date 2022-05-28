@@ -38,7 +38,7 @@ public class UserService {
 
         userUpdateDto.setPassword(encoder.encode(userUpdateDto.getPassword()));
 
-        User findUser = userRepository.findUserWithImages(userId).orElseThrow(
+        User findUser = userRepository.findUserWithImagesAndLikes(userId).orElseThrow(
                 () -> {
                     log.info("유효성 검사 실패 [존재하지 않는 회원입니다.]");
                     return new CustomValidationApiException("존재하지 않는 회원입니다.");
@@ -54,7 +54,7 @@ public class UserService {
     public UserProfileDto userProfile(Long pageUserId, Long principalId) {
         UserProfileDto userProfileDto = new UserProfileDto();
 
-        User findUser = userRepository.findUserWithImages(pageUserId).orElseThrow(
+        User findUser = userRepository.findUserWithImagesAndLikes(pageUserId).orElseThrow(
                 () -> {
                     log.info("유효성 검사 실패 [존재하지 않는 회원입니다.]");
                     return new CustomValidationException("존재하지 않는 회원입니다.", null);

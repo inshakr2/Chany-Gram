@@ -1,5 +1,6 @@
 package com.toy.chanygram.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class Comment extends BaseTimeEntity {
 
     @JoinColumn(name = "User_ID")
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"images"})
     private User user;
 
     @JoinColumn(name = "Image_ID")
