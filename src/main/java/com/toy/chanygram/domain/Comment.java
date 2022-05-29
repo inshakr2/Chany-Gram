@@ -30,7 +30,8 @@ public class Comment extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private Image image;
 
-    public Comment(String content, User user, Image image) {
+    public
+    Comment(String content, User user, Image image) {
         this.content = content;
         this.user = user;
         this.image = image;

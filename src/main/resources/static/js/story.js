@@ -182,20 +182,25 @@ function addComment(imageId) {
 		dataType:"json"
 	}).done(res=>{
 		console.log(res);
+
+		let comment = res.data;
+
+		let content = `
+		<div class="sl__item__contents__comment" id="storyCommentItem-${comment.commentId}"> 
+		  <p>
+			<b>${comment.username} :</b>
+			${comment.content}
+		  </p>
+		  <button><i class="fas fa-times"></i></button>
+		</div>
+		`;
+		commentList.prepend(content);
+
 	}).fail(error=>{
 		console.log(error);
 	});
 
-	let content = `
-			  <div class="sl__item__contents__comment" id="storyCommentItem-2""> 
-			    <p>
-			      <b>GilDong :</b>
-			      댓글 샘플입니다.
-			    </p>
-			    <button><i class="fas fa-times"></i></button>
-			  </div>
-	`;
-	commentList.prepend(content);
+
 	commentInput.val("");
 }
 

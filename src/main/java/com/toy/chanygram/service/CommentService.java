@@ -3,6 +3,7 @@ package com.toy.chanygram.service;
 import com.toy.chanygram.domain.Comment;
 import com.toy.chanygram.domain.Image;
 import com.toy.chanygram.domain.User;
+import com.toy.chanygram.dto.comment.CommentResponseDto;
 import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.repository.CommentRepository;
 import com.toy.chanygram.repository.ImageRepository;
@@ -24,16 +25,16 @@ public class CommentService {
     private final ImageRepository imageRepository;
     private final CommentRepository commentRepository;
 
-    public Comment writeComment(Long userId, Long imageId, String content) {
+    public CommentResponseDto writeComment(Long userId, Long imageId, String content) {
 
-        User user = userRepository.findUserWithImages(userId).orElseThrow(
+        User user = userRepository.findById(userId).orElseThrow(
                 () -> {
                     log.info("댓글 저장 실패 : 존재하지 않는 회원입니다.");
                     return new CustomValidationException("댓글 저장 실패 : 존재하지 않는 회원입니다.", null);
                 }
         );
 
-        Image image = imageRepository.findImageWithUser(imageId).orElseThrow(
+        Image image = imageRepository.findById(imageId).orElseThrow(
                 () -> {
                     log.info("댓글 저장 실패 : 존재하지 않는 이미지입니다.");
                     return new CustomValidationException("댓글 저장 실패 : 존재하지 않는 이미지입니다.", null);
@@ -42,6 +43,7 @@ public class CommentService {
 
 
         Comment comment = commentRepository.save(new Comment(content, user, image));
-        return comment;
+        return new CommentResponseDto(comment.getId(), user.getUsername(), content);
     }
+
 }

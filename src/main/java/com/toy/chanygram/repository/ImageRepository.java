@@ -30,8 +30,4 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
             "ORDER BY cnt DESC")
     List<ImagePopularDto> fetchPopularImage();
 
-    @Query("SELECT i FROM Image i " +
-            "JOIN FETCH i.user u " +
-            "WHERE i.id = :imageId")
-    Optional<Image> findImageWithUser(@Param("imageId") Long imageId);
 }
