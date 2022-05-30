@@ -35,7 +35,9 @@ public class Image extends BaseTimeEntity{
     @OneToMany(mappedBy = "image")
     private List<Likes> likes;
 
-    // TODO : comment 추가 필요
+    @JsonIgnoreProperties({"image"})
+    @OneToMany(mappedBy = "image")
+    private List<Comment> comments;
 
     public Image(String caption, String imageFullPath, User user) {
         this.caption = caption;

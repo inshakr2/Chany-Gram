@@ -6,7 +6,9 @@ import com.toy.chanygram.domain.Likes;
 import com.toy.chanygram.dto.image.ImagePopularDto;
 import com.toy.chanygram.dto.image.ImageStoryDto;
 import com.toy.chanygram.dto.image.ImageUploadDto;
+import com.toy.chanygram.repository.CommentRepository;
 import com.toy.chanygram.repository.ImageRepository;
+import com.toy.chanygram.repository.LikesRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +35,7 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 public class ImageService {
 
     private final ImageRepository imageRepository;
+    private final CommentRepository commentRepository;
 
     @Value("${custom.file.path}")
     private String uploadPath;
@@ -46,6 +49,8 @@ public class ImageService {
         Slice<Image> imageForStory = imageRepository.getImageForStory(principalId, lastImageId, pageRequest);
         List<ImageStoryDto> imageStoryDtoList = new ArrayList<>();
 
+        // 각 Image 별로 댓글 및 좋아요 정보는 join으로 가져올 수 없어 각 repository에 요청.. 대신 page size 상향 조정함
+
         imageForStory.forEach(
                 image -> {
                     imageStoryDtoList.add(new ImageStoryDto(
@@ -55,7 +60,8 @@ public class ImageService {
                             getLikeStatus(image.getLikes(), principalId),
                             image.getLikes().size(),
                             image.getUser().getUsername(),
-                            image.getUser().getProfileImageUrl()
+                            image.getUser().getProfileImageUrl(),
+                            commentRepository.findByImageForStory(image.getId())
                     ));
                 }
         );
