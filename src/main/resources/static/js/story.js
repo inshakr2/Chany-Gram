@@ -64,6 +64,7 @@ function getStoryItem(image) {
 
 		<div id="storyCommentList-${image.imageId}">`;
 
+		
 		image.comments.forEach((comment) => {
 
 			item += `

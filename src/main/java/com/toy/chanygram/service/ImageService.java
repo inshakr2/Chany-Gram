@@ -1,8 +1,10 @@
 package com.toy.chanygram.service;
 
 import com.toy.chanygram.config.auth.PrincipalDetails;
+import com.toy.chanygram.domain.Comment;
 import com.toy.chanygram.domain.Image;
 import com.toy.chanygram.domain.Likes;
+import com.toy.chanygram.dto.comment.CommentResponseDto;
 import com.toy.chanygram.dto.image.ImagePopularDto;
 import com.toy.chanygram.dto.image.ImageStoryDto;
 import com.toy.chanygram.dto.image.ImageUploadDto;
@@ -25,6 +27,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
@@ -49,8 +52,7 @@ public class ImageService {
         Slice<Image> imageForStory = imageRepository.getImageForStory(principalId, lastImageId, pageRequest);
         List<ImageStoryDto> imageStoryDtoList = new ArrayList<>();
 
-        // 각 Image 별로 댓글 및 좋아요 정보는 join으로 가져올 수 없어 각 repository에 요청.. 대신 page size 상향 조정함
-
+        //TODO: like 정보와 comment 정보 fetch 시킬 수 있도록 개선 필요, 현재 우선 page size 상향 조정 하였음.
         imageForStory.forEach(
                 image -> {
                     imageStoryDtoList.add(new ImageStoryDto(
@@ -61,12 +63,24 @@ public class ImageService {
                             image.getLikes().size(),
                             image.getUser().getUsername(),
                             image.getUser().getProfileImageUrl(),
-                            commentRepository.findByImageForStory(image.getId())
+                            getCommentResponseDto(image.getComments())
                     ));
                 }
         );
 
         return imageStoryDtoList;
+    }
+
+    private List<CommentResponseDto> getCommentResponseDto(List<Comment> comments) {
+        List<CommentResponseDto> dto = new ArrayList<>();
+        comments.forEach(
+                comment -> {
+                    dto.add(new CommentResponseDto(comment.getId(),
+                            comment.getUser().getUsername(), comment.getContent()));
+                }
+        );
+
+        return dto.stream().sorted().collect(Collectors.toList());
     }
 
     private boolean getLikeStatus(List<Likes> likes, Long principalId) {

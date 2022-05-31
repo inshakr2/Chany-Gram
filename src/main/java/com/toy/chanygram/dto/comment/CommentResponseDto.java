@@ -8,11 +8,14 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CommentResponseDto {
+public class CommentResponseDto implements Comparable<CommentResponseDto> {
 
     private Long commentId;
     private String username;
     private String content;
 
-
+    @Override
+    public int compareTo(CommentResponseDto o) {
+        return Long.compare(o.commentId, this.commentId);
+    }
 }
