@@ -7,6 +7,8 @@
 	(5) 댓글삭제
  */
 
+let principalId = $("#principalId").val();
+
 // (1) 스토리 로드하기
 function storyLoad(lastImageId) {
 	$.ajax({
@@ -33,7 +35,7 @@ function getStoryItem(image) {
 			<img class="profile-image" src="/upload/${image.userProfileImageUrl}"
 				onerror="this.src='/image/person.jpeg'" />
 		</div>
-		<div>${image.username}</div>
+		<div><b>${image.username}</b></div>
 	</div>
 
 	<div class="sl__item__img">
@@ -68,21 +70,23 @@ function getStoryItem(image) {
 		image.comments.forEach((comment) => {
 
 			item += `
-				<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"">
+				<div class="sl__item__contents__comment" id="storyCommentItem-${comment.commentId}"">
 					<p>
 						<b>${comment.username} :</b> ${comment.content}
-					</p>
+					</p>`
 
-					<button>
-						<i class="fas fa-times"></i>
-					</button>
-
+					if(principalId == comment.userId){
+						item += 
+						`<button onClick="deleteComment(${comment.commentId})">
+							<i class="fas fa-times"></i>
+						</button>`
+					}
+					
+			item += `	
 				</div>
 			`
-
 		})
 			
-
 		item += `
 		</div>
 
@@ -197,10 +201,11 @@ function addComment(imageId) {
 		let content = `
 		<div class="sl__item__contents__comment" id="storyCommentItem-${comment.commentId}"> 
 		  <p>
-			<b>${comment.username} :</b>
-			${comment.content}
+			<b>${comment.username} :</b> ${comment.content}
 		  </p>
-		  <button><i class="fas fa-times"></i></button>
+			<button onClick="deleteComment(${comment.commentId})">
+		  		<i class="fas fa-times"></i>
+			</button>
 		</div>
 		`;
 		commentList.prepend(content);
@@ -214,7 +219,17 @@ function addComment(imageId) {
 }
 
 // (5) 댓글 삭제
-function deleteComment() {
+function deleteComment(commentId) {
+
+	$.ajax({
+		type:"delete",
+		url:`/api/comment/${commentId}`,
+		dataType:"json"
+	}).done(res=>{
+		$(`#storyCommentItem-${commentId}`).remove();
+	}).fail(error=>{
+
+	});
 
 }
 

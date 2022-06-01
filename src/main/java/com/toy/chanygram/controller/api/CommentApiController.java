@@ -10,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,8 +31,11 @@ public class CommentApiController {
                 new CommonResponseDto<>(1, "댓글 쓰기 성공", commentResponseDto), HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/api/comment")
-    public ResponseEntity<?> commentDelete() {
-        return null;
+    @DeleteMapping("/api/comment/{commentId}")
+    public ResponseEntity<?> commentDelete(@PathVariable Long commentId) {
+
+        commentService.deleteComment(commentId);
+        return new ResponseEntity<>(
+                new CommonResponseDto<>(1, "댓글 삭제 성공", null), HttpStatus.OK);
     }
 }

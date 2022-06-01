@@ -43,7 +43,10 @@ public class CommentService {
 
 
         Comment comment = commentRepository.save(new Comment(content, user, image));
-        return new CommentResponseDto(comment.getId(), user.getUsername(), content);
+        return new CommentResponseDto(comment.getId(), user.getId(), user.getUsername(), content);
     }
 
+    public void deleteComment(Long commentId) {
+        commentRepository.deleteById(commentId);
+    }
 }

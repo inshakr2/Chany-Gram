@@ -75,7 +75,7 @@ public class ImageService {
         List<CommentResponseDto> dto = new ArrayList<>();
         comments.forEach(
                 comment -> {
-                    dto.add(new CommentResponseDto(comment.getId(),
+                    dto.add(new CommentResponseDto(comment.getId(), comment.getUser().getId(),
                             comment.getUser().getUsername(), comment.getContent()));
                 }
         );

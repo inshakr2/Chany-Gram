@@ -11,6 +11,7 @@ import lombok.Setter;
 public class CommentResponseDto implements Comparable<CommentResponseDto> {
 
     private Long commentId;
+    private Long userId;
     private String username;
     private String content;
 
