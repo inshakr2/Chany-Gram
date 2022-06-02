@@ -5,13 +5,22 @@ import com.toy.chanygram.domain.Comment;
 import com.toy.chanygram.dto.CommonResponseDto;
 import com.toy.chanygram.dto.comment.CommentDto;
 import com.toy.chanygram.dto.comment.CommentResponseDto;
+import com.toy.chanygram.exception.CustomValidationApiException;
 import com.toy.chanygram.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
+
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 public class CommentApiController {
@@ -20,7 +29,19 @@ public class CommentApiController {
 
     @PostMapping("/api/comment")
     public ResponseEntity<?> commentSave(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                         @RequestBody CommentDto commentDto) {
+                                         @Valid @RequestBody CommentDto commentDto,
+                                         Errors errors) {
+
+        if (errors.hasErrors()) {
+            Map<String, String> errorMap = new HashMap<>();
+
+            for(FieldError fieldError : errors.getFieldErrors()) {
+                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+                log.info("유효성 검사 실패 - 댓글작성 [" + fieldError.getField() +"] : [" + fieldError.getDefaultMessage() + "]");
+            }
+
+            throw new CustomValidationApiException("유효성 검사 실패 - 댓글작성", errorMap);
+        }
 
         CommentResponseDto commentResponseDto = commentService.writeComment(
                 principalDetails.getUser().getId(), commentDto.getImageId(), commentDto.getContent()

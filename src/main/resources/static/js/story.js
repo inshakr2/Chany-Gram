@@ -212,6 +212,7 @@ function addComment(imageId) {
 
 	}).fail(error=>{
 		console.log(error);
+		alert(error.responseJSON.data.content);
 	});
 
 
