@@ -66,17 +66,6 @@ public class UserApiController {
                                        Errors errors,
                                        @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
-        if (errors.hasErrors()) {
-            Map<String, String> errorMap = new HashMap<>();
-
-            for(FieldError fieldError : errors.getFieldErrors()) {
-                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-                log.info("유효성 검사 실패 - 회원정보 수정 [" + fieldError.getField() +"] : [" + fieldError.getDefaultMessage() + "]");
-            }
-
-            throw new CustomValidationApiException("유효성 검사 실패 - 회원정보 수정", errorMap);
-        }
-
         User user = userService.userUpdate(id, userUpdateDto);
         principalDetails.setUser(user);
         return new CommonResponseDto<>(1, "회원정보 수정완료", user);

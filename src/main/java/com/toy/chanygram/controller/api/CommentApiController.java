@@ -32,17 +32,6 @@ public class CommentApiController {
                                          @Valid @RequestBody CommentDto commentDto,
                                          Errors errors) {
 
-        if (errors.hasErrors()) {
-            Map<String, String> errorMap = new HashMap<>();
-
-            for(FieldError fieldError : errors.getFieldErrors()) {
-                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-                log.info("유효성 검사 실패 - 댓글작성 [" + fieldError.getField() +"] : [" + fieldError.getDefaultMessage() + "]");
-            }
-
-            throw new CustomValidationApiException("유효성 검사 실패 - 댓글작성", errorMap);
-        }
-
         CommentResponseDto commentResponseDto = commentService.writeComment(
                 principalDetails.getUser().getId(), commentDto.getImageId(), commentDto.getContent()
         );
