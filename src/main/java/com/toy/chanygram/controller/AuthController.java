@@ -37,17 +37,6 @@ public class AuthController {
     public String signup(@ModelAttribute @Valid SignupDto signupDto,
                          Errors errors) {
 
-        if (errors.hasErrors()) {
-            Map<String, String> errorMap = new HashMap<>();
-
-            for(FieldError fieldError : errors.getFieldErrors()) {
-                errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
-                log.info("유효성 검사 실패 - 회원가입 [" + fieldError.getField() +"] : [" + fieldError.getDefaultMessage() + "]");
-            }
-
-            throw new CustomValidationException("유효성 검사 실패 - 회원가입", errorMap);
-        }
-
         log.info("New SignUp Req : " + signupDto);
         authService.join(signupDto);
 

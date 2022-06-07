@@ -1,7 +1,6 @@
 package com.toy.chanygram.controller;
 
 import com.toy.chanygram.config.auth.PrincipalDetails;
-import com.toy.chanygram.domain.Image;
 import com.toy.chanygram.dto.image.ImagePopularDto;
 import com.toy.chanygram.dto.image.ImageUploadDto;
 import com.toy.chanygram.exception.CustomValidationException;
@@ -48,7 +47,7 @@ public class ImageController {
                               @AuthenticationPrincipal PrincipalDetails principalDetails) {
 
         if (imageUploadDto.getFile().isEmpty()) {
-            log.info("No image attached");
+            log.warn("No image attached");
             throw new CustomValidationException("이미지가 첨부되지 않았습니다.", null);
         }
 

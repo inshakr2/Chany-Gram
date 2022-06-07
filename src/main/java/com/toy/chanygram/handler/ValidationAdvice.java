@@ -1,6 +1,7 @@
 package com.toy.chanygram.handler;
 
 import com.toy.chanygram.exception.CustomValidationApiException;
+import com.toy.chanygram.exception.CustomValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -47,7 +48,19 @@ public class ValidationAdvice {
         Object[] args = proceedingJoinPoint.getArgs();
         for (Object arg : args) {
             if (arg instanceof BindingResult) {
-                System.out.println("유효성 검사 진행");
+
+                BindingResult bindingResult = (BindingResult) arg;
+
+                if (bindingResult.hasErrors()) {
+                    Map<String, String> errorMap = new HashMap<>();
+
+                    for(FieldError fieldError : bindingResult.getFieldErrors()) {
+                        errorMap.put(fieldError.getField(), fieldError.getDefaultMessage());
+                        log.info("유효성 검사 실패 [" + fieldError.getField() +"] : [" + fieldError.getDefaultMessage() + "]");
+                    }
+
+                    throw new CustomValidationException("유효성 검사 실패", errorMap);
+                }
             }
         }
         return proceedingJoinPoint.proceed();
