@@ -39,3 +39,11 @@ custom:
 
   story:
     page-size: 6
+
+  oauth:
+    facebook:
+      client-id: 541312677464433
+      client-secret: 6db0ebbd263a19c4463a5de8a9dfd545
+      scope:
+        - public_profile
+        - email
