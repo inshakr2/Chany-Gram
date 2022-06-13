@@ -122,7 +122,11 @@
 <!--로그아웃, 회원정보변경 모달-->
 <div class="modal-info" onclick="modalInfo()">
 	<div class="modal">
-		<button onclick="location.href='/user/${dto.userId}/update'">회원정보 변경</button>
+		<c:choose>
+			<c:when test="${dto.pageOwner}">
+				<button onclick="location.href='/user/${dto.userId}/update'">회원정보 변경</button>
+			</c:when>
+		</c:choose>
 		<button onclick="location.href='/logout'">로그아웃</button>
 		<button onclick="closePopup('.modal-info')">취소</button>
 	</div>

@@ -68,6 +68,6 @@ public class UserApiController {
 
         User user = userService.userUpdate(id, userUpdateDto);
         principalDetails.setUser(user);
-        return new CommonResponseDto<>(1, "회원정보 수정완료", user);
+        return new CommonResponseDto<>(1, "회원정보 수정완료", null);
     }
 }
