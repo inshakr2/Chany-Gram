@@ -23,6 +23,7 @@ public class ImageStoryDto {
 
 
     // User
+    Long userId;
     String username;
     String userProfileImageUrl;
 
