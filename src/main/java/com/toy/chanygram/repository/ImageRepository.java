@@ -22,7 +22,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     Slice<Image> getImageForStory(@Param("principalId") Long principalId,
                                   @Param("lastImageId") Long lastImageId, Pageable pageable);
 
-    @Query("SELECT new com.toy.chanygram.dto.image.ImagePopularDto(i.id , COUNT(i) as cnt, i.postImageUrl, i.user.id) " +
+    @Query("SELECT new com.toy.chanygram.dto.image.ImagePopularDto(i.id , COUNT(l) as cnt, i.postImageUrl, i.user.id) " +
             "FROM Image i " +
             "LEFT JOIN i.likes l " +
             "GROUP BY i.id " +
