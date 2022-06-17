@@ -125,6 +125,7 @@
 		<c:choose>
 			<c:when test="${dto.pageOwner}">
 				<button onclick="location.href='/user/${dto.userId}/update'">회원정보 변경</button>
+				<button class="withdrawalMember" onclick="withdrawalMember(${principal.user.id})">회원탈퇴</button>
 			</c:when>
 		</c:choose>
 		<button onclick="location.href='/logout'">로그아웃</button>

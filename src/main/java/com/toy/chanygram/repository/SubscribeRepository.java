@@ -61,4 +61,8 @@ public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
     )
     Optional<List<SubscribeResponseDto>> followerList(@Param("principalId") long principalId,
                                                        @Param("pageUserId") long pageUserId);
+
+    @Modifying
+    @Query("DELETE FROM Subscribe s WHERE s.fromUser.id = :principalId")
+    void deleteByFromUser(@Param("principalId") long principalId);
 }

@@ -5,8 +5,6 @@ import com.toy.chanygram.domain.User;
 import com.toy.chanygram.dto.CommonResponseDto;
 import com.toy.chanygram.dto.subscribe.SubscribeResponseDto;
 import com.toy.chanygram.dto.user.UserUpdateDto;
-import com.toy.chanygram.exception.CustomValidationApiException;
-import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.service.SubscribeService;
 import com.toy.chanygram.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,14 +13,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.Errors;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
@@ -69,5 +64,12 @@ public class UserApiController {
         User user = userService.userUpdate(id, userUpdateDto);
         principalDetails.setUser(user);
         return new CommonResponseDto<>(1, "회원정보 수정완료", null);
+    }
+
+    @DeleteMapping("/api/user/{principalId}")
+    public CommonResponseDto<?> leaveMembership(@PathVariable long principalId) {
+
+        userService.withdrawalMember(principalId);
+        return new CommonResponseDto<>(1, "회원탈퇴 완료", null);
     }
 }

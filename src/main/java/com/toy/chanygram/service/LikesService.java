@@ -24,5 +24,4 @@ public class LikesService {
         log.info("USER " + principalId + " UnLikes To Image : " + imageId);
         likesRepository.fetchUnLikes(principalId, imageId);
     }
-
 }

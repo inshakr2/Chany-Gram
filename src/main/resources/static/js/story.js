@@ -16,7 +16,6 @@ function storyLoad(lastImageId) {
 		type:"GET",
 		dataType:"json"
 	}).done(res=>{
-		console.log(res);
 		res.data.forEach((image)=>{
 			let storyItem = getStoryItem(image);
 			$("#storyList").append(storyItem);

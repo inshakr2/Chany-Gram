@@ -47,7 +47,7 @@ public class User extends BaseTimeEntity {
     private Role role = USER; // 권한
 
     @JsonIgnoreProperties({"user"})
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Image> images;
 
     public User(SignupDto signupDto) {

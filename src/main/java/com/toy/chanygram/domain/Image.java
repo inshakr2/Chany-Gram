@@ -32,11 +32,11 @@ public class Image extends BaseTimeEntity{
     private User user;
 
     @JsonIgnoreProperties({"image"})
-    @OneToMany(mappedBy = "image")
+    @OneToMany(mappedBy = "image", orphanRemoval = true)
     private List<Likes> likes;
 
     @JsonIgnoreProperties({"image"})
-    @OneToMany(mappedBy = "image")
+    @OneToMany(mappedBy = "image", orphanRemoval = true)
     private List<Comment> comments;
 
     public Image(String caption, String imageFullPath, User user) {

@@ -8,7 +8,7 @@
   (6) 사용자 정보(회원정보, 로그아웃, 닫기) 모달
   (7) 사용자 프로파일 이미지 메뉴(사진업로드, 취소) 모달 
   (8) 구독자 정보 모달 닫기
-
+  (9) 회원 탈퇴
  */
 
 // (1) 유저 프로파일 페이지 구독하기, 구독취소
@@ -192,9 +192,22 @@ function modalClose() {
 	location.reload();
 }
 
+// (9) 회원 탈퇴
+function withdrawalMember(principalId) {
 
+	if(confirm("정말 탈퇴 하시겠습니까?\n(※ 작성한 이미지, 댓글 등은 삭제 됩니다.)") == true)
+	{
+		$.ajax({
+			url:`/api/user/${principalId}`,
+			type:"DELETE",
+			dataType:"JSON"
+		}).done(res=>{
+			alert("회원 탈퇴가 완료되었습니다.");
+			window.location.replace("/logout");
+		}).fail(error=>{
 
-
-
+		})
+	}
+}
 
 
