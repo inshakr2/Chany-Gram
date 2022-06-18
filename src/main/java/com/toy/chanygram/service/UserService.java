@@ -5,6 +5,7 @@ import com.toy.chanygram.dto.user.UserProfileDto;
 import com.toy.chanygram.dto.user.UserUpdateDto;
 import com.toy.chanygram.exception.CustomValidationApiException;
 import com.toy.chanygram.exception.CustomValidationException;
+import com.toy.chanygram.repository.CommentRepository;
 import com.toy.chanygram.repository.LikesRepository;
 import com.toy.chanygram.repository.SubscribeRepository;
 import com.toy.chanygram.repository.UserRepository;
@@ -34,6 +35,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
     private final LikesRepository likesRepository;
+    private final CommentRepository commentRepository;
     private final SubscribeRepository subscribeRepository;
 
     public User userUpdate(long userId, UserUpdateDto userUpdateDto) {
@@ -117,6 +119,7 @@ public class UserService {
 
         subscribeRepository.deleteByFromUser(principalId);
         likesRepository.deleteByFromUser(principalId);
+        commentRepository.deleteByUser(principalId);
         userRepository.deleteById(principalId);
         log.info("회원탈퇴 : [" + principalId + "]");
     }
