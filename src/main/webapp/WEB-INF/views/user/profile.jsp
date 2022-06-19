@@ -103,13 +103,18 @@
 				<!--아이템들-->
 
                 <c:forEach var="image" items="${dto.images}">
-                    <div class="img-box">
-                        <a href=""> <img src="/upload/${image.postImageUrl}" >
-                        </a>
+                    <div class="img-box" onclick="modalDetail(${image.imageId})">
+
+							<a href=""> 
+								<img src="/upload/${image.postImageUrl}" >
+							</a>
+			
                         <div class="comment">
-                            <a href="#" class=""> <i class="fas fa-heart"></i><span>${image.likesCount}</span>
+                            <a href="#" class=""> <i class="fas fa-heart">
+								</i><span>${image.likesCount}</span>
                             </a>
                         </div>
+
                     </div>
                 </c:forEach>
 
@@ -177,6 +182,41 @@
 
 </div>
 
+
+<!-- 이미지 상세 모달 -->
+
+<div class="modal-detail">
+	<div class="detail">
+		<div class="detail-header">
+			<span>
+			<button onclick="modalDetailClose()">
+				<i class="fas fa-times"></i>
+			</button>
+
+		</div>
+
+		
+		<div class="grid-container">
+			
+				<!-- image 영역 -->
+				<div class="detail-img-box">
+
+					
+
+				</div>
+
+				<!-- 부가정보 영역 -->
+				<div class="detail-comment-box">
+
+
+
+
+
+				</div>
+
+		</div>
+	</div>
+</div>
 
 <script src="/js/profile.js"></script>
 

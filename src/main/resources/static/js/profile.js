@@ -210,4 +210,33 @@ function withdrawalMember(principalId) {
 	}
 }
 
+// (10) 이미지 상페 모달 오픈
+function modalDetail(imageId) {
+	$(".modal-detail").css("display", "flex");
+	
+	$.ajax({
+		url:`/api/image/${imageId}`,
+		type:"GET",
+		dataType:"json"
+	}).done(res=>{
+		console.log(res);
+		$(".detail-img-box").append();
+		let comment = ``;
+	}).fail(error=>{
+		console.log(error);
+	});
+
+	
+
+	$(".detail-comment-box").append("")
+
+}
+
+// (11) 이미지 상세 모달 닫기
+function modalDetailClose() {
+	$(".modal-detail").css("display", "none");
+	location.reload();
+}
+
+
 
