@@ -8,9 +8,10 @@ import com.toy.chanygram.dto.comment.CommentResponseDto;
 import com.toy.chanygram.dto.image.ImagePopularDto;
 import com.toy.chanygram.dto.image.ImageStoryDto;
 import com.toy.chanygram.dto.image.ImageUploadDto;
+import com.toy.chanygram.dto.image.ImageDetailDto;
+import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.repository.CommentRepository;
 import com.toy.chanygram.repository.ImageRepository;
-import com.toy.chanygram.repository.LikesRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,6 +71,31 @@ public class ImageService {
         );
 
         return imageStoryDtoList;
+    }
+
+    public ImageDetailDto getImageDetail(Long principalId, Long imageId) {
+
+        Image image = imageRepository.getImageForDetail(principalId, imageId).orElseThrow(
+                () -> {
+                    log.info("유효성 검사 실패 [존재하지 않는 이미지입니다.]");
+                    return new CustomValidationException("존재하지 않는 이미지입니다.", null);
+                }
+        );
+
+        ImageDetailDto imageDetailDto = new ImageDetailDto(
+                image.getId(),
+                image.getPostImageUrl(),
+                image.getCaption(),
+                getLikeStatus(image.getLikes(), principalId),
+                image.getLikes().size(),
+                image.getUser().getId(),
+                image.getUser().getUsername(),
+                image.getUser().getProfileImageUrl(),
+                getCommentResponseDto(image.getComments())
+        );
+
+
+        return imageDetailDto;
     }
 
     private List<CommentResponseDto> getCommentResponseDto(List<Comment> comments) {

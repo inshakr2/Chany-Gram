@@ -30,7 +30,7 @@ public class UserProfileDto {
     public void setImages(List<Image> image) {
         image.forEach(
                 i -> {
-                    this.images.add(new ImagesWithLikes(i.getPostImageUrl(), i.getLikes().size()));
+                    this.images.add(new ImagesWithLikes(i.getId(), i.getPostImageUrl(), i.getLikes().size()));
                 }
         );
     }
@@ -38,10 +38,12 @@ public class UserProfileDto {
     @Getter @Setter
     public class ImagesWithLikes {
 
+        Long imageId;
         String postImageUrl;
         int likesCount;
 
-        public ImagesWithLikes(String postImageUrl, int likesCount) {
+        public ImagesWithLikes(Long imageId, String postImageUrl, int likesCount) {
+            this.imageId = imageId;
             this.postImageUrl = postImageUrl;
             this.likesCount = likesCount;
         }

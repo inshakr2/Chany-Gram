@@ -37,6 +37,7 @@ dependencies {
     // spring-security-oauth2-client
 	implementation group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.6.0'
 
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
 tasks.named('test') {
