@@ -147,4 +147,10 @@ public class ImageService {
         List<ImagePopularDto> images = imageRepository.fetchPopularImage();
         return images;
     }
+
+    public void deleteImage(Long imageId) {
+
+        imageRepository.deleteById(imageId);
+
+    }
 }

@@ -40,6 +40,15 @@ public class ImageApiController {
                 new CommonResponseDto<>(1, "이미지 상세정보 가져오기 성공", image), HttpStatus.OK);
     }
 
+    @DeleteMapping("/api/image/{imageId}")
+    public ResponseEntity<?> imageDelete(@PathVariable Long imageId) {
+
+        imageService.deleteImage(imageId);
+
+        return new ResponseEntity<>(
+                new CommonResponseDto<>(1, "이미지 삭제 성공", null), HttpStatus.OK);
+
+    }
 
     @PostMapping("/api/image/{imageId}/likes")
     public ResponseEntity<?> imageLikes(@AuthenticationPrincipal PrincipalDetails principalDetails,
