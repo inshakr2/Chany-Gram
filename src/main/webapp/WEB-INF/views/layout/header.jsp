@@ -27,7 +27,8 @@
 	<link rel="shortcut icon" href="/image/insta.svg">
 	
 	<!-- Font awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" /> -->
+	<script src="https://kit.fontawesome.com/dfcffd723c.js" crossorigin="anonymous"></script>
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
