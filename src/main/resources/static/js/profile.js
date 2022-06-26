@@ -273,7 +273,15 @@ function getCommentBox(image) {
 
 		item += `
 			</button>
-			<span class="like"><b id="storyLikeCount-${image.imageId}">${image.likeCount} </b>likes</span>
+			<span class="like"><b id="storyLikeCount-${image.imageId}">${image.likeCount} </b>likes</span>`;
+			
+			if (image.pageOwner) {
+				item += `<button>
+					<i class="fa-solid fa-trash fa-xs" onclick="deleteImage(${image.imageId})"></i>
+				</button>`
+			}
+
+		item += `	
 		</div>
 
 		<div class="sl__item__contents__content">
@@ -420,4 +428,18 @@ function deleteComment(commentId) {
 
 	});
 
+}
+
+// 이미지 삭제
+function deleteImage(imageId) {
+
+	$.ajax({
+		type:"delete",
+		url:`/api/image/${imageId}`,
+		dataType:"json"
+	}).done(res=>{
+		location.reload();
+	}).fail(error=>{
+		
+	})
 }

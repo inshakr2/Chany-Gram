@@ -21,6 +21,7 @@ public class ImageDetailDto {
     int likeCount;
 
     // User
+    boolean pageOwner;
     Long userId;
     String username;
     String userProfileImageUrl;

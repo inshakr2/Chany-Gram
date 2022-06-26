@@ -4,6 +4,7 @@ import com.toy.chanygram.config.auth.PrincipalDetails;
 import com.toy.chanygram.domain.Comment;
 import com.toy.chanygram.domain.Image;
 import com.toy.chanygram.domain.Likes;
+import com.toy.chanygram.domain.User;
 import com.toy.chanygram.dto.comment.CommentResponseDto;
 import com.toy.chanygram.dto.image.ImagePopularDto;
 import com.toy.chanygram.dto.image.ImageStoryDto;
@@ -82,18 +83,20 @@ public class ImageService {
                 }
         );
 
+        User owner = image.getUser();
+
         ImageDetailDto imageDetailDto = new ImageDetailDto(
                 image.getId(),
                 image.getPostImageUrl(),
                 image.getCaption(),
                 getLikeStatus(image.getLikes(), principalId),
                 image.getLikes().size(),
-                image.getUser().getId(),
-                image.getUser().getUsername(),
-                image.getUser().getProfileImageUrl(),
+                owner.getId() == principalId,
+                owner.getId(),
+                owner.getUsername(),
+                owner.getProfileImageUrl(),
                 getCommentResponseDto(image.getComments())
         );
-
 
         return imageDetailDto;
     }
