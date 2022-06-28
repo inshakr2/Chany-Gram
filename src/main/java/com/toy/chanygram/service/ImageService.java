@@ -6,10 +6,7 @@ import com.toy.chanygram.domain.Image;
 import com.toy.chanygram.domain.Likes;
 import com.toy.chanygram.domain.User;
 import com.toy.chanygram.dto.comment.CommentResponseDto;
-import com.toy.chanygram.dto.image.ImagePopularDto;
-import com.toy.chanygram.dto.image.ImageStoryDto;
-import com.toy.chanygram.dto.image.ImageUploadDto;
-import com.toy.chanygram.dto.image.ImageDetailDto;
+import com.toy.chanygram.dto.image.*;
 import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.repository.CommentRepository;
 import com.toy.chanygram.repository.ImageRepository;
@@ -154,6 +151,23 @@ public class ImageService {
     public void deleteImage(Long imageId) {
 
         imageRepository.deleteById(imageId);
+
+    }
+
+    public ImageEditDto getImageForEdit(Long imageId, Long principalId) {
+
+        Image image = imageRepository.findImageWithOwner(imageId).orElseThrow(
+                () -> {
+                    log.info("유효성 검사 실패 [존재하지 않는 이미지입니다.]");
+                    return new CustomValidationException("존재하지 않는 이미지입니다.", null);
+                }
+        );
+
+        if (image.getUser().getId() != principalId) {
+            throw new CustomValidationException("본인 게시물 이외의 이미지 수정은 불가합니다.", null);
+        }
+
+        return new ImageEditDto(image.getId(), image.getPostImageUrl(), image.getCaption());
 
     }
 }

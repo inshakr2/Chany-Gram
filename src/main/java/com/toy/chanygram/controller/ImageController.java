@@ -1,6 +1,7 @@
 package com.toy.chanygram.controller;
 
 import com.toy.chanygram.config.auth.PrincipalDetails;
+import com.toy.chanygram.dto.image.ImageEditDto;
 import com.toy.chanygram.dto.image.ImagePopularDto;
 import com.toy.chanygram.dto.image.ImageUploadDto;
 import com.toy.chanygram.exception.CustomValidationException;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -26,6 +28,17 @@ public class ImageController {
     @GetMapping({"/", "/images/story"})
     public String story() {
         return "/images/story";
+    }
+
+    @GetMapping({"/images/{imageId}/edit"})
+    public String editImage(@PathVariable Long imageId,
+                            @AuthenticationPrincipal PrincipalDetails principalDetails,
+                            Model model) {
+
+        ImageEditDto imageEditDto = imageService.getImageForEdit(imageId, principalDetails.getUser().getId());
+        model.addAttribute("image", imageEditDto);
+
+        return "/images/edit";
     }
 
     @GetMapping("/images/popular")
