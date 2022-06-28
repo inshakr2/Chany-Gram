@@ -278,7 +278,12 @@ function getCommentBox(image) {
 			if (image.pageOwner) {
 				item += `<button>
 					<i class="fa-solid fa-trash fa-xs" onclick="deleteImage(${image.imageId})"></i>
-				</button>`
+				</button>
+				<button>
+					<i class="fa-solid fa-pen-to-square fa-xs" onclick="location.href='/images/${image.imageId}/edit'"></i>
+				</button>
+				`
+
 			}
 
 		item += `	
@@ -432,14 +437,15 @@ function deleteComment(commentId) {
 
 // 이미지 삭제
 function deleteImage(imageId) {
-
-	$.ajax({
-		type:"delete",
-		url:`/api/image/${imageId}`,
-		dataType:"json"
-	}).done(res=>{
-		location.reload();
-	}).fail(error=>{
-		
-	})
+	if(confirm("정말 삭제 하시겠습니까?") == true)
+		{$.ajax({
+			type:"delete",
+			url:`/api/image/${imageId}`,
+			dataType:"json"
+		}).done(res=>{ 
+			location.reload();
+		}).fail(error=>{
+			
+		})
+	}
 }

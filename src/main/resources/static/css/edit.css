@@ -1,0 +1,101 @@
+@import "header.css";
+@import "footer.css";
+
+/*컨테이너 중앙배치*/
+.editContainer{
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 150px;
+}
+
+/*edit 섹션*/
+.edit {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 40px;
+  border: 1px solid #dbdbdb;
+}
+
+/* 로고*/
+.edit .edit-top {
+  text-align: center;
+}
+
+.edit .edit-top img {
+  width: 200px;
+  margin: 10px 0 20px;
+}
+
+.edit .edit-top p {
+  text-align: center;
+  position: relative;
+  margin-bottom: 5%;
+}
+.edit .edit-top p::before {
+  content: "";
+  position: absolute;
+  left: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 150px;
+  height: 1px;
+  background: #222;
+}
+.edit .edit-top p::after {
+  content: "";
+  position: absolute;
+  right: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 150px;
+  height: 1px;
+  background: #222;
+}
+
+
+/*edit Form*/
+.edit .edit-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit .edit-bottom .origin-img {
+  width: 400px;
+  height: 300px;
+  margin-bottom: 5px;
+}
+
+.edit .edit-bottom .origin-img img {
+  width: 100%;
+  height: 100%;
+}
+
+.edit .edit-bottom .origin-img-detail {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3%;
+}
+
+/*이미지에 대한 설명인풋 + 버튼*/
+.edit .edit-bottom .origin-img-detail input,
+.edit .edit-bottom .origin-img-detail button {
+  width: 340px;
+}
+.edit .edit-bottom .origin-img-detail input {
+  text-indent: 10px;
+  height: 45px;
+  margin-bottom: 5px;
+  border: 1px solid #ddd;
+}
+.edit .edit-bottom .origin-img-detail input::placeholder {
+  color: #222;
+}
+.edit .edit-bottom .origin-img-detail button {
+  height: 40px;
+  margin: 5px 0 10px 0;
+}
