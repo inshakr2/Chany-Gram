@@ -22,6 +22,11 @@ function toggleSubscribe(toUserId, obj) {
 	    }).done(res=> {
 			$(obj).text("구독하기");
 			$(obj).toggleClass("blue");
+
+			let followerCnt = $("#profileFollowerCount").text();
+			followerCnt = Number(followerCnt) - 1;
+			$("#profileFollowerCount").text(followerCnt);
+
 	    }).fail(error=> {
 			console.log("구독취소 실패", error)
 	    });
@@ -36,6 +41,11 @@ function toggleSubscribe(toUserId, obj) {
         }).done(res=> {
 			$(obj).text("구독취소");
 			$(obj).toggleClass("blue");
+
+			let followerCnt = $("#profileFollowerCount").text();
+			followerCnt = Number(followerCnt) + 1;
+			$("#profileFollowerCount").text(followerCnt);
+
         }).fail(error=> {
 			console.log("구독하기 실패", error)
         });

@@ -73,12 +73,19 @@
 
 			<div class="subscribe">
 				<ul>
-					<li><a href=""> 게시물<span>${dto.imageCount}</span>
-					</a></li>
-					<li><a href="javascript:followerInfoModalOpen(${dto.userId});"> 팔로워<span>${dto.follower}</span>
-					</a></li>
-					<li><a href="javascript:subscribeInfoModalOpen(${dto.userId});"> 팔로잉<span>${dto.following}</span>
-					</a></li>
+					<li>
+						<a href=""> 게시물<span>${dto.imageCount}</span></a>
+					</li>
+					<li>
+						<a href="javascript:followerInfoModalOpen(${dto.userId});"> 팔로워
+							<span id="profileFollowerCount">${dto.follower}</span>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:subscribeInfoModalOpen(${dto.userId});"> 팔로잉
+							<span id="profileFollowingCount">${dto.following}</span>
+						</a>
+					</li>
 				</ul>
 			</div>
 			<div class="state">
