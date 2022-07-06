@@ -132,7 +132,7 @@ button {
   margin-top: 15px;
 }
 /*페이스북 로그인 버튼*/
-.login__facebook button {
+.login__facebook .fb_button {
   background-color: #fff;
   width: 100%;
   height: 30px;
@@ -141,9 +141,51 @@ button {
   font-size: 15px;
 }
 /*페이스북 로그인 색깔*/
-.login__facebook button i,
+.login__facebook .fb_button #fb_fab,
 span {
   color: #385185;
+}
+
+
+/* 구글 로그인 영역 */
+.login__google {
+  padding: 0 40px;
+  margin-top: 15px;
+}
+/* 구글 로그인 버튼*/
+.login__google .google_button {
+  background-color: #fff;
+  width: 100%;
+  height: 30px;
+  border: 0;
+  font-weight: 600;
+  font-size: 15px;
+}
+/* 구글 로그인 색깔*/
+.login__google .google_button #google_fab,
+span {
+  color: #d82323;
+}
+
+
+/* 카카오 로그인 영역 */
+.login__kakao {
+  padding: 0 40px;
+  margin-top: 15px;
+}
+/* 카카오 로그인 버튼*/
+.login__kakao .kakao_button {
+  background-color: #fff;
+  width: 100%;
+  height: 30px;
+  border: 0;
+  font-weight: 600;
+  font-size: 15px;
+}
+/* 카카오 로그인 색깔*/
+.login__kakao .kakao_button #kakao_fab,
+span {
+  color: #251204;
 }
 
 /*가입페이지로 이동*/

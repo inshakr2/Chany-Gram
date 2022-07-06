@@ -41,9 +41,21 @@
                         
                         <!-- Oauth 소셜로그인 -->
                         <div class="login__facebook">
-                            <button onclick="javascript:location.href='/oauth2/authorization/facebook'">
-                                <i class="fab fa-facebook-square"></i>
+                            <button class="fb_button" onclick="javascript:location.href='/oauth2/authorization/facebook'">
+                                <i id="fb_fab" class="fab fa-facebook-square"></i>
                                 <span>Facebook으로 로그인</span>
+                            </button>
+                        </div>
+                        <div class="login__google">
+                            <button class="google_button" onclick="javascript:location.href='/oauth2/authorization/facebook'">
+                                <i id="google_fab" class="fab fa-google"></i>
+                                <span>Google로 로그인</span>
+                            </button>
+                        </div>
+                        <div class="login__kakao">
+                            <button class="kakao_button" onclick="javascript:location.href='/oauth2/authorization/facebook'">
+                                <i id="kakao_fab" class="fa fa-comment"></i>
+                                <span>kakao로 로그인</span>
                             </button>
                         </div>
                         <!-- Oauth 소셜로그인end -->
