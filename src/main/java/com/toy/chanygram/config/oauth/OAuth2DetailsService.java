@@ -3,9 +3,10 @@ package com.toy.chanygram.config.oauth;
 import com.toy.chanygram.config.auth.PrincipalDetails;
 import com.toy.chanygram.domain.User;
 import com.toy.chanygram.dto.auth.SignupDto;
+import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -13,8 +14,8 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
-import java.util.UUID;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class OAuth2DetailsService extends DefaultOAuth2UserService {
@@ -23,23 +24,27 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
+        String userNameAttributeKey = userRequest.getClientRegistration()
+                                            .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
+        System.out.println("registrationId = " + registrationId);
+        System.out.println("userNameAttributeName = " + userNameAttributeKey);
 
         Map<String, Object> userInfo = super.loadUser(userRequest).getAttributes();
 
-        String username = "FB_" + userInfo.get("id");
-        User userEntity = userRepository.findByUsername(username).orElse(null);
+        SignupDto signupDto = OAuthAttributes.of(registrationId, userNameAttributeKey, userInfo);
+
+        if (signupDto == null) {
+            log.error("OAUTH 로그인 실패. registrationId : " + registrationId);
+            throw new CustomValidationException("지원하지 않는 소셜 로그인입니다.", null);
+        }
+
+        User userEntity = userRepository.findByUsername(signupDto.getUsername()).orElse(null);
 
         if (userEntity == null) {
-            User fbUser = new User(
-                    new SignupDto(
-                            username,
-                            new BCryptPasswordEncoder().encode(UUID.randomUUID().toString()),
-                            (String) userInfo.get("email"),
-                            (String) userInfo.get("name")
-                    )
-            );
-
-            return new PrincipalDetails(userRepository.save(fbUser), userInfo);
+            User authUser = new User(signupDto);
+            log.info("New OAUTH user : [" + signupDto + "]");
+            return new PrincipalDetails(userRepository.save(authUser), userInfo);
 
         } else {
 
