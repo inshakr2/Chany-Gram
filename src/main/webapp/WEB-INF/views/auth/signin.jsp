@@ -47,7 +47,7 @@
                             </button>
                         </div>
                         <div class="login__google">
-                            <button class="google_button" onclick="javascript:location.href='/oauth2/authorization/facebook'">
+                            <button class="google_button" onclick="javascript:location.href='/oauth2/authorization/google'">
                                 <i id="google_fab" class="fab fa-google"></i>
                                 <span>Google로 로그인</span>
                             </button>
