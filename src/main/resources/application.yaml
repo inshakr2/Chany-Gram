@@ -49,6 +49,23 @@ spring:
             scope:
               - profile
               - email
+          kakao:
+            client-id: 4337466801029c13635a577bbcd73906
+            client-secret: hoSo0Lb187WxIdLOIpMtGV8GvztXvnxX
+            redirect-uri: http://localhost:28090/login/oauth2/code/kakao
+            authorization-grant-type: authorization_code
+            scope:
+              - profile_nickname
+              - account_email
+            client-name: kakao
+            client-authentication-method: POST
+
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
 
 custom:
   file:

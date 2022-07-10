@@ -19,14 +19,31 @@ public class OAuthAttributes {
             return ofFacebook(nameAttributeKey, attributes);
         } else if (registrationId.equalsIgnoreCase("google")) {
             return ofGoogle(nameAttributeKey, attributes);
+        } else if (registrationId.equalsIgnoreCase("kakao")) {
+            return ofKakao(nameAttributeKey, attributes);
         } else {
             return null;
         }
     }
 
+    private static SignupDto ofKakao(String nameAttributeKey, Map<String, Object> attributes) {
+        System.out.println("nameAttributeKey = " + nameAttributeKey);
+        System.out.println("attributes = " + attributes);
+        String username = "KK_" + String.valueOf(attributes.get(nameAttributeKey));
+        String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
+
+        Map <String, Object> kakao_account = (Map <String, Object>) attributes.get("kakao_account");
+        String email = (String) kakao_account.get("email");
+
+        Map <String, Object> properties = (Map <String, Object>) attributes.get("properties");
+        String name = (String) properties.get("nickname");
+
+        return new SignupDto(username, password, email, name);
+    }
+
     private static SignupDto ofGoogle(String nameAttributeKey, Map<String, Object> attributes) {
 
-        String username = "GOOGLE" + (String) attributes.get(nameAttributeKey);
+        String username = "GG_" + (String) attributes.get(nameAttributeKey);
         String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
         String email = (String) attributes.get("email");
         String name = (String) attributes.get("name");

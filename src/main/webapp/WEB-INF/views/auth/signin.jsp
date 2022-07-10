@@ -53,7 +53,7 @@
                             </button>
                         </div>
                         <div class="login__kakao">
-                            <button class="kakao_button" onclick="javascript:location.href='/oauth2/authorization/facebook'">
+                            <button class="kakao_button" onclick="javascript:location.href='/oauth2/authorization/kakao'">
                                 <i id="kakao_fab" class="fa fa-comment"></i>
                                 <span>kakao로 로그인</span>
                             </button>
