@@ -43,17 +43,26 @@
 			<a href="/" class="logo">
 				<img src="/image/logo.jpg" alt="">
 			</a>
+			<div class="search_form">
+    			<input class="search-bar_input" type="search" placeholder="검색" />
+			</div>
 			<nav class="navi">
 				<ul class="navi-list">
-					<li class="navi-item"><a href="/">
+					<li class="navi-item">
+						<a href="/">
 							<i class="fas fa-home"></i>
-						</a></li>
-					<li class="navi-item"><a href="/images/popular">
+						</a>
+					</li>
+					<li class="navi-item">
+						<a href="/images/popular">
 							<i class="far fa-compass"></i>
-						</a></li>
-					<li class="navi-item"><a href="/user/${principal.user.id}">
+						</a>
+					</li>
+					<li class="navi-item">
+						<a href="/user/${principal.user.id}">
 							<i class="far fa-user"></i>
-						</a></li>
+						</a>
+					</li>
 				</ul>
 			</nav>
 		</div>
