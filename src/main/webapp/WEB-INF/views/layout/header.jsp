@@ -25,7 +25,7 @@
 	<link rel="stylesheet" href="/css/upload.css">
 	<link rel="stylesheet" href="/css/update.css">
 	<link rel="stylesheet" href="/css/edit.css">
-	<link rel="shortcut icon" href="/image/insta.svg">
+	<link rel="shortcut icon" href="/image/favicon.png">
 	
 	<!-- Font awesome -->
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" /> -->
@@ -43,9 +43,26 @@
 			<a href="/" class="logo">
 				<img src="/image/logo.jpg" alt="">
 			</a>
+
 			<div class="search_form">
-    			<input class="search-bar_input" type="search" placeholder="검색" />
+    			<input class="search-bar_input" type="search" placeholder="검색" 
+					onclick="searchBoxOpen()"/>
+				
+				<div class="search_box">
+					<div class="search">
+						<div class="search_box_header">
+							<button onclick="searchBoxClose()">
+								<i class="fas fa-times"></i>
+							</button>
+						</div>
+
+						<div class="search-list" id="searchResultList">
+							<!-- 모달 리스트 ajax에서 처리 -->
+						</div>
+					</div>
+				</div>
 			</div>
+
 			<nav class="navi">
 				<ul class="navi-list">
 					<li class="navi-item">
@@ -67,3 +84,5 @@
 			</nav>
 		</div>
 	</header>
+
+	<script src="/js/header.js"></script>
