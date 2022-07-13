@@ -11,6 +11,17 @@ function searchBoxClose() {
 }
 
 $(".search-bar_input").on("change input", function() {
-    var currentVal = $(this).val();
-    console.log("changed!");
+    var keyword = $(this).val();
+
+    $.ajax({
+        type:'POST',
+        url:"/api/user/search",
+        data:{username:keyword}
+    }).done(res=>{
+        console.log(res);
+    }).fail(error=>{
+        console.log(error);
+    });
 })
+
+// 프로필 이미지 , 아이디 , 닉네임 , pk , 팔로우 유무

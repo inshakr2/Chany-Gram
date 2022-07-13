@@ -4,6 +4,7 @@ import com.toy.chanygram.config.auth.PrincipalDetails;
 import com.toy.chanygram.domain.User;
 import com.toy.chanygram.dto.CommonResponseDto;
 import com.toy.chanygram.dto.subscribe.SubscribeResponseDto;
+import com.toy.chanygram.dto.user.UserSearchResultDto;
 import com.toy.chanygram.dto.user.UserUpdateDto;
 import com.toy.chanygram.service.SubscribeService;
 import com.toy.chanygram.service.UserService;
@@ -26,6 +27,14 @@ public class UserApiController {
 
     private final UserService userService;
     private final SubscribeService subscribeService;
+
+    @PostMapping("/api/user/search")
+    public ResponseEntity<?> searchResultList(@RequestParam String username,
+                                              @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        System.out.println("UserApiController.searchResultList");
+        List<UserSearchResultDto> findList = userService.search(username, principalDetails.getUser().getId());
+        return new ResponseEntity<>(new CommonResponseDto<>(1, "search api 테스트", findList), HttpStatus.OK);
+    }
 
     @PutMapping("/api/user/{principalId}/profileImage")
     public ResponseEntity<?> profileImageUpdate(@PathVariable long principalId,
