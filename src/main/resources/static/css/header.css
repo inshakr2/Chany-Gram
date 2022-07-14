@@ -142,37 +142,52 @@
 .search_box .search .search_box_header button i {
   font-size: 20px;
 }
-.search_box .search .subscribe-list {
+.search_box .search .search-list {
   overflow: hidden;
   overflow-y: auto;
 }
-.search_box .search .subscribe-list .subscribe__item {
+.search_box .search .search-list .search__item {
   display: flex;
-  height: 70px;
+  height: auto;
   padding: 10px;
 }
-.search_box .search .subscribe-list .subscribe__item .subscribe__img {
+.search_box .search .search-list .search__item .search__img {
   width: 80px;
   text-align: center;
 }
-.search_box .search .subscribe-list .subscribe__item .subscribe__img {
-  width: 80px;
-  text-align: center;
-}
-.msearch_box .search .subscribe-list .subscribe__item .subscribe__img img {
+
+.search_box .search .search-list .search__item .search__img img {
   width: 50px;
   height: 50px;
   border-radius: 50%;
 }
-.search_box .search .subscribe-list .subscribe__item .subscribe__text {
-  padding-top: 5px;
+.search_box .search .search-list .search__item .search__text {
+  align-self: center;
 }
-.search_box .search .subscribe-list .subscribe__item .subscribe__text h2 {
+.search_box
+ .search
+ .search-list
+ .search__item
+ .search__text
+ .text_username {
+  flex: 1;
+}
+.search_box
+ .search
+ .search-list
+ .search__item
+ .search__text
+ .text_name {
+  flex: 1;
+  font-size: 14px;
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+  color: rgba(175, 168, 168, 0.8);
+}
+.search_box
+ .search
+ .search-list
+ .search__item
+ .search__text
+ .text_username h2 {
   font-size: 16px;
-  line-height: 50px;
-}
-.search_box .search .subscribe-list .subscribe__item .subscribe__btn {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
 }

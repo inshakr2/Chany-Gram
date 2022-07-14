@@ -26,12 +26,20 @@
 	<link rel="stylesheet" href="/css/update.css">
 	<link rel="stylesheet" href="/css/edit.css">
 	<link rel="shortcut icon" href="/image/favicon.png">
-	
+
 	<!-- Font awesome -->
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" /> -->
 	<script src="https://kit.fontawesome.com/dfcffd723c.js" crossorigin="anonymous"></script>
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+	<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+	<!-- a Tag -->
+	<style type="text/css">
+		a:link { color: black; text-decoration: none;}	
+		a:visited { color: black; text-decoration: none;}	
+		a:hover { color: black; text-decoration: underline;}
+		a:active { color: #aaa; text-decoration: none;}
+	</style>
 </head>
 
 <body>
