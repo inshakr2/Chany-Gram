@@ -26,7 +26,9 @@ public interface UserRepository extends JpaRepository<User,Long> {
             "(SELECT COUNT(s.id) > 0 FROM Subscribe s WHERE s.fromUser.id = :principalId AND s.toUser.id = u.id)) " +
             "FROM User u " +
             "LEFT OUTER JOIN Subscribe s ON u.id = s.fromUser.id " +
-            "WHERE u.username LIKE CONCAT('%',:username,'%')")
+            "WHERE u.username LIKE CONCAT('%',:username,'%') " +
+            "OR u.username LIKE CONCAT(:username,'%') " +
+            "OR u.username LIKE CONCAT('%',:username)")
     List<UserSearchResultDto> searchByUsername(@Param("username") String username,
                                                @Param("principalId") Long principalId);
 }
