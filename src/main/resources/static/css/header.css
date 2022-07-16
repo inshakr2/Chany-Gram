@@ -91,11 +91,33 @@
   text-align: center;
   margin: 0 15px;
   display: flex;
+  align-self: center;
 }
 .navi > .navi-list .navi-item a i {
-  font-size: 22px;
+  font-size: 26px;
   color: #808080;
   margin-top: 4px;
+}
+
+
+.navi > .navi-list
+  .navi-item
+  .nav-profile-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: relative;
+  border: 2px solid #fafafa;
+}
+
+/*리스트 아이템 헤더 실제이미지*/
+.navi > .navi-list
+  .navi-item
+  .nav-profile-img
+  .nav-user-profile-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
 }
 
 @media screen and (max-width: 935px) {

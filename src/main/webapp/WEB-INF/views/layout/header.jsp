@@ -84,9 +84,11 @@
 						</a>
 					</li>
 					<li class="navi-item">
-						<a href="/user/${principal.user.id}">
-							<i class="far fa-user"></i>
-						</a>
+						<button class="nav-profile-img"
+							onclick="location.href='/user/${principal.user.id}'">
+							<img class="nav-user-profile-image" src="/upload/${principal.user.profileImageUrl}"
+								onerror="this.src='/image/person.jpeg'" id="userProfileImage"/>
+						</button>
 					</li>
 				</ul>
 			</nav>
