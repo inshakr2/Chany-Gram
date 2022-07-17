@@ -160,7 +160,7 @@ function profileImageUpload(pageUserId, principalId) {
 			$("#userProfileImage").attr("src", e.target.result);
 		}
 		reader.readAsDataURL(f); // 이 코드 실행시 reader.onload 실행됨.
-
+		location.reload();
 		}).fail(error=>{
 
 			console.log("error", error);

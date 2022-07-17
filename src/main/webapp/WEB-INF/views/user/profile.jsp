@@ -30,7 +30,7 @@
 
 					<div class="profile-img-wrap story-border">
 
-						<img class="profile-image" src="#"
+						<img class="profile-image" src="/upload/${dto.userProfileImageUrl}"
 							onerror="this.src='/image/person.jpeg'" id="userProfileImage" />
 					</div>
 
