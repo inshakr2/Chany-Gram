@@ -73,7 +73,7 @@ public class ImageService {
 
     public ImageDetailDto getImageDetail(Long principalId, Long imageId) {
 
-        Image image = imageRepository.getImageForDetail(principalId, imageId).orElseThrow(
+        Image image = imageRepository.getImageForDetail(imageId).orElseThrow(
                 () -> {
                     log.info("유효성 검사 실패 [존재하지 않는 이미지입니다.]");
                     return new CustomValidationException("존재하지 않는 이미지입니다.", null);
