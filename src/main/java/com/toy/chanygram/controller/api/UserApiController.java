@@ -31,7 +31,7 @@ public class UserApiController {
     @PostMapping("/api/user/search")
     public ResponseEntity<?> searchResultList(@RequestParam String username,
                                               @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        System.out.println("UserApiController.searchResultList");
+
         List<UserSearchResultDto> findList = userService.search(username, principalDetails.getUser().getId());
         return new ResponseEntity<>(new CommonResponseDto<>(1, "search api 테스트", findList), HttpStatus.OK);
     }

@@ -21,7 +21,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
             "WHERE u.id = :userId")
     Optional<User> findUserWithImagesAndLikes(@Param("userId") Long userId);
 
-    @Query("SELECT new com.toy.chanygram.dto.user.UserSearchResultDto" +
+    @Query("SELECT DISTINCT new com.toy.chanygram.dto.user.UserSearchResultDto" +
             "(u.id, u.username, u.name, u.profileImageUrl, " +
             "(SELECT COUNT(s.id) > 0 FROM Subscribe s WHERE s.fromUser.id = :principalId AND s.toUser.id = u.id)) " +
             "FROM User u " +
