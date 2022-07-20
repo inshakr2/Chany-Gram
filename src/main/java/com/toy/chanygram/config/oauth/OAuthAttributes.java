@@ -21,9 +21,28 @@ public class OAuthAttributes {
             return ofGoogle(nameAttributeKey, attributes);
         } else if (registrationId.equalsIgnoreCase("kakao")) {
             return ofKakao(nameAttributeKey, attributes);
-        } else {
+        } else if (registrationId.equalsIgnoreCase("naver")) {
+            return ofNaver(nameAttributeKey, attributes);
+        }else {
             return null;
         }
+    }
+
+    private static SignupDto ofNaver(String nameAttributeKey, Map<String, Object> attributes) {
+        System.out.println("nameAttributeKey = " + nameAttributeKey);
+        System.out.println("attributes = " + attributes);
+
+        Map <String, Object> naver_account = (Map <String, Object>) attributes.get(nameAttributeKey);
+
+        String id = (String) naver_account.get("id");
+
+        String username = "NV_" + id.substring(0,22);
+        String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
+
+        String email = (String) naver_account.get("email");;
+        String name = (String) naver_account.get("name");;
+
+        return new SignupDto(username, password, email, name);
     }
 
     private static SignupDto ofKakao(String nameAttributeKey, Map<String, Object> attributes) {
