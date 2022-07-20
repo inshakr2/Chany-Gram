@@ -55,7 +55,13 @@
                         <div class="login__kakao">
                             <button class="kakao_button" onclick="javascript:location.href='/oauth2/authorization/kakao'">
                                 <i id="kakao_fab" class="fa fa-comment"></i>
-                                <span>kakao로 로그인</span>
+                                <span>Kakao로 로그인</span>
+                            </button>
+                        </div>
+                        <div class="login__naver">
+                            <button class="naver_button" onclick="javascript:location.href='/oauth2/authorization/naver'">
+                                <i id="naver_fab" class="fab fa-neos"></i>
+                                <span>Naver로 로그인</span>
                             </button>
                         </div>
                         <!-- Oauth 소셜로그인end -->
