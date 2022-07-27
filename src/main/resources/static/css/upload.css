@@ -90,9 +90,18 @@
 
 /*이미지에 대한 설명인풋 + 버튼*/
 .upload .upload-form .upload-form-detail input,
+.upload .upload-form .upload-form-detail textarea,
 .upload .upload-form .upload-form-detail button {
   width: 340px;
 }
+
+.upload .upload-form .upload-form-detail textarea {
+  border: 1px solid #dbdbdb;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
 .upload .upload-form .upload-form-detail input {
   text-indent: 10px;
   height: 45px;

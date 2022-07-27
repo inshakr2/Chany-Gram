@@ -63,7 +63,6 @@ public class ImageController {
             log.warn("No image attached");
             throw new CustomValidationException("이미지가 첨부되지 않았습니다.", null);
         }
-
         imageService.imageUpload(imageUploadDto, principalDetails);
         return "redirect:/user/" + principalDetails.getUser().getId();
     }
