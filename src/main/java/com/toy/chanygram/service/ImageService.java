@@ -37,7 +37,6 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 public class ImageService {
 
     private final ImageRepository imageRepository;
-    private final CommentRepository commentRepository;
 
     @Value("${custom.file.path}")
     private String uploadPath;
