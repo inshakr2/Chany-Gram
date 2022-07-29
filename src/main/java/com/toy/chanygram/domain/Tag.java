@@ -27,4 +27,7 @@ public class Tag extends BaseTimeEntity{
     @OneToMany(mappedBy = "tag")
     List<ImageTag> images = new ArrayList<>();
 
+    public Tag(String tag) {
+        this.tag = tag;
+    }
 }

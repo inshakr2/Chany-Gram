@@ -121,7 +121,7 @@ public class ImageService {
         return likeUserId.contains(principalId);
     }
 
-    public void imageUpload(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails) {
+    public Long imageUpload(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails) {
         UUID uuid = UUID.randomUUID();
         String imageFileName = uuid + "_" + imageUploadDto.getFile().getOriginalFilename();
 
@@ -137,7 +137,9 @@ public class ImageService {
         }
 
         Image image = new Image(imageUploadDto.getCaption(), imageFileName, principalDetails.getUser());
-        imageRepository.save(image);
+        Image entity = imageRepository.save(image);
+
+        return entity.getId();
     }
 
     @Transactional(readOnly = true)

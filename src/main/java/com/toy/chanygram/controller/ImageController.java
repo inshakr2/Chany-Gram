@@ -6,6 +6,7 @@ import com.toy.chanygram.dto.image.ImagePopularDto;
 import com.toy.chanygram.dto.image.ImageUploadDto;
 import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.service.ImageService;
+import com.toy.chanygram.service.TagService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +25,7 @@ import java.util.List;
 public class ImageController {
 
     private final ImageService imageService;
+    private final TagService tagService;
 
     @GetMapping({"/", "/images/story"})
     public String story() {
@@ -63,7 +65,9 @@ public class ImageController {
             log.warn("No image attached");
             throw new CustomValidationException("이미지가 첨부되지 않았습니다.", null);
         }
-        imageService.imageUpload(imageUploadDto, principalDetails);
+        Long imageId = imageService.imageUpload(imageUploadDto, principalDetails);
+        tagService.mappingImage(imageUploadDto, imageId);
+
         return "redirect:/user/" + principalDetails.getUser().getId();
     }
 }
