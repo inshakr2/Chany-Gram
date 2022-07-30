@@ -8,7 +8,6 @@ import com.toy.chanygram.domain.User;
 import com.toy.chanygram.dto.comment.CommentResponseDto;
 import com.toy.chanygram.dto.image.*;
 import com.toy.chanygram.exception.CustomValidationException;
-import com.toy.chanygram.repository.CommentRepository;
 import com.toy.chanygram.repository.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,6 +52,7 @@ public class ImageService {
         //TODO: like 정보와 comment 정보 fetch 시킬 수 있도록 개선 필요, 현재 우선 page size 상향 조정 하였음.
         imageForStory.forEach(
                 image -> {
+                    System.out.println(image.getTags());
                     imageStoryDtoList.add(new ImageStoryDto(
                             image.getId(),
                             image.getPostImageUrl(),

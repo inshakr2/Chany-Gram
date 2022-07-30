@@ -44,13 +44,11 @@ public class TagService {
         rawTag = rawTag.endsWith(" ") ? rawTag : rawTag + " ";
         List<String> tags = new ArrayList<>();
 
-        Pattern p = Pattern.compile("\\#([a-zA-Zㄱ-ㅎ가-힣]*)\\s{1}");
+        Pattern p = Pattern.compile("\\#([a-zA-Zㄱ-ㅎ가-힣0-9]*)\\s{1}");
         Matcher m = p.matcher(rawTag);
 
         while (m.find()) {
-            String t = m.group(1);
-            tags.add(t);
-            System.out.println("find TAG : " + t);
+            tags.add(m.group(1));
         }
 
         return tags;
