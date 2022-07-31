@@ -16,8 +16,7 @@ import java.util.Optional;
 public interface ImageRepository extends JpaRepository<Image, Long> {
 
     @Query("SELECT i FROM Image i " +
-            "JOIN FETCH i.user u " +
-            "JOIN FETCH i.tags t " +
+            "JOIN FETCH i.user u "+
             "WHERE (i.user.id IN (SELECT s.toUser.id FROM Subscribe s WHERE s.fromUser.id = :principalId) " +
             "OR i.user.id = :principalId) " +
             "AND i.id < :lastImageId")

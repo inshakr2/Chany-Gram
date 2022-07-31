@@ -29,4 +29,7 @@ public class ImageStoryDto {
 
     // comment
     List<CommentResponseDto> comments;
+
+    // tag
+    List<String> tags;
 }

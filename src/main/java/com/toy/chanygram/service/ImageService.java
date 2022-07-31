@@ -1,14 +1,12 @@
 package com.toy.chanygram.service;
 
 import com.toy.chanygram.config.auth.PrincipalDetails;
-import com.toy.chanygram.domain.Comment;
-import com.toy.chanygram.domain.Image;
-import com.toy.chanygram.domain.Likes;
-import com.toy.chanygram.domain.User;
+import com.toy.chanygram.domain.*;
 import com.toy.chanygram.dto.comment.CommentResponseDto;
 import com.toy.chanygram.dto.image.*;
 import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.repository.ImageRepository;
+import com.toy.chanygram.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,6 +34,7 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
 public class ImageService {
 
     private final ImageRepository imageRepository;
+    private final TagRepository tagRepository;
 
     @Value("${custom.file.path}")
     private String uploadPath;
@@ -62,7 +61,8 @@ public class ImageService {
                             image.getUser().getId(),
                             image.getUser().getUsername(),
                             image.getUser().getProfileImageUrl(),
-                            getCommentResponseDto(image.getComments())
+                            getCommentResponseDto(image.getComments()),
+                            getTagsList(image.getTags())
                     ));
                 }
         );
@@ -95,6 +95,16 @@ public class ImageService {
         );
 
         return imageDetailDto;
+    }
+
+    private List<String> getTagsList(List<ImageTag> imageTags) {
+        List<String> tags = new ArrayList<>();
+
+        List<Long> tagIds = imageTags.stream().map(i -> i.getTag().getId()).collect(Collectors.toList());
+        List<String> res = tagRepository.findTagsByIds(tagIds);
+        System.out.println("res = " + res);
+        return res;
+
     }
 
     private List<CommentResponseDto> getCommentResponseDto(List<Comment> comments) {
