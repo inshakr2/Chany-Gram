@@ -659,6 +659,26 @@
   padding: 5px 15px;
 }
 
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents
+  .tag {
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents
+  .tag .tag-span {
+  color: cornflowerblue;
+  cursor: pointer;
+}
+
 /*게시물 like 갯수스타일*/
 .modal-detail 
   .detail 

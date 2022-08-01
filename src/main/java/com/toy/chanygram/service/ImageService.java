@@ -51,7 +51,6 @@ public class ImageService {
         //TODO: like 정보와 comment 정보 fetch 시킬 수 있도록 개선 필요, 현재 우선 page size 상향 조정 하였음.
         imageForStory.forEach(
                 image -> {
-                    System.out.println(image.getTags());
                     imageStoryDtoList.add(new ImageStoryDto(
                             image.getId(),
                             image.getPostImageUrl(),
@@ -91,7 +90,8 @@ public class ImageService {
                 owner.getId(),
                 owner.getUsername(),
                 owner.getProfileImageUrl(),
-                getCommentResponseDto(image.getComments())
+                getCommentResponseDto(image.getComments()),
+                getTagsList(image.getTags())
         );
 
         return imageDetailDto;
@@ -99,11 +99,9 @@ public class ImageService {
 
     private List<String> getTagsList(List<ImageTag> imageTags) {
         List<String> tags = new ArrayList<>();
-
         List<Long> tagIds = imageTags.stream().map(i -> i.getTag().getId()).collect(Collectors.toList());
-        List<String> res = tagRepository.findTagsByIds(tagIds);
-        System.out.println("res = " + res);
-        return res;
+
+        return tagRepository.findTagsByIds(tagIds);
 
     }
 

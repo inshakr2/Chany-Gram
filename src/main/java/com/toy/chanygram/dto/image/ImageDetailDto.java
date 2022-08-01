@@ -28,4 +28,7 @@ public class ImageDetailDto {
 
     // comment
     List<CommentResponseDto> comments;
+
+    // tag
+    List<String> tags;
 }

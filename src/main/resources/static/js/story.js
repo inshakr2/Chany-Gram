@@ -66,7 +66,14 @@ function getStoryItem(image) {
 		<div class="sl__item__contents__content">
 			<p>${image.caption}</p>
 		</div>
+		<div class="tag">`;
+		
+		image.tags.forEach((tag) => {
+			item += `<span class="tag-span" onclick="location.href='/images/search?tag=${tag}'">#${tag} </span>`;
+		})
 
+
+		item += `</div>
 		<div id="storyCommentList-${image.imageId}">`;
 
 		

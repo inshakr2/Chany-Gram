@@ -126,6 +126,26 @@
   padding: 5px 15px;
 }
 
+.main
+  .container
+  .story-list
+  .story-list__item
+  .sl__item__contents
+  .tag {
+    margin-left: 15px;
+    margin-bottom: 10px;
+ }
+
+.main
+  .container
+  .story-list
+  .story-list__item
+  .sl__item__contents
+  .tag .tag-span {
+    color: cornflowerblue;
+    cursor: pointer;
+ }
+
 /*게시물 like 갯수스타일*/
 .main
   .container
