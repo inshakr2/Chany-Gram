@@ -24,9 +24,6 @@ public class TagService {
     private final ImageTagRepository imageTagRepository;
 
     public void mappingImage(ImageUploadDto imageUploadDto, Long imageId) {
-        // tag 테이블에 있는지 확인 -> 없으면 persistence
-        // imageTag 테이블에 매핑 정보 저장 => Tag & Image ID 필요
-
         List<String> tagString = splitTag(imageUploadDto.getTag());
 
         for (String t : tagString) {
@@ -35,6 +32,29 @@ public class TagService {
             );
 
             imageTagRepository.mappingImageWithTags(imageId, tag.getId());
+        }
+
+    }
+
+    public void editMappingImage(Long imageId, String orgTag, String newTag) {
+
+        System.out.println("orgTag = " + orgTag);
+        System.out.println("newTag = " + newTag);
+        if (orgTag != newTag) {
+
+            List<String> newTags = splitTag(newTag);
+
+            // image tag 매핑 정보 초기화 후 재 매핑
+            imageTagRepository.deleteByImageId(imageId);
+
+            for (String t : newTags) {
+                Tag tag = tagRepository.findByTag(t).orElseGet(
+                        () -> tagRepository.save(new Tag(t))
+                );
+
+                imageTagRepository.mappingImageWithTags(imageId, tag.getId());
+            }
+
         }
 
     }

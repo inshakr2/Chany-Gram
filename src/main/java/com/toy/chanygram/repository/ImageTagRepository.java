@@ -14,4 +14,9 @@ public interface ImageTagRepository extends JpaRepository<ImageTag, Long> {
     @Query(value = "INSERT INTO imageTag(Image_ID, Tag_ID, createdDate, lastModifiedDate) " +
             "VALUES (:imageId, :tagId, now(), now())", nativeQuery = true)
     void mappingImageWithTags(@Param("imageId") Long imageId, @Param("tagId") Long tagId);
+
+    @Modifying
+    @Query("DELETE FROM ImageTag it WHERE it.image.id = :imageId")
+    void deleteByImageId(@Param("imageId") Long imageId);
+
 }

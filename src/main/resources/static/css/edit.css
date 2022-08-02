@@ -83,9 +83,18 @@
 
 /*이미지에 대한 설명인풋 + 버튼*/
 .edit .edit-bottom .origin-img-detail input,
+.edit .edit-bottom .origin-img-detail textarea,
 .edit .edit-bottom .origin-img-detail button {
   width: 340px;
 }
+
+.edit .edit-bottom .origin-img-detail textarea {
+  border: 1px solid #dbdbdb;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
 .edit .edit-bottom .origin-img-detail input {
   text-indent: 10px;
   height: 45px;

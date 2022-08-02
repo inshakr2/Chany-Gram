@@ -20,12 +20,12 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
             "WHERE (i.user.id IN (SELECT s.toUser.id FROM Subscribe s WHERE s.fromUser.id = :principalId) " +
             "OR i.user.id = :principalId) " +
             "AND i.id < :lastImageId")
-    Slice<Image> getImageForStory(@Param("principalId") Long principalId,
+    Slice<Image> getImageForStory(@Param("principalId") Long principalIqqd,
                                   @Param("lastImageId") Long lastImageId, Pageable pageable);
 
     @Query("SELECT i FROM Image i " +
             "JOIN FETCH i.user u " +
-            "JOIN FETCH i.tags t " +
+            "LEFT JOIN i.tags t " +
             "WHERE i.id = :imageId")
     Optional<Image> getImageForDetail(@Param("imageId") Long imageId);
 
@@ -38,7 +38,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     @Query("SELECT i FROM Image i " +
             "JOIN FETCH i.user u " +
-            "JOIN FETCH i.tags t " +
+            "LEFT JOIN i.tags t " +
             "WHERE i.id = :imageId")
     Optional<Image> findImageWithOwner(@Param("imageId") Long imageId);
 }

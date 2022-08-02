@@ -22,6 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -163,7 +164,7 @@ public class ImageService {
 
     }
 
-    public ImageEditDto getImageForEdit(Long imageId, Long principalId) {
+    public ImageEditResponseDto getImageForEdit(Long imageId, Long principalId) {
 
         Image image = imageRepository.findImageWithOwner(imageId).orElseThrow(
                 () -> {
@@ -176,7 +177,32 @@ public class ImageService {
             throw new CustomValidationException("본인 게시물 이외의 이미지 수정은 불가합니다.", null);
         }
 
-        return new ImageEditDto(image.getId(), image.getPostImageUrl(), image.getCaption());
+        StringJoiner sj = new StringJoiner(" ");
+        image.getTags().forEach(
+                tag -> {
+                    sj.add("#" + tag.getTag().getTag());
+                }
+        );
+        ImageEditResponseDto imageEditResponseDto = new ImageEditResponseDto(
+                image.getId(), image.getPostImageUrl(), image.getCaption(), sj.toString());
 
+        return imageEditResponseDto;
+
+    }
+
+    public void editImageDetail(Long imageId, Long principalId, ImageEditRequestDto imageEditRequestDto) {
+
+        Image image = imageRepository.findImageWithOwner(imageId).orElseThrow(
+                () -> {
+                    log.info("유효성 검사 실패 [존재하지 않는 이미지입니다.]");
+                    return new CustomValidationException("존재하지 않는 이미지입니다.", null);
+                }
+        );
+
+        if (image.getUser().getId() != principalId) {
+            throw new CustomValidationException("본인 게시물 이외의 이미지 수정은 불가합니다.", null);
+        }
+
+        image.editCaption(imageEditRequestDto.getCaption());
     }
 }

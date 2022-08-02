@@ -49,4 +49,8 @@ public class Image extends BaseTimeEntity{
         this.postImageUrl = imageFullPath;
         this.user = user;
     }
+
+    public void editCaption(String caption) {
+        this.caption = caption;
+    }
 }

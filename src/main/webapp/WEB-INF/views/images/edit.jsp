@@ -12,7 +12,7 @@
                     <a href="home.html" class="">
                         <img src="/image/logo.jpg" alt="">
                     </a>
-                    <p>사진 캡션 수정</p>
+                    <p>게시물 수정</p>
                 </div>
                 <!--edit 로고 end-->
                 
@@ -22,10 +22,16 @@
                         <img src="/upload/${image.postImageUrl}" alt="" id="imageUploadPreview" />
                     </div>
                     
-                    <div class="origin-img-detail">
-                        <input type="text" placeholder="${image.caption}" name="caption" id="edited-caption-${image.imageId}"/>
-                        <button class="cta blue">수정</button>
-                    </div>
+                    <form class="edit-form" action="/images/${image.imageId}/edit" method="post">
+                        <input type="hidden" id="imageId" value="${image.imageId}" name="imageId" />
+                        <input type="hidden" id="orgTag" value="${image.tags}" name="orgTag" />
+                        <div class="origin-img-detail">
+                            <textarea type="text" placeholder="${image.caption}" name="caption" id="edited-caption-${image.imageId}"></textarea>
+                            <br>
+                            <input type="text" value="${image.tags}" name="newTag">
+                            <button class="cta blue">수정</button>
+                        </div>
+                    </form>
                 </div>
 
             </section>

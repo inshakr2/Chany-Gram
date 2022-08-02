@@ -1,7 +1,8 @@
 package com.toy.chanygram.controller;
 
 import com.toy.chanygram.config.auth.PrincipalDetails;
-import com.toy.chanygram.dto.image.ImageEditDto;
+import com.toy.chanygram.dto.image.ImageEditRequestDto;
+import com.toy.chanygram.dto.image.ImageEditResponseDto;
 import com.toy.chanygram.dto.image.ImagePopularDto;
 import com.toy.chanygram.dto.image.ImageUploadDto;
 import com.toy.chanygram.exception.CustomValidationException;
@@ -32,17 +33,6 @@ public class ImageController {
         return "/images/story";
     }
 
-    @GetMapping({"/images/{imageId}/edit"})
-    public String editImage(@PathVariable Long imageId,
-                            @AuthenticationPrincipal PrincipalDetails principalDetails,
-                            Model model) {
-
-        ImageEditDto imageEditDto = imageService.getImageForEdit(imageId, principalDetails.getUser().getId());
-        model.addAttribute("image", imageEditDto);
-
-        return "/images/edit";
-    }
-
     @GetMapping("/images/popular")
     public String popular(Model model) {
 
@@ -67,6 +57,28 @@ public class ImageController {
         }
         Long imageId = imageService.imageUpload(imageUploadDto, principalDetails);
         tagService.mappingImage(imageUploadDto, imageId);
+
+        return "redirect:/user/" + principalDetails.getUser().getId();
+    }
+
+    @GetMapping({"/images/{imageId}/edit"})
+    public String editImage(@PathVariable Long imageId,
+                            @AuthenticationPrincipal PrincipalDetails principalDetails,
+                            Model model) {
+
+        ImageEditResponseDto imageEditResponseDto = imageService.getImageForEdit(imageId, principalDetails.getUser().getId());
+        model.addAttribute("image", imageEditResponseDto);
+
+        return "/images/edit";
+    }
+
+    @PostMapping("/images/{imageId}/edit")
+    public String imageEdit(@PathVariable Long imageId,
+                            @ModelAttribute ImageEditRequestDto imageEditRequestDto,
+                            @AuthenticationPrincipal PrincipalDetails principalDetails) {
+
+        imageService.editImageDetail(imageId, principalDetails.getUser().getId(), imageEditRequestDto);
+        tagService.editMappingImage(imageId, imageEditRequestDto.getOrgTag(), imageEditRequestDto.getNewTag());
 
         return "redirect:/user/" + principalDetails.getUser().getId();
     }
