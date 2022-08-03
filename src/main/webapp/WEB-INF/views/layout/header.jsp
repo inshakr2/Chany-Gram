@@ -25,6 +25,7 @@
 	<link rel="stylesheet" href="/css/upload.css">
 	<link rel="stylesheet" href="/css/update.css">
 	<link rel="stylesheet" href="/css/edit.css">
+	<link rel="stylesheet" href="/css/search.css">
 	<link rel="shortcut icon" href="/image/favicon.png">
 
 	<!-- Font awesome -->
