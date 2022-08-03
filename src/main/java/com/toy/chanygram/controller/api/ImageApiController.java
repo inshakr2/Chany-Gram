@@ -2,6 +2,7 @@ package com.toy.chanygram.controller.api;
 
 import com.toy.chanygram.config.auth.PrincipalDetails;
 import com.toy.chanygram.dto.CommonResponseDto;
+import com.toy.chanygram.dto.image.ImageSearchResponseDto;
 import com.toy.chanygram.dto.image.ImageStoryDto;
 import com.toy.chanygram.dto.image.ImageDetailDto;
 import com.toy.chanygram.service.ImageService;
@@ -33,7 +34,7 @@ public class ImageApiController {
 
     @GetMapping("/api/image/{imageId}")
     public ResponseEntity<?> imageDetail(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                        @PathVariable Long imageId) {
+                                         @PathVariable Long imageId) {
         ImageDetailDto image = imageService.getImageDetail(principalDetails.getUser().getId(), imageId);
 
         return new ResponseEntity<>(
@@ -63,12 +64,23 @@ public class ImageApiController {
 
     @DeleteMapping("/api/image/{imageId}/likes")
     public ResponseEntity<?> imageUnLikes(@AuthenticationPrincipal PrincipalDetails principalDetails,
-                                        @PathVariable Long imageId) {
+                                          @PathVariable Long imageId) {
 
         likesService.unLikes(principalDetails.getUser().getId(), imageId);
 
         return new ResponseEntity<>(
                 new CommonResponseDto<>(1, "이미지 좋아요 취소 성공", null), HttpStatus.OK);
+
+    }
+
+    @GetMapping("/api/image/search")
+    public ResponseEntity<?> imageSearch(@RequestParam Long lastImageId,
+                                         @RequestParam String tag) {
+
+        List<ImageSearchResponseDto> images = imageService.searchImageByTag(lastImageId, tag);
+
+        return new ResponseEntity<>(
+                new CommonResponseDto<>(1, "스토리 가져오기 성공", images), HttpStatus.OK);
 
     }
 }

@@ -205,4 +205,31 @@ public class ImageService {
 
         image.editCaption(imageEditRequestDto.getCaption());
     }
+
+    public List<ImageSearchResponseDto> searchImageByTag(Long lastImageId, String tag) {
+        System.out.println("tag = " + tag);
+
+        Tag tagEntity = tagRepository.findByTag(tag).orElseThrow(
+                () -> {
+                    log.info("유효성 검사 실패 [존재하지 않는 태그입니다.]");
+                    return new CustomValidationException("존재하지 않는 태그입니다.", null);
+                }
+        );
+
+        PageRequest pageRequest = PageRequest.of(0, 9, Sort.by(DESC, "id"));
+        Slice<Image> imageSearchSlice = imageRepository.getImageFromTag(lastImageId, tagEntity.getId(), pageRequest);
+        List<ImageSearchResponseDto> imageSearchResults = new ArrayList<>();
+
+
+        imageSearchSlice.forEach(
+                image -> {
+                    imageSearchResults.add(
+                            new ImageSearchResponseDto(image.getId(), image.getUser().getId(), image.getPostImageUrl())
+                    );
+
+                }
+        );
+
+        return imageSearchResults;
+    }
 }

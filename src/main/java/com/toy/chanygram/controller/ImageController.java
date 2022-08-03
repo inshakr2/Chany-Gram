@@ -13,10 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -81,5 +78,13 @@ public class ImageController {
         tagService.editMappingImage(imageId, imageEditRequestDto.getOrgTag(), imageEditRequestDto.getNewTag());
 
         return "redirect:/user/" + principalDetails.getUser().getId();
+    }
+
+    @GetMapping("/images/search")
+    public String searchImage(@RequestParam("tag") String tag, Model model) {
+
+        model.addAttribute("tag", tag);
+
+        return "/images/search";
     }
 }
