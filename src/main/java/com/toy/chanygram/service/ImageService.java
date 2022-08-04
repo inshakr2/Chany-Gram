@@ -6,6 +6,7 @@ import com.toy.chanygram.dto.comment.CommentResponseDto;
 import com.toy.chanygram.dto.image.*;
 import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.repository.ImageRepository;
+import com.toy.chanygram.repository.ImageTagRepository;
 import com.toy.chanygram.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +37,7 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
     private final TagRepository tagRepository;
+    private final ImageTagRepository imageTagRepository;
 
     @Value("${custom.file.path}")
     private String uploadPath;
@@ -207,8 +209,6 @@ public class ImageService {
     }
 
     public List<ImageSearchResponseDto> searchImageByTag(Long lastImageId, String tag) {
-        System.out.println("tag = " + tag);
-
         Tag tagEntity = tagRepository.findByTag(tag).orElseThrow(
                 () -> {
                     log.info("유효성 검사 실패 [존재하지 않는 태그입니다.]");
@@ -220,16 +220,31 @@ public class ImageService {
         Slice<Image> imageSearchSlice = imageRepository.getImageFromTag(lastImageId, tagEntity.getId(), pageRequest);
         List<ImageSearchResponseDto> imageSearchResults = new ArrayList<>();
 
-
         imageSearchSlice.forEach(
                 image -> {
                     imageSearchResults.add(
                             new ImageSearchResponseDto(image.getId(), image.getUser().getId(), image.getPostImageUrl())
                     );
-
                 }
         );
 
         return imageSearchResults;
+    }
+
+    public void getSearchProfile(String tag) {
+
+        Tag tagEntity = tagRepository.findByTag(tag).orElseThrow(
+                () -> {
+                    log.info("유효성 검사 실패 [존재하지 않는 태그입니다.]");
+                    return new CustomValidationException("존재하지 않는 태그입니다.", null);
+                }
+        );
+
+
+        PageRequest pageRequest = PageRequest.of(0, 1, Sort.by(DESC, "CNT"));
+        Slice<ImageProfileDto> topImageSlice = imageTagRepository.getTopImageProfileFromTag(tagEntity.getId(), pageRequest);
+        ImageProfileDto imageProfileDto = topImageSlice.getContent().get(0);
+        System.out.println("topImageProfileFromTag = " + imageProfileDto.getTopImageUrl());
+        System.out.println("topImageProfileFromTag = " + imageProfileDto.getImageCount());
     }
 }

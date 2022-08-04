@@ -83,6 +83,8 @@ public class ImageController {
     @GetMapping("/images/search")
     public String searchImage(@RequestParam("tag") String tag, Model model) {
 
+        imageService.getSearchProfile(tag);
+
         model.addAttribute("tag", tag);
 
         return "/images/search";
