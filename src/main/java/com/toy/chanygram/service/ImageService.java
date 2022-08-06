@@ -208,16 +208,10 @@ public class ImageService {
         image.editCaption(imageEditRequestDto.getCaption());
     }
 
-    public List<ImageSearchResponseDto> searchImageByTag(Long lastImageId, String tag) {
-        Tag tagEntity = tagRepository.findByTag(tag).orElseThrow(
-                () -> {
-                    log.info("유효성 검사 실패 [존재하지 않는 태그입니다.]");
-                    return new CustomValidationException("존재하지 않는 태그입니다.", null);
-                }
-        );
+    public List<ImageSearchResponseDto> searchImageByTag(Long lastImageId, Long tagId) {
 
         PageRequest pageRequest = PageRequest.of(0, 9, Sort.by(DESC, "id"));
-        Slice<Image> imageSearchSlice = imageRepository.getImageFromTag(lastImageId, tagEntity.getId(), pageRequest);
+        Slice<Image> imageSearchSlice = imageRepository.getImageFromTag(lastImageId, tagId, pageRequest);
         List<ImageSearchResponseDto> imageSearchResults = new ArrayList<>();
 
         imageSearchSlice.forEach(
@@ -231,7 +225,7 @@ public class ImageService {
         return imageSearchResults;
     }
 
-    public void getSearchProfile(String tag) {
+    public ImageSearchProfileDto getSearchProfile(String tag) {
 
         Tag tagEntity = tagRepository.findByTag(tag).orElseThrow(
                 () -> {
@@ -240,11 +234,17 @@ public class ImageService {
                 }
         );
 
+        Long tagId = tagEntity.getId();
 
-        PageRequest pageRequest = PageRequest.of(0, 1, Sort.by(DESC, "CNT"));
-        Slice<ImageProfileDto> topImageSlice = imageTagRepository.getTopImageProfileFromTag(tagEntity.getId(), pageRequest);
-        ImageProfileDto imageProfileDto = topImageSlice.getContent().get(0);
-        System.out.println("topImageProfileFromTag = " + imageProfileDto.getTopImageUrl());
-        System.out.println("topImageProfileFromTag = " + imageProfileDto.getImageCount());
+        // Top N 쿼리 대안으로 size 1 페이징 처리
+        PageRequest pageRequest = PageRequest.of(0, 1);
+        Slice<ImagePopularDto> topImageSlice = imageRepository.getTopPopularImageByTag(tagId, pageRequest);
+        ImagePopularDto imagePopularDto = topImageSlice.getContent().get(0);
+
+        Long totalCnt = imageRepository.getTotalCountByTag(tagId);
+
+        ImageSearchProfileDto imageSearchProfileDto = new ImageSearchProfileDto(tagId, imagePopularDto.getPostImageUrl(), totalCnt);
+
+        return imageSearchProfileDto;
     }
 }

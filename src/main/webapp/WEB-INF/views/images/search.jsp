@@ -3,6 +3,7 @@
 <%@ include file="../layout/header.jsp"%>
 
 <input type="hidden" id="tag" value="${tag}" />
+<input type="hidden" id="tagId" value="${dto.tagId}" />
 
 <section class="search-section">
 	<div class="search-profile">

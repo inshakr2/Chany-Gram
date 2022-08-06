@@ -25,16 +25,15 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     @Query("SELECT i FROM Image i " +
             "JOIN FETCH i.user u " +
-            "WHERE (i.id IN (SELECT it.image.id FROM ImageTag it WHERE it.tag.id = :tagId)) " +
-            "AND i.id < :lastImageId")
-    Slice<Image> getImageFromTag(@Param("lastImageId") Long lastImageId,
-                                 @Param("tagId") Long tagId, Pageable pageable);
+            "LEFT JOIN i.tags t " +
+            "WHERE i.id = :imageId")
+    Optional<Image> getImageForDetail(@Param("imageId") Long imageId);
 
     @Query("SELECT i FROM Image i " +
             "JOIN FETCH i.user u " +
             "LEFT JOIN i.tags t " +
             "WHERE i.id = :imageId")
-    Optional<Image> getImageForDetail(@Param("imageId") Long imageId);
+    Optional<Image> findImageWithOwner(@Param("imageId") Long imageId);
 
     @Query("SELECT new com.toy.chanygram.dto.image.ImagePopularDto(i.id , COUNT(l) as cnt, i.postImageUrl, i.user.id) " +
             "FROM Image i " +
@@ -45,8 +44,22 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
     @Query("SELECT i FROM Image i " +
             "JOIN FETCH i.user u " +
-            "LEFT JOIN i.tags t " +
-            "WHERE i.id = :imageId")
-    Optional<Image> findImageWithOwner(@Param("imageId") Long imageId);
+            "WHERE (i.id IN (SELECT it.image.id FROM ImageTag it WHERE it.tag.id = :tagId)) " +
+            "AND i.id < :lastImageId")
+    Slice<Image> getImageFromTag(@Param("lastImageId") Long lastImageId,
+                                 @Param("tagId") Long tagId, Pageable pageable);
 
+    @Query("SELECT new com.toy.chanygram.dto.image.ImagePopularDto(i.id , COUNT(l) as cnt, i.postImageUrl) " +
+            "FROM Image i " +
+            "INNER JOIN i.tags t " +
+            "LEFT JOIN i.likes l " +
+            "WHERE t.tag.id = :tagId " +
+            "GROUP BY i.id " +
+            "ORDER BY cnt DESC")
+    Slice<ImagePopularDto> getTopPopularImageByTag(@Param("tagId") Long tagId, Pageable pageable);
+
+    @Query("SELECT COUNT(i) FROM Image i " +
+            "INNER JOIN i.tags t " +
+            "WHERE t.tag.id = :tagId")
+    Long getTotalCountByTag(@Param("tagId") Long tagId);
 }

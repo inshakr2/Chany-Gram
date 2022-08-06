@@ -1,10 +1,7 @@
 package com.toy.chanygram.controller;
 
 import com.toy.chanygram.config.auth.PrincipalDetails;
-import com.toy.chanygram.dto.image.ImageEditRequestDto;
-import com.toy.chanygram.dto.image.ImageEditResponseDto;
-import com.toy.chanygram.dto.image.ImagePopularDto;
-import com.toy.chanygram.dto.image.ImageUploadDto;
+import com.toy.chanygram.dto.image.*;
 import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.service.ImageService;
 import com.toy.chanygram.service.TagService;
@@ -83,9 +80,10 @@ public class ImageController {
     @GetMapping("/images/search")
     public String searchImage(@RequestParam("tag") String tag, Model model) {
 
-        imageService.getSearchProfile(tag);
+        ImageSearchProfileDto searchProfile = imageService.getSearchProfile(tag);
 
         model.addAttribute("tag", tag);
+        model.addAttribute("dto", searchProfile);
 
         return "/images/search";
     }

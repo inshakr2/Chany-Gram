@@ -8,8 +8,9 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ImageProfileDto {
+public class ImageSearchProfileDto {
 
+    public Long tagId;
     public String topImageUrl;
     public Long imageCount;
 }

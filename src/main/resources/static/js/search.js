@@ -1,9 +1,9 @@
-let searchTag = $("#tag").val();
+let searchTagId = $("#tagId").val();
 
 // (1) 검색 페이지 로드하기
-function resultLoad(tag, lastImageId) {
+function resultLoad(tagId, lastImageId) {
 	$.ajax({
-		url:`/api/image/search?tag=${tag}&lastImageId=${lastImageId}`,
+		url:`/api/image/search?tagId=${searchTagId}&lastImageId=${lastImageId}`,
 		type:"GET",
 		dataType:"json"
 	}).done(res=>{
@@ -17,7 +17,7 @@ function resultLoad(tag, lastImageId) {
 }
 // Number.MAX_SAFE_INTEGER (9007199254740991.. 약 9천조)
 // 최초 로딩시 가장 작은 id값이 없기 때문에 해당 값으로 로딩 차후 변경 필요한 시점이 있을 수 있음.
-resultLoad(searchTag, Number.MAX_SAFE_INTEGER);
+resultLoad(searchTagId, Number.MAX_SAFE_INTEGER);
 
 // (1) 스토리 스크롤 페이징
 function getLastImageId() {
@@ -40,7 +40,7 @@ $(window).scroll(() => {
 	if (checkNum < 1 && checkNum > -1) {
 
 		var lastImageId = getLastImageId();
-		resultLoad(searchTag, lastImageId);
+		resultLoad(searchTagId, lastImageId);
 
 	}
 });

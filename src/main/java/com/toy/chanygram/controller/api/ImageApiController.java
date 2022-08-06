@@ -75,12 +75,12 @@ public class ImageApiController {
 
     @GetMapping("/api/image/search")
     public ResponseEntity<?> imageSearch(@RequestParam Long lastImageId,
-                                         @RequestParam String tag) {
+                                         @RequestParam Long tagId) {
 
-        List<ImageSearchResponseDto> images = imageService.searchImageByTag(lastImageId, tag);
+        List<ImageSearchResponseDto> images = imageService.searchImageByTag(lastImageId, tagId);
 
         return new ResponseEntity<>(
-                new CommonResponseDto<>(1, "스토리 가져오기 성공", images), HttpStatus.OK);
+                new CommonResponseDto<>(1, "태그 검색 결과 가져오기 성공", images), HttpStatus.OK);
 
     }
 }
