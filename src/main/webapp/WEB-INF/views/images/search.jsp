@@ -25,11 +25,27 @@
 </section>
 
 <!--검색 결과 -->
-<main class="searchMain">
+<main class="searchPopular">
+	<div>
+		<span>인기 게시물</span>
+	</div>
 	<div class="exploreContainer">
 
 		<!--검색 결과 갤러리(GRID배치)-->
-		<div class="search-gallery" id="searchList">
+		<div class="search-gallery" id="searchPopularList">
+
+		</div>
+
+	</div>
+</main>
+<main class="searchResult">
+	<div>
+		<span>최근 사진</span>
+	</div>
+	<div class="exploreContainer">
+
+		<!--검색 결과 갤러리(GRID배치)-->
+		<div class="search-gallery" id="searchResultList">
 
 		</div>
 
