@@ -45,9 +45,12 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     @Query("SELECT i FROM Image i " +
             "JOIN FETCH i.user u " +
             "WHERE (i.id IN (SELECT it.image.id FROM ImageTag it WHERE it.tag.id = :tagId)) " +
-            "AND i.id < :lastImageId")
+            "AND i.id < :lastImageId " +
+            "AND i.id NOT IN :popularIds")
     Slice<Image> getImageFromTag(@Param("lastImageId") Long lastImageId,
-                                 @Param("tagId") Long tagId, Pageable pageable);
+                                 @Param("tagId") Long tagId,
+                                 @Param("popularIds") List<Long> popularIds ,
+                                 Pageable pageable);
 
     @Query("SELECT new com.toy.chanygram.dto.image.ImagePopularDto(i.id , COUNT(l) as cnt, i.postImageUrl) " +
             "FROM Image i " +

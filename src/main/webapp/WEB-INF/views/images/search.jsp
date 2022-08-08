@@ -9,7 +9,7 @@
 	<div class="search-profile">
 		<div class="search-left">
 			<div class="search-img-wrap">
-				<img class="profile-image" src="/upload/${dto.topImageUrl}"
+				<img class="profile-image" src="/upload/${dto.popularImages[0].postImageUrl}"
 									onerror="this.src='/image/person.jpeg'" id="topImageUrl" />
 			</div>
 		</div>
@@ -26,29 +26,36 @@
 
 <!--검색 결과 -->
 <main class="searchPopular">
-	<div>
-		<span>인기 게시물</span>
-	</div>
 	<div class="exploreContainer">
-
+		<div>
+			<span><h3>인기 게시물</h3></span>
+		</div>
 		<!--검색 결과 갤러리(GRID배치)-->
 		<div class="search-gallery" id="searchPopularList">
+			
+            <c:forEach var="image" items="${dto.popularImages}">
 
+                <div class="p-img-box">
+                    <a href=""> <img src="/upload/${image.postImageUrl}" name="${image.imageId}"/>
+                    </a>
+                </div>
+
+			</c:forEach>
 		</div>
 
 	</div>
 </main>
+
 <main class="searchResult">
-	<div>
-		<span>최근 사진</span>
-	</div>
 	<div class="exploreContainer">
-
-		<!--검색 결과 갤러리(GRID배치)-->
-		<div class="search-gallery" id="searchResultList">
-
+		<div>
+			<span><h3>최근 사진</h3></span>
 		</div>
 
+		<div class="search-gallery" id="searchResult-List">
+
+
+		</div>
 	</div>
 </main>
 <script src="/js/search.js"></script>

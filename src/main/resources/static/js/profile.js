@@ -224,7 +224,6 @@ function modalDetail(imageId) {
 		type:"GET",
 		dataType:"json"
 	}).done(res=>{
-		console.log(res);
 		$(".detail-img-box").append(getImageBox(res.data));
 		$(".detail-comment-box").append(getCommentBox(res.data));
 	}).fail(error=>{

@@ -2,6 +2,7 @@ package com.toy.chanygram.controller.api;
 
 import com.toy.chanygram.config.auth.PrincipalDetails;
 import com.toy.chanygram.dto.CommonResponseDto;
+import com.toy.chanygram.dto.image.ImageSearchPagingDto;
 import com.toy.chanygram.dto.image.ImageSearchResponseDto;
 import com.toy.chanygram.dto.image.ImageStoryDto;
 import com.toy.chanygram.dto.image.ImageDetailDto;
@@ -73,11 +74,10 @@ public class ImageApiController {
 
     }
 
-    @GetMapping("/api/image/search")
-    public ResponseEntity<?> imageSearch(@RequestParam Long lastImageId,
-                                         @RequestParam Long tagId) {
+    @PostMapping("/api/image/search")
+    public ResponseEntity<?> imageSearch(@RequestBody ImageSearchPagingDto imageSearchPagingDto) {
 
-        List<ImageSearchResponseDto> images = imageService.searchImageByTag(lastImageId, tagId);
+        List<ImageSearchResponseDto> images = imageService.searchImageByTag(imageSearchPagingDto);
 
         return new ResponseEntity<>(
                 new CommonResponseDto<>(1, "태그 검색 결과 가져오기 성공", images), HttpStatus.OK);

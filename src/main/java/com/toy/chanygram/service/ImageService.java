@@ -208,10 +208,11 @@ public class ImageService {
         image.editCaption(imageEditRequestDto.getCaption());
     }
 
-    public List<ImageSearchResponseDto> searchImageByTag(Long lastImageId, Long tagId) {
+    public List<ImageSearchResponseDto> searchImageByTag(ImageSearchPagingDto dto) {
 
         PageRequest pageRequest = PageRequest.of(0, 9, Sort.by(DESC, "id"));
-        Slice<Image> imageSearchSlice = imageRepository.getImageFromTag(lastImageId, tagId, pageRequest);
+        Slice<Image> imageSearchSlice = imageRepository.getImageFromTag(
+                dto.getLastImageId(), dto.getTagId(), dto.getPopularIds(), pageRequest);
         List<ImageSearchResponseDto> imageSearchResults = new ArrayList<>();
 
         imageSearchSlice.forEach(
@@ -236,14 +237,15 @@ public class ImageService {
 
         Long tagId = tagEntity.getId();
 
-        // Top N 쿼리 대안으로 size 1 페이징 처리
-        PageRequest pageRequest = PageRequest.of(0, 1);
+        // Top N 쿼리 대안으로 페이징 처리
+        PageRequest pageRequest = PageRequest.of(0, 9);
         Slice<ImagePopularDto> topImageSlice = imageRepository.getTopPopularImageByTag(tagId, pageRequest);
-        ImagePopularDto imagePopularDto = topImageSlice.getContent().get(0);
+        List<ImagePopularDto> popularImages = topImageSlice.getContent();
 
         Long totalCnt = imageRepository.getTotalCountByTag(tagId);
 
-        ImageSearchProfileDto imageSearchProfileDto = new ImageSearchProfileDto(tagId, imagePopularDto.getPostImageUrl(), totalCnt);
+        ImageSearchProfileDto imageSearchProfileDto = new ImageSearchProfileDto(
+                tagId, totalCnt, popularImages);
 
         return imageSearchProfileDto;
     }
