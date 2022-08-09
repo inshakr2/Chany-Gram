@@ -21,6 +21,11 @@
   grid-gap: 15px;
 }
 
+.popular .exploreContainer .popular-gallery .p-img-box {
+  position: relative;
+  height: 293px;
+}
+
 .popular .exploreContainer .popular-gallery .p-img-box img {
   display: block;
   width: 100%;

@@ -104,6 +104,14 @@
 .searchPopular
  .exploreContainer
  .search-gallery 
+ .p-img-box {
+  position: relative;
+  height: 293px;
+}
+
+.searchPopular
+ .exploreContainer
+ .search-gallery 
  .p-img-box img {
   display: block;
   width: 100%;
@@ -133,8 +141,313 @@
 .searchResult
  .exploreContainer 
  .search-gallery 
+ .p-img-box {
+  position: relative;
+  height: 293px;
+}
+
+.searchResult
+ .exploreContainer 
+ .search-gallery 
  .p-img-box img {
   display: block;
   width: 100%;
   height: 100%;
+}
+
+
+/* 이미지 상세 */
+.modal-detail {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.700);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-detail .detail {
+  width: 70%;
+  height: 85%;
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-detail .detail .detail-header {
+  line-height: 50px;
+  font-weight: bold;
+  border-bottom: 1px;
+  position: relative;
+  margin-bottom: 3%;
+}
+
+.modal-detail .detail .detail-header button {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  background-color: transparent;
+  border: 0;
+}
+
+.modal-detail .detail .detail-header button i {
+  font-size: 20px;
+  color: rgb(0, 0, 0);
+}
+
+.modal-detail .detail .grid-container {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-template-rows: minmax(min-content, 500px);
+  column-gap: 10px;
+}
+
+/*이미지 상세 img box 영역*/
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-img-box 
+  .sl__item__header {
+  width: 100%;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  margin-left: 5%;
+}
+
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-img-box 
+  .sl__item__header div {
+  margin-left: 10px;
+}
+
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-img-box
+  .sl__item__header
+  div:nth-child(1) {
+  width: 40px;
+  height: 40px;
+  padding: 3px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-img-box
+  .sl__item__header
+  div:nth-child(1)
+  img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+/* 게시물 이미지 박스*/
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-img-box 
+  .sl__item__img {
+  max-width: 85%;
+  /* max-height: 70%; */
+  display: block;
+  margin: 0px auto;
+}
+
+/* 게시물 이미지*/
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-img-box 
+  .sl__item__img img {
+    width: 100%;
+    height: 100%;
+    max-height: 500px;
+    object-fit: scale-down;
+}
+
+/* 이미지 상세 Comment Box 역역 */
+
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents {
+  display: flex;
+  flex-direction: column;
+}
+
+/*좋아요 버튼영역*/
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents
+  .sl__item__contents__icon {
+  height: 40px;
+  padding: 5px 0;
+  margin-top: 10%;    
+}
+
+/*좋아요 실제 버튼*/
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents
+  .sl__item__contents__icon
+  button {
+  background-color: transparent;
+  width: 40px;
+  font-size: 25px;
+  
+  border: 0;
+  cursor: pointer;
+}
+
+/*게시물 내용*/
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents
+  .sl__item__contents__content {
+  padding: 5px 15px;
+}
+
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents
+  .tag {
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents
+  .tag .tag-span {
+  color: cornflowerblue;
+  cursor: pointer;
+}
+
+/*게시물 like 갯수스타일*/
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents
+  .sl__item__contents__icon .like{
+	background-color: transparent;
+	border: 0;
+	color: #aaa;
+	font-size: 14px;
+	margin-bottom: 5px;
+	text-indent: 15px;
+}
+/*게시물 좋아요 count값 */
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents
+  .sl__item__contents__icon .like b{
+	margin-right: 5px;
+}
+
+/*태그영역*/
+.sl__item__contents__tags{
+  height: 40px;
+  padding: 5px 10px;  
+  color: #0080ff;
+}
+
+/*코멘트 = 댓글 */
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents
+  .sl__item__contents__comment
+  {
+  display:flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background-color: transparent;
+  color: #000;
+  font-size: 16px;
+  padding: 0 15px;
+  margin-bottom: 5px;
+}
+
+/*댓글 삭제버튼*/
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents
+.sl__item__contents__comment button{ border: none; outline: none; background: #fff; cursor: pointer;}
+
+/* 댓글 입력창*/
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__input {
+  display: flex;
+  border-top: 1px solid #dbdbdb;
+  margin-top: 10px;
+  margin-right: 15px;
+}
+
+/*입력 인풋*/
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__input input {
+  flex: 9;
+  height: 56px;
+  border: 0;
+  padding-left: 15px;
+}
+/* 입력하기 버튼 */
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__input button {
+  flex: 1;
+  height: 56px;
+  border: 0;
+  background-color: transparent;
+  font-weight: 500;
+  color: #0095f6;
+  font-size: 14px;
+}
+
+
+.modal-detail 
+  .detail 
+  .grid-container 
+  .detail-comment-box
+  .sl__item__contents
+  .sl__item__contents__icon
+  button:first-child
+  .active {
+  color: red;
 }

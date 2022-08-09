@@ -35,8 +35,8 @@
 			
             <c:forEach var="image" items="${dto.popularImages}">
 
-                <div class="p-img-box">
-                    <a href=""> <img src="/upload/${image.postImageUrl}" name="${image.imageId}"/>
+                <div class="p-img-box" onclick="modalDetail(${image.imageId})">
+                    <a href="#"> <img src="/upload/${image.postImageUrl}" name="${image.imageId}"/>
                     </a>
                 </div>
 
@@ -58,6 +58,44 @@
 		</div>
 	</div>
 </main>
+
+<!-- 이미지 상세 모달 -->
+
+<div class="modal-detail">
+	<div class="detail">
+		<div class="detail-header">
+			<span>
+			<button onclick="modalDetailClose()">
+				<i class="fas fa-times"></i>
+			</button>
+
+		</div>
+
+		
+		<div class="grid-container">
+			
+				<!-- image 영역 -->
+				<div class="detail-img-box">
+
+					
+
+				</div>
+
+				<!-- 부가정보 영역 -->
+				<div class="detail-comment-box">
+
+
+
+
+
+				</div>
+
+		</div>
+	</div>
+</div>
+
+
 <script src="/js/search.js"></script>
+<script src="/js/profile.js"></script>
 <%@ include file="../layout/footer.jsp"%>
 

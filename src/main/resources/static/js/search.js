@@ -59,9 +59,10 @@ $(window).scroll(() => {
 
 
 function getResultItem(image) {
-	let item = `<div class="p-img-box" id="${image.imageId}">
-	<a href=""> <img src="/upload/${image.postImageUrl}" />
+	let item = `<div class="p-img-box" onclick="modalDetail(${image.imageId})" id="${image.imageId}">
+	<a href="#"> <img src="/upload/${image.postImageUrl}" />
 	</a>
 </div>`
 	return item;
 }
+
