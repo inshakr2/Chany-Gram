@@ -154,10 +154,12 @@ public class ImageService {
     }
 
     @Transactional(readOnly = true)
-    public List<ImagePopularDto> getPopularImage() {
+    public List<ImagePopularDto> getPopularImage(int page) {
 
-        List<ImagePopularDto> images = imageRepository.fetchPopularImage();
-        return images;
+        PageRequest pageRequest = PageRequest.of(page, 9);
+        Slice<ImagePopularDto> images = imageRepository.fetchPopularImage(pageRequest);
+
+        return images.getContent();
     }
 
     public void deleteImage(Long imageId) {

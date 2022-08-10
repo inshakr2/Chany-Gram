@@ -40,7 +40,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
             "LEFT JOIN i.likes l " +
             "GROUP BY i.id " +
             "ORDER BY cnt DESC")
-    List<ImagePopularDto> fetchPopularImage();
+    Slice<ImagePopularDto> fetchPopularImage(Pageable pageable);
 
     @Query("SELECT i FROM Image i " +
             "JOIN FETCH i.user u " +

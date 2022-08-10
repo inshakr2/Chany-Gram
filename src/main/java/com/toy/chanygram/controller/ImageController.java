@@ -30,9 +30,6 @@ public class ImageController {
     @GetMapping("/images/popular")
     public String popular(Model model) {
 
-        List<ImagePopularDto> popularImage = imageService.getPopularImage();
-        model.addAttribute("popularImage", popularImage);
-
         return "/images/popular";
     }
 

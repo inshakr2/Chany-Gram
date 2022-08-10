@@ -2,10 +2,7 @@ package com.toy.chanygram.controller.api;
 
 import com.toy.chanygram.config.auth.PrincipalDetails;
 import com.toy.chanygram.dto.CommonResponseDto;
-import com.toy.chanygram.dto.image.ImageSearchPagingDto;
-import com.toy.chanygram.dto.image.ImageSearchResponseDto;
-import com.toy.chanygram.dto.image.ImageStoryDto;
-import com.toy.chanygram.dto.image.ImageDetailDto;
+import com.toy.chanygram.dto.image.*;
 import com.toy.chanygram.service.ImageService;
 import com.toy.chanygram.service.LikesService;
 import lombok.RequiredArgsConstructor;
@@ -82,5 +79,14 @@ public class ImageApiController {
         return new ResponseEntity<>(
                 new CommonResponseDto<>(1, "태그 검색 결과 가져오기 성공", images), HttpStatus.OK);
 
+    }
+
+    @GetMapping("/api/image/popular")
+    public ResponseEntity<?> imagesPopular(@RequestParam int page) {
+
+        List<ImagePopularDto> images = imageService.getPopularImage(page);
+
+        return new ResponseEntity<>(
+                new CommonResponseDto<>(1, "인기 게시물 가져오기 성공", images), HttpStatus.OK);
     }
 }
