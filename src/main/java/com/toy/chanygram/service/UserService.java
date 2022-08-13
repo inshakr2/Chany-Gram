@@ -2,7 +2,6 @@ package com.toy.chanygram.service;
 
 import com.toy.chanygram.domain.User;
 import com.toy.chanygram.dto.user.UserProfileDto;
-import com.toy.chanygram.dto.user.UserSearchResultDto;
 import com.toy.chanygram.dto.user.UserUpdateDto;
 import com.toy.chanygram.exception.CustomValidationApiException;
 import com.toy.chanygram.exception.CustomValidationException;
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -126,13 +124,4 @@ public class UserService {
         log.info("회원탈퇴 : [" + principalId + "]");
     }
 
-    public List<UserSearchResultDto> search(String username, Long principalId) {
-
-        List<UserSearchResultDto> findList = userRepository.searchByUsername(username, principalId);
-
-        // 검색결과 본인 계정은 제외
-        findList.removeIf(f -> f.getUserId().equals(principalId));
-
-        return findList;
-    }
 }

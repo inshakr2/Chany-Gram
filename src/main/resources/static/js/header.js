@@ -39,15 +39,16 @@ $(".search-bar_input").on("change input", function() {
     if(keyword != "") {
         $.ajax({
             type:'POST',
-            url:"/api/user/search",
-            data:{username:keyword}
+            url:"/api/search",
+            data:{searchKeywords:keyword}
         }).done(res=>{
             $(".search-list").empty();
-
+/*
             res.data.forEach((u)=> {
                 let item = getSearchModalList(u);
                 $(".search-list").append(item);
             });
+*/            
         }).fail(error=>{
             console.log(error);
         });
