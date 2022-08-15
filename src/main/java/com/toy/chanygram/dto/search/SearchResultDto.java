@@ -19,7 +19,7 @@ public class SearchResultDto implements Comparable<SearchResultDto> {
     private String userProfileImageUrl;
     private boolean subscribeStatus;
 
-    // 최종 반환시 정렬을 위한 필드로 User = 팔로워 수, Tag = 게시물 수 저장
+    // 최종 반환시 정렬을 위한 필드로 User = 팔로워 수, Tag = 게시물 수
     private Long count;
 
     @Override

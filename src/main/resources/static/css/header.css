@@ -191,7 +191,7 @@
  .search-list
  .search__item
  .search__text
- .text_username {
+ .text_result {
   flex: 1;
 }
 .search_box
@@ -205,11 +205,23 @@
   font-family: 'Spoqa Han Sans Neo', 'sans-serif';
   color: rgba(175, 168, 168, 0.8);
 }
+
 .search_box
  .search
  .search-list
  .search__item
  .search__text
- .text_username h2 {
+ .text_count {
+  flex: 1;
+  font-size: 14px;
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+}
+
+.search_box
+ .search
+ .search-list
+ .search__item
+ .search__text
+ .text_result h2 {
   font-size: 16px;
 }
