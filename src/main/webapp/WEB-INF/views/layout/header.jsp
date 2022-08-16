@@ -34,6 +34,10 @@
 	<!-- Fonts -->
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
 	<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css' rel='stylesheet' type='text/css'>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">    	
 	<!-- a Tag -->
 	<style type="text/css">
 		a:link { color: black; text-decoration: none;}	
@@ -49,9 +53,9 @@
 
 	<header class="header">
 		<div class="container">
-			<a href="/" class="logo">
-				<img src="/image/logo.jpg" alt="">
-			</a>
+			<button class="logo" type="button" onclick="location.href='/'">
+				<p class="logo_txt">ChanyGram</p>
+			</button>
 
 			<div class="search_form">
     			<input class="search-bar_input" type="search" placeholder="검색" 

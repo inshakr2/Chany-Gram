@@ -10,6 +10,10 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
         integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -21,7 +25,7 @@
                 <article class="login__form__container">
                    <!--로그인 폼-->
                    <div class="login__form">
-                        <h1><img src="/image/logo.jpg" alt=""></h1>
+                        <p style="font-family: 'Pacifico', cursive; font-size: 36px">ChanyGram</p>
                         
                         <!--로그인 인풋-->
                         <form class="login__input" action="/auth/signin" method="post">
