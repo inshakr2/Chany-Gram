@@ -43,7 +43,7 @@ function getSearchTagList(data) {
 		</div>
 		<div class="search__text">
             <div class="text_result">
-                <a href="images/search?tag=${data.tag}">
+                <a href="/images/search?tag=${data.tag}">
                     <h2>#${data.tag}</h2>
                 </a>
             </div>
