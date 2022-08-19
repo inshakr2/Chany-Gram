@@ -21,11 +21,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringJoiner;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
@@ -51,6 +49,8 @@ public class ImageService {
         Slice<Image> imageForStory = imageRepository.getImageForStory(principalId, lastImageId, pageRequest);
         List<ImageStoryDto> imageStoryDtoList = new ArrayList<>();
 
+        HashMap<Long, List<Long>> tagMapper = new HashMap<>();
+
         //TODO: like 정보와 comment 정보 fetch 시킬 수 있도록 개선 필요, 현재 우선 page size 상향 조정 하였음.
         imageForStory.forEach(
                 image -> {
@@ -66,8 +66,22 @@ public class ImageService {
                             getCommentResponseDto(image.getComments()),
                             getTagsList(image.getTags())
                     ));
+
+
+                    tagMapper.put(image.getId(),
+                            image.getTags().stream().
+                                    map(ImageTag::getTag).
+                                    map(Tag::getId).collect(Collectors.toList()));
                 }
         );
+
+        // tagIds로 태그 다 가져오고..
+        // 이미지 아이디에 맞게 맵핑 List<String>
+        List<Long> tagIds = tagMapper.values().stream()
+                .flatMap(Collection::stream)
+                .collect(Collectors.toList());
+
+        List<String> tags = tagRepository.findTagsByIds(tagIds);
 
         return imageStoryDtoList;
     }

@@ -18,6 +18,9 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
     @Query("SELECT t.tag FROM Tag t WHERE t.id IN :tagIds")
     List<String> findTagsByIds(@Param("tagIds") List<Long> tagIds);
 
+    @Query("SELECT t.id, t.tag FROM Tag t WHERE t.id IN :tagIds")
+    List<String> findTagsWithIdByIds(@Param("tagIds") List<Long> tagIds);
+
     @Query("SELECT DISTINCT new com.toy.chanygram.dto.search.SearchResultDto" +
             "(True, t.tag, " +
             "(SELECT COUNT(it) FROM ImageTag it WHERE it.tag.id = t.id)) " +
