@@ -4,6 +4,7 @@ import com.toy.chanygram.config.auth.PrincipalDetails;
 import com.toy.chanygram.domain.*;
 import com.toy.chanygram.dto.comment.CommentResponseDto;
 import com.toy.chanygram.dto.image.*;
+import com.toy.chanygram.dto.tag.TagWithId;
 import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.repository.ImageRepository;
 import com.toy.chanygram.repository.ImageTagRepository;
@@ -64,8 +65,8 @@ public class ImageService {
                             image.getUser().getUsername(),
                             image.getUser().getProfileImageUrl(),
                             getCommentResponseDto(image.getComments()),
-                            getTagsList(image.getTags())
-                    ));
+                            null)
+                    );
 
 
                     tagMapper.put(image.getId(),
@@ -75,15 +76,35 @@ public class ImageService {
                 }
         );
 
-        // tagIds로 태그 다 가져오고..
-        // 이미지 아이디에 맞게 맵핑 List<String>
+        setTagList(imageStoryDtoList, tagMapper);
+
+        return imageStoryDtoList;
+    }
+
+    private void setTagList(List<ImageStoryDto> imageStoryDtoList, HashMap<Long, List<Long>> tagMapper) {
         List<Long> tagIds = tagMapper.values().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
 
-        List<String> tags = tagRepository.findTagsByIds(tagIds);
+        HashMap<Long, String> resultMap = new HashMap<>();
+        List<TagWithId> result = tagRepository.findTagsWithIdByIds(tagIds);
+        result.forEach(
+                t -> {
+                    if(!resultMap.containsKey(t.getTagId())) {
+                        resultMap.put(t.getTagId(), t.getTag());
+                    }
+                }
+        );
 
-        return imageStoryDtoList;
+        imageStoryDtoList.forEach(
+                i -> {
+                    List<String> tagList = tagMapper.get(i.getImageId()).stream()
+                            .map(resultMap::get)
+                            .collect(Collectors.toList());
+
+                    i.setTags(tagList);
+                }
+        );
     }
 
     public ImageDetailDto getImageDetail(Long principalId, Long imageId) {

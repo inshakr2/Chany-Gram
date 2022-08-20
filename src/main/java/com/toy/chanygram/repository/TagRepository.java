@@ -2,6 +2,7 @@ package com.toy.chanygram.repository;
 
 import com.toy.chanygram.domain.Tag;
 import com.toy.chanygram.dto.search.SearchResultDto;
+import com.toy.chanygram.dto.tag.TagWithId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,8 +19,8 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
     @Query("SELECT t.tag FROM Tag t WHERE t.id IN :tagIds")
     List<String> findTagsByIds(@Param("tagIds") List<Long> tagIds);
 
-    @Query("SELECT t.id, t.tag FROM Tag t WHERE t.id IN :tagIds")
-    List<String> findTagsWithIdByIds(@Param("tagIds") List<Long> tagIds);
+    @Query("SELECT new com.toy.chanygram.dto.tag.TagWithId(t.id, t.tag) FROM Tag t WHERE t.id IN :tagIds")
+    List<TagWithId> findTagsWithIdByIds(@Param("tagIds") List<Long> tagIds);
 
     @Query("SELECT DISTINCT new com.toy.chanygram.dto.search.SearchResultDto" +
             "(True, t.tag, " +

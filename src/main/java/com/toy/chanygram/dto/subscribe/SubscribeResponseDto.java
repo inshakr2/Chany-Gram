@@ -5,7 +5,6 @@ import lombok.*;
 @Getter @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class SubscribeResponseDto {
 
     private long userId;
