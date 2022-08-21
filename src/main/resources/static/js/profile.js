@@ -236,7 +236,8 @@ function modalDetail(imageId) {
 // (11) 이미지 상세 모달 닫기
 function modalDetailClose() {
 	$(".modal-detail").css("display", "none");
-	location.reload();
+	$(".detail-img-box").empty();
+	$(".detail-comment-box").empty();
 }
 
 function getImageBox(image) {

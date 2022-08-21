@@ -76,12 +76,12 @@ public class ImageService {
                 }
         );
 
-        setTagList(imageStoryDtoList, tagMapper);
+        mappingTags(imageStoryDtoList, tagMapper);
 
         return imageStoryDtoList;
     }
 
-    private void setTagList(List<ImageStoryDto> imageStoryDtoList, HashMap<Long, List<Long>> tagMapper) {
+    private void mappingTags(List<ImageStoryDto> imageStoryDtoList, HashMap<Long, List<Long>> tagMapper) {
         List<Long> tagIds = tagMapper.values().stream()
                 .flatMap(Collection::stream)
                 .collect(Collectors.toList());
