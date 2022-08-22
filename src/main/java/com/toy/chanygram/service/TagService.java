@@ -2,6 +2,7 @@ package com.toy.chanygram.service;
 
 import com.toy.chanygram.domain.Tag;
 import com.toy.chanygram.dto.image.ImageUploadDto;
+import com.toy.chanygram.dto.tag.TagWithId;
 import com.toy.chanygram.repository.ImageTagRepository;
 import com.toy.chanygram.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -24,39 +26,50 @@ public class TagService {
     private final ImageTagRepository imageTagRepository;
 
     public void mappingImage(ImageUploadDto imageUploadDto, Long imageId) {
-        List<String> tagString = splitTag(imageUploadDto.getTag());
+        List<String> requestTags = splitTag(imageUploadDto.getTag());
+        List<TagWithId> existsTagWithId = tagRepository.findTagsByTags(requestTags);
 
-        for (String t : tagString) {
-            Tag tag = tagRepository.findByTag(t).orElseGet(
-                    () -> tagRepository.save(new Tag(t))
-            );
+        List<String> existsTag = existsTagWithId.stream().map(TagWithId::getTag).collect(Collectors.toList());
+        requestTags.removeIf(t -> existsTag.contains(t));
+        for (String t : requestTags) {
+            Tag newTag = tagRepository.save(new Tag(t));
 
-            imageTagRepository.mappingImageWithTags(imageId, tag.getId());
+            existsTagWithId.add(new TagWithId(newTag.getId(), t));
         }
+
+        existsTagWithId.forEach(
+                t -> {
+                    imageTagRepository.mappingImageWithTags(imageId, t.getTagId());
+                }
+        );
 
     }
 
     public void editMappingImage(Long imageId, String orgTag, String newTag) {
 
-        System.out.println("orgTag = " + orgTag);
-        System.out.println("newTag = " + newTag);
         if (orgTag != newTag) {
-
-            List<String> newTags = splitTag(newTag);
 
             // image tag 매핑 정보 초기화 후 재 매핑
             imageTagRepository.deleteByImageId(imageId);
 
-            for (String t : newTags) {
-                Tag tag = tagRepository.findByTag(t).orElseGet(
-                        () -> tagRepository.save(new Tag(t))
-                );
+            List<String> requestTags = splitTag(newTag);
+            List<TagWithId> existsTagWithId = tagRepository.findTagsByTags(requestTags);
 
-                imageTagRepository.mappingImageWithTags(imageId, tag.getId());
+            List<String> existsTag = existsTagWithId.stream().map(TagWithId::getTag).collect(Collectors.toList());
+            requestTags.removeIf(t -> existsTag.contains(t));
+
+            for (String t : requestTags) {
+                Tag newTagEntity = tagRepository.save(new Tag(t));
+
+                existsTagWithId.add(new TagWithId(newTagEntity.getId(), t));
             }
 
+            existsTagWithId.forEach(
+                    t -> {
+                        imageTagRepository.mappingImageWithTags(imageId, t.getTagId());
+                    }
+            );
         }
-
     }
 
     private List<String> splitTag(String rawTag) {
