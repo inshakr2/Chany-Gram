@@ -41,7 +41,7 @@ public class Image extends BaseTimeEntity{
     private List<Comment> comments;
 
     @JsonIgnoreProperties({"image"})
-    @OneToMany(mappedBy = "image")
+    @OneToMany(mappedBy = "image", orphanRemoval = true)
     private List<ImageTag> tags = new ArrayList<>();
 
     public Image(String caption, String imageFullPath, User user) {

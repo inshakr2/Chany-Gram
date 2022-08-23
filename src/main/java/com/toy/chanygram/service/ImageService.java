@@ -199,6 +199,21 @@ public class ImageService {
 
     public void deleteImage(Long imageId) {
 
+        Image image = imageRepository.findById(imageId).orElseThrow(
+                () -> {
+                    log.info("유효성 검사 실패 [존재하지 않는 이미지입니다.]");
+                    return new CustomValidationException("존재하지 않는 이미지입니다.", null);
+                }
+        );
+
+        Path path = Paths.get(uploadPath + image.getPostImageUrl());
+        try {
+            Files.deleteIfExists(path);
+        } catch (IOException e) {
+            log.error("I/O error occurred during image delete : [" + imageId + "]");
+            e.printStackTrace();
+        }
+
         imageRepository.deleteById(imageId);
 
     }
