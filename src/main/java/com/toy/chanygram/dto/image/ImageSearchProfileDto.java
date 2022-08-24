@@ -15,4 +15,5 @@ public class ImageSearchProfileDto {
     public Long tagId;
     public Long imageCount;
     public List<ImagePopularDto> popularImages;
+    public boolean enoughImage;
 }

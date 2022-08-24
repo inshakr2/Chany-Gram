@@ -46,18 +46,24 @@
 	</div>
 </main>
 
-<main class="searchResult">
-	<div class="exploreContainer">
-		<div>
-			<span><h3>최근 사진</h3></span>
-		</div>
 
-		<div class="search-gallery" id="searchResult-List">
+<c:choose>
+	<c:when test="${dto.enoughImage}">
+		<main class="searchResult">
+			<div class="exploreContainer">
+				<div>
+					<span><h3>최근 사진</h3></span>
+				</div>
+
+				<div class="search-gallery" id="searchResult-List">
 
 
-		</div>
-	</div>
-</main>
+				</div>
+			</div>
+		</main>
+	</c:when>
+</c:choose>
+
 
 <!-- 이미지 상세 모달 -->
 

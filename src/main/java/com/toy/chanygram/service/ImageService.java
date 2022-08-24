@@ -289,15 +289,21 @@ public class ImageService {
 
         Long tagId = tagEntity.getId();
 
+        boolean enoughImage = false;
         // Top N 쿼리 대안으로 페이징 처리
-        PageRequest pageRequest = PageRequest.of(0, 9);
+        PageRequest pageRequest = PageRequest.of(0, 10);
         Slice<ImagePopularDto> topImageSlice = imageRepository.getTopPopularImageByTag(tagId, pageRequest);
-        List<ImagePopularDto> popularImages = topImageSlice.getContent();
+        List<ImagePopularDto> popularImages = new ArrayList<>(topImageSlice.getContent());
+
+        if (popularImages.size() > 9) {
+            enoughImage = true;
+            popularImages.remove(9);
+        }
 
         Long totalCnt = imageRepository.getTotalCountByTag(tagId);
 
         ImageSearchProfileDto imageSearchProfileDto = new ImageSearchProfileDto(
-                tagId, totalCnt, popularImages);
+                tagId, totalCnt, popularImages, enoughImage);
 
         return imageSearchProfileDto;
     }
