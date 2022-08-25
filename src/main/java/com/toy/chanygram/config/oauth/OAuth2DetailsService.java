@@ -27,8 +27,6 @@ public class OAuth2DetailsService extends DefaultOAuth2UserService {
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
         String userNameAttributeKey = userRequest.getClientRegistration()
                                             .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
-        System.out.println("registrationId = " + registrationId);
-        System.out.println("userNameAttributeName = " + userNameAttributeKey);
 
         Map<String, Object> userInfo = super.loadUser(userRequest).getAttributes();
 

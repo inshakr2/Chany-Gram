@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final OAuth2DetailsService oAuth2DetailsService;
+    private final AuthenticationFailureHandler failureHandler;
 
     @Bean
     public BCryptPasswordEncoder encodePWD() {
@@ -30,10 +32,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().loginPage("/auth/signin")
                 .loginProcessingUrl("/auth/signin")
+                .failureHandler(failureHandler)
                 .defaultSuccessUrl("/")
                 .and()
                 .oauth2Login()
                 .userInfoEndpoint()
                 .userService(oAuth2DetailsService);
+
     }
 }

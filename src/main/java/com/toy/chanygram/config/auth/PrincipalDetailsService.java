@@ -20,9 +20,8 @@ public class PrincipalDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         User principal = userRepository.findByUsername(username).orElseThrow(()
-                -> {
-            return new UsernameNotFoundException("해당 사용자를 찾을 수 없습니다. :" + username);
-        });
+                -> new UsernameNotFoundException("해당 사용자를 찾을 수 없습니다. :" + username)
+        );
 
         return new PrincipalDetails(principal);
     }

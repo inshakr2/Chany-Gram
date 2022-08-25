@@ -4,6 +4,7 @@ import com.toy.chanygram.dto.auth.SignupDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Map;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @Getter @Setter
 @NoArgsConstructor
+@Slf4j
 public class OAuthAttributes {
 
     public static SignupDto of(String registrationId, String nameAttributeKey, Map<String, Object> attributes) {
@@ -29,8 +31,7 @@ public class OAuthAttributes {
     }
 
     private static SignupDto ofNaver(String nameAttributeKey, Map<String, Object> attributes) {
-        System.out.println("nameAttributeKey = " + nameAttributeKey);
-        System.out.println("attributes = " + attributes);
+        log.info("OAUTH2 Access : [NAVER]" );
 
         Map <String, Object> naver_account = (Map <String, Object>) attributes.get(nameAttributeKey);
 
@@ -46,8 +47,8 @@ public class OAuthAttributes {
     }
 
     private static SignupDto ofKakao(String nameAttributeKey, Map<String, Object> attributes) {
-        System.out.println("nameAttributeKey = " + nameAttributeKey);
-        System.out.println("attributes = " + attributes);
+        log.info("OAUTH2 Access : [KAKAO]");
+
         String username = "KK_" + String.valueOf(attributes.get(nameAttributeKey));
         String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
 
@@ -61,6 +62,7 @@ public class OAuthAttributes {
     }
 
     private static SignupDto ofGoogle(String nameAttributeKey, Map<String, Object> attributes) {
+        log.info("OAUTH2 Access : [GOOGLE]" );
 
         String username = "GG_" + (String) attributes.get(nameAttributeKey);
         String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());
@@ -71,6 +73,7 @@ public class OAuthAttributes {
     }
 
     private static SignupDto ofFacebook(String nameAttributeKey, Map<String, Object> attributes) {
+        log.info("OAUTH2 Access : [FACEBOOK]" );
 
         String username = "FB_" + (String) attributes.get(nameAttributeKey);
         String password = new BCryptPasswordEncoder().encode(UUID.randomUUID().toString());

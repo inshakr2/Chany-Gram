@@ -69,7 +69,16 @@
                             </button>
                         </div>
                         <!-- Oauth 소셜로그인end -->
+                        <c:choose>
+                            <c:when test="${error}">
+                                <p style="font-size: 20px; color: red; padding-top: 5%;">${exception}</p>
+                            </c:when>
+                        </c:choose>
                     </div>
+
+                    
+
+
                     
                     <!--계정이 없으신가요?-->
                     <div class="login__register">
