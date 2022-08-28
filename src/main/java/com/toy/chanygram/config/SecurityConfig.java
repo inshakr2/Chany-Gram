@@ -42,16 +42,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userService(oAuth2DetailsService);
 
     }
-
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-        daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
-
-        return daoAuthenticationProvider;
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(daoAuthenticationProvider());
-    }
 }
