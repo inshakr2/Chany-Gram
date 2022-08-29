@@ -1,6 +1,7 @@
 package com.toy.chanygram.repository;
 
 import com.toy.chanygram.domain.Image;
+import com.toy.chanygram.domain.User;
 import com.toy.chanygram.dto.image.ImagePopularDto;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -65,4 +66,9 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
             "INNER JOIN i.tags t " +
             "WHERE t.tag.id = :tagId")
     Long getTotalCountByTag(@Param("tagId") Long tagId);
+
+    @Query("SELECT i FROM Image i " +
+            "LEFT JOIN i.likes " +
+            "WHERE u.id = :userId")
+    Slice<Image> findImagesWithLikes(@Param("userId") Long userId, Pageable pageable);
 }

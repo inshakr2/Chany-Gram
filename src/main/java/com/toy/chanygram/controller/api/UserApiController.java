@@ -3,8 +3,10 @@ package com.toy.chanygram.controller.api;
 import com.toy.chanygram.config.auth.PrincipalDetails;
 import com.toy.chanygram.domain.User;
 import com.toy.chanygram.dto.CommonResponseDto;
+import com.toy.chanygram.dto.image.ImagesWithLikesDto;
 import com.toy.chanygram.dto.subscribe.SubscribeResponseDto;
 import com.toy.chanygram.dto.user.UserUpdateDto;
+import com.toy.chanygram.service.ImageService;
 import com.toy.chanygram.service.SubscribeService;
 import com.toy.chanygram.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,18 @@ public class UserApiController {
 
     private final UserService userService;
     private final SubscribeService subscribeService;
+    private final ImageService imageService;
+
+
+    @GetMapping("/api/user/{userId}")
+    public ResponseEntity<?> imageProfile(@PathVariable Long userId,
+                                          @RequestParam int page) {
+
+        List<ImagesWithLikesDto> profileImages = imageService.getProfileImage(page, userId);
+
+        return new ResponseEntity<>(
+                new CommonResponseDto<>(1, "프로필 게시물 가져오기 성공", profileImages), HttpStatus.OK);
+    }
 
     @PutMapping("/api/user/{principalId}/profileImage")
     public ResponseEntity<?> profileImageUpdate(@PathVariable long principalId,
