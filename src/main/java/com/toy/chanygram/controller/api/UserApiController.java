@@ -31,9 +31,8 @@ public class UserApiController {
     private final ImageService imageService;
 
 
-    @GetMapping("/api/user/{userId}")
-    public ResponseEntity<?> imageProfile(@PathVariable Long userId,
-                                          @RequestParam int page) {
+    @GetMapping("/api/user")
+    public ResponseEntity<?> imageProfile(@RequestParam int page, @RequestParam Long userId) {
 
         List<ImagesWithLikesDto> profileImages = imageService.getProfileImage(page, userId);
 

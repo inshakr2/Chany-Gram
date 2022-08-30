@@ -4,6 +4,7 @@
 <%@ include file="../layout/header.jsp"%>
 
 <!--프로필 섹션-->
+<input type="hidden" id="pageUserId" value="${dto.userId}" />
 <section class="profile">
 	<!--유저정보 컨테이너-->
 	<div class="profileContainer">
@@ -109,7 +110,7 @@
 
 				<!--아이템들-->
 
-                <c:forEach var="image" items="${dto.images}">
+                <%-- <c:forEach var="image" items="${dto.images}">
                     <div class="img-box" onclick="modalDetail(${image.imageId})">
 
 							<a href=""> 
@@ -123,7 +124,7 @@
                         </div>
 
                     </div>
-                </c:forEach>
+                </c:forEach> --%>
 
 				<!--아이템들end-->
 			</div>

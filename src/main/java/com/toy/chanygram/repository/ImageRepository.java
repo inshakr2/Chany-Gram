@@ -67,7 +67,8 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
             "WHERE t.tag.id = :tagId")
     Long getTotalCountByTag(@Param("tagId") Long tagId);
 
-    @Query("SELECT i FROM Image i " +
+    @Query("SELECT DISTINCT i FROM Image i " +
+            "JOIN FETCH i.user u " +
             "LEFT JOIN i.likes " +
             "WHERE u.id = :userId")
     Slice<Image> findImagesWithLikes(@Param("userId") Long userId, Pageable pageable);

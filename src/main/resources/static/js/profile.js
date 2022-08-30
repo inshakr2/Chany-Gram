@@ -1,5 +1,6 @@
 /**
   1. 유저 프로파일 페이지
+  (0) 프로필 이미지 페이징
   (1) 유저 프로파일 페이지 구독하기, 구독취소
   (2) 팔로워 정보 모달 보기
   (3) 팔로잉 리스트 모달 정보 (추가)
@@ -10,6 +11,62 @@
   (8) 구독자 정보 모달 닫기
   (9) 회원 탈퇴
  */
+
+
+  // 프로필 이미지 페이징
+var page = 0;
+var userId = $("#pageUserId").val();
+
+// (0) 프로필 페이지 이미지 로드
+function resultLoad(page, userId) {
+	$.ajax({
+		url:`/api/user?page=${page}&userId=${userId}`,
+		type:"GET",
+		dataType:"json"
+	}).done(res=>{
+		res.data.forEach((image)=>{
+			let item = getResultItem(image);
+			$(".tab-1-content-inner").append(item);
+		})
+	}).fail(error=>{
+		console.log(error);
+	});
+}
+
+resultLoad(page, userId);
+
+$(window).scroll(() => {
+
+	let checkNum = $(window).scrollTop() - ($(document).height() - $(window).height());
+
+	if (checkNum < 1 && checkNum > -1) {
+		page += 1;
+		resultLoad(page, userId);
+
+	}
+});
+
+
+function getResultItem(image) {
+
+	let item = `<div class="img-box" onclick="modalDetail(${image.imageId})">
+
+	<a href=""> 
+		<img src="/upload/${image.postImageUrl}" >
+	</a>
+
+<div class="comment">
+	<a href="#" class=""> <i class="fas fa-heart">
+		</i><span>${image.likesCount}</span>
+	</a>
+</div>
+
+</div>`
+
+	return item;
+}
+
+  
 
 let principalId = $("#principalId").val();
 

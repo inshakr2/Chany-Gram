@@ -201,7 +201,7 @@ public class ImageService {
     public List<ImagesWithLikesDto> getProfileImage(int page, Long userId) {
         List<ImagesWithLikesDto> images = new ArrayList<>();
 
-        PageRequest pageRequest = PageRequest.of(page, 9);
+        PageRequest pageRequest = PageRequest.of(page, 9, Sort.by(DESC, "id"));
         List<Image> content = imageRepository.findImagesWithLikes(userId, pageRequest).getContent();
 
         content.forEach(
