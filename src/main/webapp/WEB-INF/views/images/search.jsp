@@ -102,6 +102,5 @@
 
 
 <script src="/js/search.js"></script>
-<script src="/js/profile.js"></script>
 <%@ include file="../layout/footer.jsp"%>
 
