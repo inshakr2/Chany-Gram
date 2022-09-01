@@ -49,7 +49,7 @@
 	</div>
 </div>
 
-<script src="/js/profile.js"></script>
+
 <script src="/js/popular.js"></script>
 
 <%@ include file="../layout/footer.jsp"%>
