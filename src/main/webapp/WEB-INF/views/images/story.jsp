@@ -11,5 +11,6 @@
 	</section>
 </main>
 <script src="/js/story.js"></script>
+<script src="/js/common.js"></script>
 </body>
 </html>

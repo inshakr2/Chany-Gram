@@ -227,5 +227,6 @@
 </div>
 
 <script src="/js/profile.js"></script>
+<script src="/js/common.js"></script>
 
 <%@ include file="../layout/footer.jsp"%>

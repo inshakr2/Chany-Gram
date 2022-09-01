@@ -102,5 +102,6 @@
 
 
 <script src="/js/search.js"></script>
+<script src="/js/common.js"></script>
 <%@ include file="../layout/footer.jsp"%>
 

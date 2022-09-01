@@ -51,6 +51,7 @@
 
 
 <script src="/js/popular.js"></script>
+<script src="/js/common.js"></script>
 
 <%@ include file="../layout/footer.jsp"%>
 
