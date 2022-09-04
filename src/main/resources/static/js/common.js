@@ -110,7 +110,11 @@ function getCommentBox(image) {
 			item += `
 				<div class="sl__item__contents__comment" id="storyCommentItem-${comment.commentId}"">
 					<p>
-						<b>${comment.username} :</b> ${comment.content}
+						<b>
+							<a href="/user/${comment.userId}">
+								${comment.username}
+							</a> :
+						</b> ${comment.content}
 					</p>`
 
 					if(principalUserId == comment.userId){
