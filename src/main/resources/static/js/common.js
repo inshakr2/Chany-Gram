@@ -215,7 +215,11 @@ function addComment(imageId) {
 		let content = `
 		<div class="sl__item__contents__comment" id="storyCommentItem-${comment.commentId}"> 
 		  <p>
-			<b>${comment.username} :</b> ${comment.content}
+			<b>
+				<a href="/user/${comment.userId}">
+					${comment.username}
+				</a> :
+			</b> ${comment.content}
 		  </p>
 			<button onClick="deleteComment(${comment.commentId})">
 		  		<i class="fas fa-times"></i>
