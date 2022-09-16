@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Slf4j
@@ -55,10 +56,13 @@ public class ImageController {
     @GetMapping({"/images/{imageId}/edit"})
     public String editImage(@PathVariable Long imageId,
                             @AuthenticationPrincipal PrincipalDetails principalDetails,
-                            Model model) {
+                            Model model, HttpServletRequest request) {
 
         ImageEditResponseDto imageEditResponseDto = imageService.getImageForEdit(imageId, principalDetails.getUser().getId());
         model.addAttribute("image", imageEditResponseDto);
+
+        String referer = request.getHeader("Referer");
+        request.getSession().setAttribute("prevPage", referer);
 
         return "/images/edit";
     }
@@ -66,12 +70,15 @@ public class ImageController {
     @PostMapping("/images/{imageId}/edit")
     public String imageEdit(@PathVariable Long imageId,
                             @ModelAttribute ImageEditRequestDto imageEditRequestDto,
-                            @AuthenticationPrincipal PrincipalDetails principalDetails) {
+                            @AuthenticationPrincipal PrincipalDetails principalDetails,
+                            HttpServletRequest request) {
 
         imageService.editImageDetail(imageId, principalDetails.getUser().getId(), imageEditRequestDto);
         tagService.editMappingImage(imageId, imageEditRequestDto.getOrgTag(), imageEditRequestDto.getNewTag());
 
-        return "redirect:/user/" + principalDetails.getUser().getId();
+        String prevPage = (String) request.getSession().getAttribute("prevPage");
+//        return "redirect:/user/" + principalDetails.getUser().getId();
+        return "redirect:" + prevPage;
     }
 
     @GetMapping("/images/search")
