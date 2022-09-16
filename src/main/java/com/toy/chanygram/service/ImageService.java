@@ -7,7 +7,6 @@ import com.toy.chanygram.dto.image.*;
 import com.toy.chanygram.dto.tag.TagWithId;
 import com.toy.chanygram.exception.CustomValidationException;
 import com.toy.chanygram.repository.ImageRepository;
-import com.toy.chanygram.repository.ImageTagRepository;
 import com.toy.chanygram.repository.TagRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +23,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
@@ -36,7 +34,6 @@ public class ImageService {
 
     private final ImageRepository imageRepository;
     private final TagRepository tagRepository;
-    private final ImageTagRepository imageTagRepository;
 
     @Value("${custom.file.path}")
     private String uploadPath;
@@ -174,12 +171,18 @@ public class ImageService {
         String imageFullPath = uploadPath + imageFileName;
         Path imagePath = Paths.get(imageFullPath);
 
+        // TODO 업로드 파일 확장자 제한
         try {
-            log.info("Try to upload [" + imageFileName +"] image to ${file.path}");
+
+            if (imageUploadDto.getFile().getBytes() == null || imageUploadDto.getFile().getBytes().length == 0) {
+                throw new CustomValidationException("이미지가 첨부되지 않았습니다.", null);
+            }
+
+            log.info("Try to upload [" + imageFileName + "] image to ${file.path}");
             Files.write(imagePath, imageUploadDto.getFile().getBytes());
-        } catch (IOException e) {
+        } catch (IOException e1) {
             log.error("I/O error occurred during image upload : [" + imageFileName + "]");
-            e.printStackTrace();
+            e1.printStackTrace();
         }
 
         Image image = new Image(imageUploadDto.getCaption(), imageFileName, principalDetails.getUser());
