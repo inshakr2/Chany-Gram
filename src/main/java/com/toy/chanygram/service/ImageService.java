@@ -171,11 +171,14 @@ public class ImageService {
         String imageFullPath = uploadPath + imageFileName;
         Path imagePath = Paths.get(imageFullPath);
 
-        // TODO 업로드 파일 확장자 제한
         try {
 
             if (imageUploadDto.getFile().getBytes() == null || imageUploadDto.getFile().getBytes().length == 0) {
                 throw new CustomValidationException("이미지가 첨부되지 않았습니다.", null);
+            }
+
+            if (!isAllowMime(imageFileName)) {
+                throw new CustomValidationException("허용하지 않는 확장자입니다.", null);
             }
 
             log.info("Try to upload [" + imageFileName + "] image to ${file.path}");
@@ -189,6 +192,16 @@ public class ImageService {
         Image entity = imageRepository.save(image);
 
         return entity.getId();
+    }
+
+    private boolean isAllowMime(String imageFileName) {
+
+        String[] allowMimes = {"png", "jpg", "jpeg", "gif", "bmp"};
+
+        String mime = imageFileName.substring(imageFileName.lastIndexOf(".") + 1);
+
+        return Arrays.asList(allowMimes).contains(mime.toLowerCase());
+
     }
 
     @Transactional(readOnly = true)
